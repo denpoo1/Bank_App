@@ -35,4 +35,5 @@ public class People {
         this.surname = surname;
     }
 //Тестирование Джира 
+    // Второй коммит 
 }
