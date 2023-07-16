@@ -1,4 +1,4 @@
 package com.onlinebank.models;
 
-public class TransactionRoundingModel {
+public class TransactionRounding {
 }
