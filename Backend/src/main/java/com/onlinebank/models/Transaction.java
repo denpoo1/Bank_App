@@ -24,11 +24,10 @@ public class Transaction {
     private Integer leftoverAmount;
 
     @Column(name = "to_account_id")
-    private Integer toAccountId;
+    private int toAccountId;
 
-    @ManyToOne
-    @JoinColumn(name = "credit_card_id", referencedColumnName = "id")
-    private CreditCard creditCard;
+    @Column(name = "credit_card_id")
+    private int fromAccountId;
 
     @ManyToMany(mappedBy = "transactions")
     private List<PaymentCategory> paymentCategoryList;
@@ -36,12 +35,12 @@ public class Transaction {
     public Transaction() {
     }
 
-    public Transaction(Date date, Integer amount, Integer leftoverAmount, Integer toAccountId, CreditCard creditCard) {
+    public Transaction(Date date, Integer amount, Integer leftoverAmount, int toAccountId, int fromAccountId) {
         this.date = date;
         this.amount = amount;
         this.leftoverAmount = leftoverAmount;
         this.toAccountId = toAccountId;
-        this.creditCard = creditCard;
+        this.fromAccountId = fromAccountId;
     }
 
     public Integer getId() {
@@ -84,12 +83,16 @@ public class Transaction {
         this.toAccountId = toAccountId;
     }
 
-    public CreditCard getCreditCard() {
-        return creditCard;
+    public void setToAccountId(int toAccountId) {
+        this.toAccountId = toAccountId;
     }
 
-    public void setCreditCard(CreditCard creditCard) {
-        this.creditCard = creditCard;
+    public int getFromAccountId() {
+        return fromAccountId;
+    }
+
+    public void setFromAccountId(int fromAccountId) {
+        this.fromAccountId = fromAccountId;
     }
 
     public List<PaymentCategory> getPaymentCategoryList() {

@@ -33,7 +33,7 @@ public class Customer {
     @Column(name = "username", nullable = false)
     private String username;
 
-    @OneToOne(mappedBy = "customer")
+    @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL)
     private Account account;
 
     public Customer() {
