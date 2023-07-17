@@ -3,6 +3,7 @@ package com.onlinebank.models;
 import jakarta.persistence.*;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "credit_card")
@@ -34,13 +35,17 @@ public class CreditCard {
     @Column(name = "expiration_date", nullable = false)
     private Date expirationDate;
 
-    @Column(name = "account_id", nullable = false)
-    private Integer accountId;
+    @ManyToOne
+    @JoinColumn(name = "account_id", referencedColumnName = "id")
+    private Account account;
+
+    @OneToMany(mappedBy = "creditCard")
+    private List<Transaction> transactions;
 
     public CreditCard() {
     }
 
-    public CreditCard(String cardNumber, String cvv, String billingAddress, Integer creditLimit, Integer balance, Date createdAt, Date expirationDate, Integer accountId) {
+    public CreditCard(String cardNumber, String cvv, String billingAddress, Integer creditLimit, Integer balance, Date createdAt, Date expirationDate, Account account) {
         this.cardNumber = cardNumber;
         this.cvv = cvv;
         this.billingAddress = billingAddress;
@@ -48,7 +53,7 @@ public class CreditCard {
         this.balance = balance;
         this.createdAt = createdAt;
         this.expirationDate = expirationDate;
-        this.accountId = accountId;
+        this.account = account;
     }
 
     public Integer getId() {
@@ -115,11 +120,19 @@ public class CreditCard {
         this.expirationDate = expirationDate;
     }
 
-    public Integer getAccountId() {
-        return accountId;
+    public Account getAccount() {
+        return account;
     }
 
-    public void setAccountId(Integer accountId) {
-        this.accountId = accountId;
+    public void setAccount(Account account) {
+        this.account = account;
+    }
+
+    public List<Transaction> getTransactions() {
+        return transactions;
+    }
+
+    public void setTransactions(List<Transaction> transactions) {
+        this.transactions = transactions;
     }
 }

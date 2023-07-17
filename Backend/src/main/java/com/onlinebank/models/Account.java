@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 
 import javax.xml.crypto.Data;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "account")
@@ -13,16 +14,40 @@ public class Account {
     @Column(name = "id")
     private int id;
 
-    @Column(name = "customer_id")
-    private int customerId;
+    @OneToOne(mappedBy = "account")
+    private PiggyBank piggyBank;
 
     @Column(name = "date_opened")
     private Date date;
 
     @OneToOne
     @JoinColumn(name = "customer_id", referencedColumnName = "id")
-    @Column(name = "transaction_rounding_id")
     private Customer customer;
+
+    @ManyToOne
+    @JoinColumn(name = "transaction_rounding_id", referencedColumnName = "id")
+    private TransactionRounding transactionRounding;
+
+    @OneToMany(mappedBy = "account")
+    List<CreditCard> creditCards;
+
+    @ManyToMany
+    @JoinTable(
+            name = "cashback_account",
+            joinColumns = @JoinColumn(name = "account_id"),
+            inverseJoinColumns = @JoinColumn(name = "cashback_id")
+    )
+    private List<CashBackCardNumber> cashBackCardNumbers;
+
+    public Account() {
+    }
+
+    public Account(PiggyBank piggyBank, Date date, Customer customer, TransactionRounding transactionRounding) {
+        this.piggyBank = piggyBank;
+        this.date = date;
+        this.customer = customer;
+        this.transactionRounding = transactionRounding;
+    }
 
     public int getId() {
         return id;
@@ -32,12 +57,12 @@ public class Account {
         this.id = id;
     }
 
-    public int getCustomerId() {
-        return customerId;
+    public PiggyBank getPiggyBank() {
+        return piggyBank;
     }
 
-    public void setCustomerId(int customerId) {
-        this.customerId = customerId;
+    public void setPiggyBank(PiggyBank piggyBank) {
+        this.piggyBank = piggyBank;
     }
 
     public Date getDate() {
@@ -56,12 +81,27 @@ public class Account {
         this.customer = customer;
     }
 
-    public Account(int customerId, Date date, Customer customer) {
-        this.customerId = customerId;
-        this.date = date;
-        this.customer = customer;
+    public TransactionRounding getTransactionRounding() {
+        return transactionRounding;
     }
 
-    public Account() {
+    public void setTransactionRounding(TransactionRounding transactionRounding) {
+        this.transactionRounding = transactionRounding;
+    }
+
+    public List<CreditCard> getCreditCards() {
+        return creditCards;
+    }
+
+    public void setCreditCards(List<CreditCard> creditCards) {
+        this.creditCards = creditCards;
+    }
+
+    public List<CashBackCardNumber> getCashBackCardNumbers() {
+        return cashBackCardNumbers;
+    }
+
+    public void setCashBackCardNumbers(List<CashBackCardNumber> cashBackCardNumbers) {
+        this.cashBackCardNumbers = cashBackCardNumbers;
     }
 }

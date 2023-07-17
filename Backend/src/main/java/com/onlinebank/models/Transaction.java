@@ -3,6 +3,7 @@ package com.onlinebank.models;
 import jakarta.persistence.*;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "Transaction")
@@ -13,29 +14,89 @@ public class Transaction {
     @Column(name = "id")
     private Integer id;
 
-    @Column(name = "date", nullable = false)
+    @Column(name = "date")
     private Date date;
 
-    @Column(name = "amount", nullable = false)
+    @Column(name = "amount")
     private Integer amount;
 
-    @Column(name = "leftover_amount", nullable = false)
+    @Column(name = "leftover_amount")
     private Integer leftoverAmount;
 
-    @Column(name = "to_account_id", nullable = false)
+    @Column(name = "to_account_id")
     private Integer toAccountId;
 
-    @Column(name = "credit_card_id", nullable = false)
-    private Integer creditCardId;
+    @ManyToOne
+    @JoinColumn(name = "credit_card_id", referencedColumnName = "id")
+    private CreditCard creditCard;
 
-    public Transaction(Date date, Integer amount, Integer leftoverAmount, Integer toAccountId, Integer creditCardId) {
+    @ManyToMany(mappedBy = "transactions")
+    private List<PaymentCategory> paymentCategoryList;
+
+    public Transaction() {
+    }
+
+    public Transaction(Date date, Integer amount, Integer leftoverAmount, Integer toAccountId, CreditCard creditCard) {
         this.date = date;
         this.amount = amount;
         this.leftoverAmount = leftoverAmount;
         this.toAccountId = toAccountId;
-        this.creditCardId = creditCardId;
+        this.creditCard = creditCard;
     }
 
-    public Transaction() {
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public Integer getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Integer amount) {
+        this.amount = amount;
+    }
+
+    public Integer getLeftoverAmount() {
+        return leftoverAmount;
+    }
+
+    public void setLeftoverAmount(Integer leftoverAmount) {
+        this.leftoverAmount = leftoverAmount;
+    }
+
+    public Integer getToAccountId() {
+        return toAccountId;
+    }
+
+    public void setToAccountId(Integer toAccountId) {
+        this.toAccountId = toAccountId;
+    }
+
+    public CreditCard getCreditCard() {
+        return creditCard;
+    }
+
+    public void setCreditCard(CreditCard creditCard) {
+        this.creditCard = creditCard;
+    }
+
+    public List<PaymentCategory> getPaymentCategoryList() {
+        return paymentCategoryList;
+    }
+
+    public void setPaymentCategoryList(List<PaymentCategory> paymentCategoryList) {
+        this.paymentCategoryList = paymentCategoryList;
     }
 }

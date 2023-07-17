@@ -33,6 +33,23 @@ public class Customer {
     @Column(name = "username", nullable = false)
     private String username;
 
+    @OneToOne(mappedBy = "customer")
+    private Account account;
+
+    public Customer() {
+    }
+
+    public Customer(String firstName, String lastName, String email, String phone, String address, String password, String username, Account account) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.phone = phone;
+        this.address = address;
+        this.password = password;
+        this.username = username;
+        this.account = account;
+    }
+
     public Integer getId() {
         return id;
     }
@@ -97,16 +114,11 @@ public class Customer {
         this.username = username;
     }
 
-    public Customer() {
+    public Account getAccount() {
+        return account;
     }
 
-    public Customer(String firstName, String lastName, String email, String phone, String address, String password, String username) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.phone = phone;
-        this.address = address;
-        this.password = password;
-        this.username = username;
+    public void setAccount(Account account) {
+        this.account = account;
     }
 }
