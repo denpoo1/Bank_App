@@ -2,6 +2,8 @@ package com.onlinebank.models;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "cashback_Card_Number")
 public class CashBackCardNumber {
@@ -22,6 +24,19 @@ public class CashBackCardNumber {
 
     @Column(name = "cashback_percentage", nullable = false)
     private Float cashbackPercentage;
+
+    @ManyToMany(mappedBy = "cashBackCardNumbers")
+    private List<Account> accounts;
+
+    public CashBackCardNumber() {
+    }
+
+    public CashBackCardNumber(String name, String description, String accountNumber, Float cashbackPercentage) {
+        this.name = name;
+        this.description = description;
+        this.accountNumber = accountNumber;
+        this.cashbackPercentage = cashbackPercentage;
+    }
 
     public Integer getId() {
         return id;
@@ -63,14 +78,12 @@ public class CashBackCardNumber {
         this.cashbackPercentage = cashbackPercentage;
     }
 
-    public CashBackCardNumber(String name, String description, String accountNumber, Float cashbackPercentage) {
-        this.name = name;
-        this.description = description;
-        this.accountNumber = accountNumber;
-        this.cashbackPercentage = cashbackPercentage;
+    public List<Account> getAccounts() {
+        return accounts;
     }
 
-    public CashBackCardNumber() {
+    public void setAccounts(List<Account> accounts) {
+        this.accounts = accounts;
     }
 }
 

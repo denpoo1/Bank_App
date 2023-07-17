@@ -19,8 +19,18 @@ public class PiggyBank {
     @Column(name = "amount", nullable = false)
     private Integer amount;
 
-    @Column(name = "account_id", nullable = false)
-    private Integer accountId;
+    @OneToOne
+    @JoinColumn(name = "account_id", referencedColumnName = "id")
+    private Account account;
+
+    public PiggyBank() {
+    }
+
+    public PiggyBank(Date createdAt, Integer amount, Account account) {
+        this.createdAt = createdAt;
+        this.amount = amount;
+        this.account = account;
+    }
 
     public Integer getId() {
         return id;
@@ -46,20 +56,11 @@ public class PiggyBank {
         this.amount = amount;
     }
 
-    public Integer getAccountId() {
-        return accountId;
+    public Account getAccount() {
+        return account;
     }
 
-    public void setAccountId(Integer accountId) {
-        this.accountId = accountId;
-    }
-
-    public PiggyBank(Date createdAt, Integer amount, Integer accountId) {
-        this.createdAt = createdAt;
-        this.amount = amount;
-        this.accountId = accountId;
-    }
-
-    public PiggyBank() {
+    public void setAccount(Account account) {
+        this.account = account;
     }
 }
