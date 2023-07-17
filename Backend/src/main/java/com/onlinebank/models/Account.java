@@ -20,15 +20,14 @@ public class Account {
     @Column(name = "date_opened")
     private Date date;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "customer_id", referencedColumnName = "id")
     private Customer customer;
 
-    @ManyToOne
-    @JoinColumn(name = "transaction_rounding_id", referencedColumnName = "id")
-    private TransactionRounding transactionRounding;
+    @Column(name = "rounding_transaction_as_a_percentage")
+    private float transactionRoundingPercentage;
 
-    @OneToMany(mappedBy = "account")
+    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
     List<CreditCard> creditCards;
 
     @ManyToMany
@@ -42,11 +41,9 @@ public class Account {
     public Account() {
     }
 
-    public Account(PiggyBank piggyBank, Date date, Customer customer, TransactionRounding transactionRounding) {
-        this.piggyBank = piggyBank;
+    public Account(Date date, float transactionRoundingPercentage) {
         this.date = date;
-        this.customer = customer;
-        this.transactionRounding = transactionRounding;
+        this.transactionRoundingPercentage = transactionRoundingPercentage;
     }
 
     public int getId() {
@@ -81,12 +78,12 @@ public class Account {
         this.customer = customer;
     }
 
-    public TransactionRounding getTransactionRounding() {
-        return transactionRounding;
+    public float getTransactionRoundingPercentage() {
+        return transactionRoundingPercentage;
     }
 
-    public void setTransactionRounding(TransactionRounding transactionRounding) {
-        this.transactionRounding = transactionRounding;
+    public void setTransactionRoundingPercentage(float transactionRoundingPercentage) {
+        this.transactionRoundingPercentage = transactionRoundingPercentage;
     }
 
     public List<CreditCard> getCreditCards() {
@@ -103,5 +100,18 @@ public class Account {
 
     public void setCashBackCardNumbers(List<CashBackCardNumber> cashBackCardNumbers) {
         this.cashBackCardNumbers = cashBackCardNumbers;
+    }
+
+    @Override
+    public String toString() {
+        return "Account{" +
+                "id=" + id +
+                ", piggyBank=" + piggyBank +
+                ", date=" + date +
+                ", customer=" + customer +
+                ", transactionRoundingPercentage=" + transactionRoundingPercentage +
+                ", creditCards=" + creditCards +
+                ", cashBackCardNumbers=" + cashBackCardNumbers +
+                '}';
     }
 }

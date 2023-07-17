@@ -26,10 +26,10 @@ public class PiggyBank {
     public PiggyBank() {
     }
 
-    public PiggyBank(Date createdAt, Integer amount, Account account) {
+    public PiggyBank(Account account, Date createdAt, Integer amount) {
+        this.account = account;
         this.createdAt = createdAt;
         this.amount = amount;
-        this.account = account;
     }
 
     public Integer getId() {
@@ -62,5 +62,15 @@ public class PiggyBank {
 
     public void setAccount(Account account) {
         this.account = account;
+    }
+
+    @Override
+    public String toString() {
+        return "PiggyBank{" +
+                "id=" + id +
+                ", createdAt=" + createdAt +
+                ", amount=" + amount +
+                ", account=" + account +
+                '}';
     }
 }

@@ -14,33 +14,30 @@ public class CreditCard {
     @Column(name = "id")
     private Integer id;
 
-    @Column(name = "card_number", nullable = false)
+    @Column(name = "card_number")
     private String cardNumber;
 
-    @Column(name = "cvv", nullable = false)
+    @Column(name = "cvv")
     private String cvv;
 
-    @Column(name = "billing_address", nullable = false)
+    @Column(name = "billing_address")
     private String billingAddress;
 
-    @Column(name = "credit_limit", nullable = false)
+    @Column(name = "credit_limit")
     private Integer creditLimit;
 
-    @Column(name = "balance", nullable = false)
+    @Column(name = "balance")
     private Integer balance;
 
-    @Column(name = "created_at", nullable = false)
+    @Column(name = "created_at")
     private Date createdAt;
 
-    @Column(name = "expiration_date", nullable = false)
+    @Column(name = "expiration_date")
     private Date expirationDate;
 
     @ManyToOne
-    @JoinColumn(name = "account_id", referencedColumnName = "id")
+    @JoinColumn(name = "account_id")
     private Account account;
-
-    @OneToMany(mappedBy = "creditCard")
-    private List<Transaction> transactions;
 
     public CreditCard() {
     }
@@ -128,11 +125,18 @@ public class CreditCard {
         this.account = account;
     }
 
-    public List<Transaction> getTransactions() {
-        return transactions;
-    }
-
-    public void setTransactions(List<Transaction> transactions) {
-        this.transactions = transactions;
+    @Override
+    public String toString() {
+        return "CreditCard{" +
+                "id=" + id +
+                ", cardNumber='" + cardNumber + '\'' +
+                ", cvv='" + cvv + '\'' +
+                ", billingAddress='" + billingAddress + '\'' +
+                ", creditLimit=" + creditLimit +
+                ", balance=" + balance +
+                ", createdAt=" + createdAt +
+                ", expirationDate=" + expirationDate +
+                ", account=" + account +
+                '}';
     }
 }

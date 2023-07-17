@@ -78,4 +78,15 @@ public class PaymentCategory {
     public void setTransactions(List<Transaction> transactions) {
         this.transactions = transactions;
     }
+
+    @Override
+    public String toString() {
+        return "PaymentCategory{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", amount=" + amount +
+                ", maxAmount=" + maxAmount +
+                ", transactions=" + transactions +
+                '}';
+    }
 }

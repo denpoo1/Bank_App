@@ -12,25 +12,25 @@ public class Customer {
     @Column(name = "id")
     private Integer id;
 
-    @Column(name = "first_name", nullable = false)
+    @Column(name = "first_name")
     private String firstName;
 
-    @Column(name = "last_name", nullable = false)
+    @Column(name = "last_name")
     private String lastName;
 
     @Column(name = "email")
     private String email;
 
-    @Column(name = "phone", nullable = false)
+    @Column(name = "phone")
     private String phone;
 
-    @Column(name = "address", nullable = false)
+    @Column(name = "address")
     private String address;
 
-    @Column(name = "password", nullable = false)
+    @Column(name = "password")
     private String password;
 
-    @Column(name = "username", nullable = false)
+    @Column(name = "username")
     private String username;
 
     @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL)
@@ -39,7 +39,7 @@ public class Customer {
     public Customer() {
     }
 
-    public Customer(String firstName, String lastName, String email, String phone, String address, String password, String username, Account account) {
+    public Customer(String firstName, String lastName, String email, String phone, String address, String password, String username) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -47,7 +47,6 @@ public class Customer {
         this.address = address;
         this.password = password;
         this.username = username;
-        this.account = account;
     }
 
     public Integer getId() {
@@ -120,5 +119,20 @@ public class Customer {
 
     public void setAccount(Account account) {
         this.account = account;
+    }
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", phone='" + phone + '\'' +
+                ", address='" + address + '\'' +
+                ", password='" + password + '\'' +
+                ", username='" + username + '\'' +
+                ", account=" + account +
+                '}';
     }
 }

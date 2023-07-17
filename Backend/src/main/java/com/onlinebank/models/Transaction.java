@@ -102,4 +102,17 @@ public class Transaction {
     public void setPaymentCategoryList(List<PaymentCategory> paymentCategoryList) {
         this.paymentCategoryList = paymentCategoryList;
     }
+
+    @Override
+    public String toString() {
+        return "Transaction{" +
+                "id=" + id +
+                ", date=" + date +
+                ", amount=" + amount +
+                ", leftoverAmount=" + leftoverAmount +
+                ", toAccountId=" + toAccountId +
+                ", fromAccountId=" + fromAccountId +
+                ", paymentCategoryList=" + paymentCategoryList +
+                '}';
+    }
 }
