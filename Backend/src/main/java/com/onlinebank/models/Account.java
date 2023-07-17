@@ -14,7 +14,7 @@ public class Account {
     @Column(name = "id")
     private int id;
 
-    @OneToOne(mappedBy = "account")
+    @OneToOne(mappedBy = "account", cascade = CascadeType.ALL)
     private PiggyBank piggyBank;
 
     @Column(name = "date_opened")
