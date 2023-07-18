@@ -1,6 +1,7 @@
 package com.onlinebank.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.PositiveOrZero;
 
 import java.util.Date;
 
@@ -13,10 +14,11 @@ public class PiggyBank {
     @Column(name = "id")
     private Integer id;
 
-    @Column(name = "created_at", nullable = false)
+    @Column(name = "created_at")
     private Date createdAt;
 
-    @Column(name = "amount", nullable = false)
+    @Column(name = "amount")
+    @PositiveOrZero(message = "Amount must be a positive or zero value.")
     private Integer amount;
 
     @OneToOne

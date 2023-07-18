@@ -1,6 +1,9 @@
 package com.onlinebank.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Digits;
+import jakarta.validation.constraints.NotEmpty;
+import org.hibernate.validator.constraints.Length;
 
 import java.util.Date;
 import java.util.List;
@@ -14,12 +17,16 @@ public class CreditCard {
     @Column(name = "id")
     private Integer id;
 
+    @Digits(integer = 28, fraction = 0, message = "Invalid card number. It must be a valid 28-digit integer.")
     @Column(name = "card_number")
-    private String cardNumber;
+    private int cardNumber;
 
+    @Digits(integer = 3, fraction = 0, message = "Invalid CVV. It must be a valid 3-digit integer.")
     @Column(name = "cvv")
-    private String cvv;
+    private int cvv;
 
+    @NotEmpty(message = "Billing address cannot be empty.")
+    @Length(max = 50, message = "Billing address cannot exceed 50 characters.")
     @Column(name = "billing_address")
     private String billingAddress;
 
@@ -42,7 +49,7 @@ public class CreditCard {
     public CreditCard() {
     }
 
-    public CreditCard(String cardNumber, String cvv, String billingAddress, Integer creditLimit, Integer balance, Date createdAt, Date expirationDate, Account account) {
+    public CreditCard(int cardNumber, int cvv, String billingAddress, Integer creditLimit, Integer balance, Date createdAt, Date expirationDate, Account account) {
         this.cardNumber = cardNumber;
         this.cvv = cvv;
         this.billingAddress = billingAddress;
@@ -61,19 +68,19 @@ public class CreditCard {
         this.id = id;
     }
 
-    public String getCardNumber() {
+    public int getCardNumber() {
         return cardNumber;
     }
 
-    public void setCardNumber(String cardNumber) {
+    public void setCardNumber(int cardNumber) {
         this.cardNumber = cardNumber;
     }
 
-    public String getCvv() {
+    public int getCvv() {
         return cvv;
     }
 
-    public void setCvv(String cvv) {
+    public void setCvv(int cvv) {
         this.cvv = cvv;
     }
 
