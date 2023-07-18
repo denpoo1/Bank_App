@@ -26,7 +26,6 @@ public class Account {
     private Customer customer;
 
     @Column(name = "rounding_transaction_as_a_percentage")
-    @Range(min = 0, max = 100, message = "Transaction rounding percentage must be between 0 and 100.")
     private float transactionRoundingPercentage;
 
     @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)

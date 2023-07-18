@@ -16,14 +16,11 @@ public class PaymentCategory {
     private int id;
 
     @Column(name = "name")
-    @Length(max = 50, message = "Name cannot exceed 50 characters.")
     private String name;
 
-    @PositiveOrZero(message = "Amount must be a positive or zero value.")
     @Column(name = "amount")
     private int amount;
 
-    @PositiveOrZero(message = "Max amount must be a positive or zero value.")
     @Column(name = "max_amount")
     private int maxAmount;
 

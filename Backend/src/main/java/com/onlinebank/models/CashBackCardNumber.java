@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import org.hibernate.validator.constraints.Length;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
@@ -17,18 +18,14 @@ public class CashBackCardNumber {
     @Column(name = "id")
     private Integer id;
 
-    @NotEmpty(message = "Name cannot be empty.")
-    @Size(max = 30, message = "Name cannot exceed 30 characters.")
     @Column(name = "name")
     private String name;
 
-    @NotEmpty(message = "Description cannot be empty.")
     @Column(name = "description")
     private String description;
 
-    @Column(name = "account_number")
-    @Digits(integer = 28, fraction = 0, message = "Account number must be a valid 28-digit integer.")
-    private int accountNumber;
+    @Column(name = "card_number")
+    private BigDecimal accountNumber;
 
     @Column(name = "cashback_percentage")
     private Float cashbackPercentage;
@@ -39,7 +36,7 @@ public class CashBackCardNumber {
     public CashBackCardNumber() {
     }
 
-    public CashBackCardNumber(String name, String description, int accountNumber, Float cashbackPercentage) {
+    public CashBackCardNumber(String name, String description, BigDecimal accountNumber, Float cashbackPercentage) {
         this.name = name;
         this.description = description;
         this.accountNumber = accountNumber;
@@ -70,11 +67,11 @@ public class CashBackCardNumber {
         this.description = description;
     }
 
-    public int getAccountNumber() {
+    public BigDecimal getAccountNumber() {
         return accountNumber;
     }
 
-    public void setAccountNumber(int accountNumber) {
+    public void setAccountNumber(BigDecimal accountNumber) {
         this.accountNumber = accountNumber;
     }
 
