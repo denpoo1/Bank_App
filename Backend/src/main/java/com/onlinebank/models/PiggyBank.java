@@ -18,7 +18,6 @@ public class PiggyBank {
     private Date createdAt;
 
     @Column(name = "amount")
-    @PositiveOrZero(message = "Amount must be a positive or zero value.")
     private Integer amount;
 
     @OneToOne

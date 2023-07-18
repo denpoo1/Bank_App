@@ -16,38 +16,24 @@ public class Customer {
     @Column(name = "id")
     private Integer id;
 
-    @NotEmpty(message = "First name cannot be empty.")
-    @Size(max = 30, message = "First name cannot exceed 30 characters.")
     @Column(name = "first_name")
     private String firstName;
 
-    @NotEmpty(message = "Last name cannot be empty.")
-    @Size(max = 30, message = "Last name cannot exceed 30 characters.")
     @Column(name = "last_name")
     private String lastName;
 
-    @NotEmpty(message = "Email cannot be empty.")
-    @Email(message = "Invalid email format.")
     @Column(name = "email")
     private String email;
 
-    @NotEmpty(message = "Phone number cannot be empty.")
-    @Size(max = 15, message = "Phone number cannot exceed 15 characters.")
     @Column(name = "phone")
     private String phone;
 
-    @NotEmpty(message = "Address cannot be empty.")
-    @Size(max = 50, message = "Address cannot exceed 50 characters.")
     @Column(name = "address")
     private String address;
 
-    @NotEmpty(message = "Password cannot be empty.")
-    @Size(max = 50, message = "Password cannot exceed 50 characters.")
     @Column(name = "password")
     private String password;
 
-    @NotEmpty(message = "Username cannot be empty.")
-    @Size(max = 50, message = "Username cannot exceed 50 characters.")
     @Column(name = "username")
     private String username;
 

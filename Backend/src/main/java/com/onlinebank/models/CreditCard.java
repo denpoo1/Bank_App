@@ -5,6 +5,7 @@ import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotEmpty;
 import org.hibernate.validator.constraints.Length;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -17,16 +18,12 @@ public class CreditCard {
     @Column(name = "id")
     private Integer id;
 
-    @Digits(integer = 28, fraction = 0, message = "Invalid card number. It must be a valid 28-digit integer.")
     @Column(name = "card_number")
-    private int cardNumber;
+    private BigDecimal cardNumber;
 
-    @Digits(integer = 3, fraction = 0, message = "Invalid CVV. It must be a valid 3-digit integer.")
     @Column(name = "cvv")
     private int cvv;
 
-    @NotEmpty(message = "Billing address cannot be empty.")
-    @Length(max = 50, message = "Billing address cannot exceed 50 characters.")
     @Column(name = "billing_address")
     private String billingAddress;
 
@@ -49,7 +46,7 @@ public class CreditCard {
     public CreditCard() {
     }
 
-    public CreditCard(int cardNumber, int cvv, String billingAddress, Integer creditLimit, Integer balance, Date createdAt, Date expirationDate, Account account) {
+    public CreditCard(BigDecimal cardNumber, int cvv, String billingAddress, Integer creditLimit, Integer balance, Date createdAt, Date expirationDate, Account account) {
         this.cardNumber = cardNumber;
         this.cvv = cvv;
         this.billingAddress = billingAddress;
@@ -68,11 +65,11 @@ public class CreditCard {
         this.id = id;
     }
 
-    public int getCardNumber() {
+    public BigDecimal getCardNumber() {
         return cardNumber;
     }
 
-    public void setCardNumber(int cardNumber) {
+    public void setCardNumber(BigDecimal cardNumber) {
         this.cardNumber = cardNumber;
     }
 
