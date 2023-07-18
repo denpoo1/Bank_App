@@ -1,6 +1,8 @@
 package com.onlinebank.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Digits;
+import jakarta.validation.constraints.PositiveOrZero;
 
 import java.util.Date;
 import java.util.List;
@@ -18,15 +20,19 @@ public class Transaction {
     private Date date;
 
     @Column(name = "amount")
+    @PositiveOrZero(message = "Amount must be a positive or zero value.")
     private Integer amount;
 
     @Column(name = "leftover_amount")
+    @PositiveOrZero(message = "Leftover amount must be a positive or zero value.")
     private Integer leftoverAmount;
 
     @Column(name = "to_account_id")
+    @Digits(integer = 28, fraction = 0, message = "To account ID must be a valid 28-digit number.")
     private int toAccountId;
 
     @Column(name = "credit_card_id")
+    @Digits(integer = 28, fraction = 0, message = "From account ID must be a valid 28-digit number.")
     private int fromAccountId;
 
     @ManyToMany(mappedBy = "transactions")

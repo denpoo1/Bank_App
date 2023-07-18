@@ -1,6 +1,10 @@
 package com.onlinebank.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Digits;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
+import org.hibernate.validator.constraints.Length;
 
 import java.util.List;
 
@@ -13,16 +17,20 @@ public class CashBackCardNumber {
     @Column(name = "id")
     private Integer id;
 
-    @Column(name = "name", nullable = false)
+    @NotEmpty(message = "Name cannot be empty.")
+    @Size(max = 30, message = "Name cannot exceed 30 characters.")
+    @Column(name = "name")
     private String name;
 
-    @Column(name = "description", nullable = false)
+    @NotEmpty(message = "Description cannot be empty.")
+    @Column(name = "description")
     private String description;
 
-    @Column(name = "account_number", nullable = false)
-    private String accountNumber;
+    @Column(name = "account_number")
+    @Digits(integer = 28, fraction = 0, message = "Account number must be a valid 28-digit integer.")
+    private int accountNumber;
 
-    @Column(name = "cashback_percentage", nullable = false)
+    @Column(name = "cashback_percentage")
     private Float cashbackPercentage;
 
     @ManyToMany(mappedBy = "cashBackCardNumbers")
@@ -31,7 +39,7 @@ public class CashBackCardNumber {
     public CashBackCardNumber() {
     }
 
-    public CashBackCardNumber(String name, String description, String accountNumber, Float cashbackPercentage) {
+    public CashBackCardNumber(String name, String description, int accountNumber, Float cashbackPercentage) {
         this.name = name;
         this.description = description;
         this.accountNumber = accountNumber;
@@ -62,11 +70,11 @@ public class CashBackCardNumber {
         this.description = description;
     }
 
-    public String getAccountNumber() {
+    public int getAccountNumber() {
         return accountNumber;
     }
 
-    public void setAccountNumber(String accountNumber) {
+    public void setAccountNumber(int accountNumber) {
         this.accountNumber = accountNumber;
     }
 
