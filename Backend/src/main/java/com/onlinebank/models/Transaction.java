@@ -25,7 +25,7 @@ public class Transaction {
     private Integer amount;
 
     @Column(name = "leftover_amount")
-    private Integer leftoverAmount;
+    private int leftoverAmount;
 
     @Column(name = "to_account_id")
     private int toAccountId;
