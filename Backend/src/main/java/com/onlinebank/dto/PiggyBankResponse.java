@@ -48,6 +48,6 @@ public class PiggyBankResponse {
         this.id = piggyBank.getId();
         this.createdAt = piggyBank.getCreatedAt();
         this.amount = piggyBank.getAmount();
-        this.createdAt = piggyBank.getCreatedAt();
+        this.accountID = piggyBank.getAccount().getId();
     }
 }

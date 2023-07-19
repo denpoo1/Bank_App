@@ -1,5 +1,6 @@
 package com.onlinebank.controllers;
 
+import com.onlinebank.dto.PiggyBankDepositAndWithrawRequest;
 import com.onlinebank.dto.PiggyBankRequest;
 import com.onlinebank.dto.PiggyBankResponse;
 import com.onlinebank.models.Account;
@@ -52,5 +53,30 @@ public class PiggyBankController {
         PiggyBank piggyBank = piggyBankRequest.toPiggyBank(account);
         piggyBankService.savePiggyBank(piggyBank);
         return ResponseEntity.ok().body(new PiggyBankResponse(piggyBank));
+    }
+
+    @PostMapping("/{id}/withraw")
+    public ResponseEntity<Object> makeDeposit(@PathVariable("id") int id, @RequestBody @Valid PiggyBankDepositAndWithrawRequest piggyBankDepositAndWithrawRequest) {
+        PiggyBank piggyBank = piggyBankService.getPiggyBankById(id);
+        if (piggyBank == null) return ResponseEntity.badRequest().body("PiggyBank with id " + id + " don't found");
+        else if (piggyBankDepositAndWithrawRequest.getAmount() > piggyBank.getAmount())
+            return ResponseEntity.badRequest().body("Requested amount exceeds the available balance in the piggy bank.");
+        else {
+            piggyBank.setAmount(piggyBank.getAmount() - piggyBankDepositAndWithrawRequest.getAmount());
+            piggyBankService.savePiggyBank(piggyBank);
+            return ResponseEntity.ok().body(new PiggyBankResponse(piggyBank));
+        }
+    }
+
+    @PostMapping("/{id}/deposit")
+    public ResponseEntity<Object> makeWithraw(@PathVariable("id") int id, @RequestBody @Valid PiggyBankDepositAndWithrawRequest piggyBankDepositAndWithrawRequest) {
+        PiggyBank piggyBank = piggyBankService.getPiggyBankById(id);
+        if (piggyBank == null) return ResponseEntity.badRequest().body("PiggyBank with id " + id + " don't found");
+        else {
+            piggyBank.setAmount(piggyBank.getAmount() + piggyBankDepositAndWithrawRequest.getAmount());
+            piggyBankService.savePiggyBank(piggyBank);
+            System.out.println(piggyBank.getId());
+            return ResponseEntity.ok().body(new PiggyBankResponse(piggyBank));
+        }
     }
 }
