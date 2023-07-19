@@ -10,14 +10,12 @@ public class TransactionRequest {
     private Date date;
 
     @PositiveOrZero(message = "Amount must be a positive or zero value.")
-    private Integer amount;
+    private int amount;
 
-    private Integer leftoverAmount;
+    private int leftoverAmount;
 
-    @Positive(message = "toAccountId amount must be a positive")
     private int toAccountId;
 
-    @Positive(message = "fromAccountId amount must be a positive")
     private int fromAccountId;
 
     public Date getDate() {
@@ -28,7 +26,7 @@ public class TransactionRequest {
         this.date = date;
     }
 
-    public Integer getAmount() {
+    public int getAmount() {
         return amount;
     }
 
@@ -36,7 +34,7 @@ public class TransactionRequest {
         this.amount = amount;
     }
 
-    public Integer getLeftoverAmount() {
+    public int getLeftoverAmount() {
         return leftoverAmount;
     }
 
@@ -59,7 +57,6 @@ public class TransactionRequest {
     public void setFromAccountId(int fromAccountId) {
         this.fromAccountId = fromAccountId;
     }
-
 
 
     public Transaction toTransaction() {

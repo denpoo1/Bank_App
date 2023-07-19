@@ -13,12 +13,12 @@ import java.util.Date;
 public class TransactionResponse {
     private Integer id;
     private Date date;
-    private Integer amount;
-    private Integer leftoverAmount;
+    private int amount;
+    private int leftoverAmount;
     private int toAccountId;
     private int fromAccountId;
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
@@ -34,7 +34,7 @@ public class TransactionResponse {
         this.date = date;
     }
 
-    public Integer getAmount() {
+    public int getAmount() {
         return amount;
     }
 
@@ -42,7 +42,7 @@ public class TransactionResponse {
         this.amount = amount;
     }
 
-    public Integer getLeftoverAmount() {
+    public int getLeftoverAmount() {
         return leftoverAmount;
     }
 

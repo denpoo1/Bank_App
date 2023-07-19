@@ -28,10 +28,10 @@ public class CreditCard {
     private String billingAddress;
 
     @Column(name = "credit_limit")
-    private Integer creditLimit;
+    private int creditLimit;
 
     @Column(name = "balance")
-    private Integer balance;
+    private int balance;
 
     @Column(name = "created_at")
     private Date createdAt;
@@ -89,7 +89,7 @@ public class CreditCard {
         this.billingAddress = billingAddress;
     }
 
-    public Integer getCreditLimit() {
+    public int getCreditLimit() {
         return creditLimit;
     }
 
@@ -97,7 +97,7 @@ public class CreditCard {
         this.creditLimit = creditLimit;
     }
 
-    public Integer getBalance() {
+    public int getBalance() {
         return balance;
     }
 
