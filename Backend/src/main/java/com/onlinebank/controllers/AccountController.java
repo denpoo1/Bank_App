@@ -13,6 +13,7 @@ import com.onlinebank.services.CustomerService;
 import com.onlinebank.services.TransactionService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -20,6 +21,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -90,5 +92,20 @@ public class AccountController {
         }
 
         return ResponseEntity.ok(transactionResponses);
+    }
+
+
+    @GetMapping("/{id}/{start_day}/{end_day}")
+    public ResponseEntity<Object> getAccountTransactionsByDays(@PathVariable("id") int id, @PathVariable("start_day") @DateTimeFormat(pattern = "yyyy-MM-dd")Date startDay,
+                                                               @PathVariable("end_day") @DateTimeFormat(pattern = "yyyy-MM-dd")Date endDay) {
+        Account account = accountService.getAccountById(id);
+        if (account == null) return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Account with id " + id + " not found");
+        List<Transaction> transactions = transactionService.getAccountTransactionsByDays(id, id ,startDay , endDay);
+        List<TransactionResponse> transactionResponses = new ArrayList<>();
+        if (transactions.isEmpty()) return ResponseEntity.badRequest().body("Transactions between " + startDay + " - " + endDay + " don't found");
+        for(Transaction transaction : transactions) {
+            transactionResponses.add(new TransactionResponse(transaction));
+        }
+        return ResponseEntity.ok().body(transactionResponses);
     }
 }
