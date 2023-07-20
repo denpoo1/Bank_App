@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -57,6 +58,13 @@ public class TransactionService {
         List<Transaction> transactions = new ArrayList<>();
         transactions.addAll(transactionRepository.findAllByToAccountId(accountId));
         transactions.addAll(transactionRepository.findAllByFromAccountId(accountId));
+        return transactions;
+    }
+
+    public List<Transaction> getAccountTransactionsByDays(int toAccountId, int fromAccountId, Date startDay, Date endDay) {
+        List<Transaction> transactions = new ArrayList<>();
+        transactions.addAll(transactionRepository.findAllByToAccountIdAndDateBetween(toAccountId, startDay, endDay));
+        transactions.addAll(transactionRepository.findAllByFromAccountIdAndDateBetween(fromAccountId, startDay, endDay));
         return transactions;
     }
 }
