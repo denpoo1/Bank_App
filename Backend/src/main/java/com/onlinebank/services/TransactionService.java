@@ -7,6 +7,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -50,5 +51,12 @@ public class TransactionService {
         } else {
             throw new EntityNotFoundException("Transaction with ID " + updatedTransaction.getId() + " not found.");
         }
+    }
+
+    public List<Transaction> getAccountTransactions(int accountId) {
+        List<Transaction> transactions = new ArrayList<>();
+        transactions.addAll(transactionRepository.findAllByToAccountId(accountId));
+        transactions.addAll(transactionRepository.findAllByFromAccountId(accountId));
+        return transactions;
     }
 }
