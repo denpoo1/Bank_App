@@ -34,7 +34,7 @@ public class CreditCardController {
     public List<CreditCardResponse> getCreditCards() {
         List<CreditCard> creditCards = creditCardService.getAllCreditCards();
         List<CreditCardResponse> creditCardResponses = new ArrayList<>();
-        for(CreditCard creditCard : creditCards) {
+        for (CreditCard creditCard : creditCards) {
             creditCardResponses.add(new CreditCardResponse(creditCard));
         }
         return creditCardResponses;
@@ -61,9 +61,50 @@ public class CreditCardController {
             return ResponseEntity.badRequest().body(errors);
         }
         Account account = accountService.getAccountById(creditCardRequest.getAccountId());
-        if (account == null) return ResponseEntity.badRequest().body("Account with id " + creditCardRequest.getAccountId() + " don't found");
+        if (account == null)
+            return ResponseEntity.badRequest().body("Account with id " + creditCardRequest.getAccountId() + " don't found");
         CreditCard creditCard = creditCardRequest.toCreditCard(account);
         creditCardService.saveCreditCard(creditCard);
         return ResponseEntity.status(HttpStatus.CREATED).body(new CreditCardResponse(creditCard));
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Object> deleteCreditCard(@PathVariable("id") int id) {
+        CreditCard creditCard = creditCardService.getCreditCardById(id);
+        if (creditCard == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Credit card with id " + id + " not found");
+        }
+
+        creditCardService.deleteCreditCardById(id);
+        return ResponseEntity.ok("Credit card with id " + id + " has been deleted successfully.");
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Object> updateCreditCard(@PathVariable("id") int id, @RequestBody @Valid CreditCardRequest creditCardRequest, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            List<FieldError> fieldErrors = bindingResult.getFieldErrors();
+            List<String> errors = new ArrayList<>();
+            for (FieldError fieldError : fieldErrors) {
+                errors.add(fieldError.getDefaultMessage());
+            }
+            return ResponseEntity.badRequest().body(errors);
+        }
+
+        CreditCard existingCreditCard = creditCardService.getCreditCardById(id);
+        if (existingCreditCard == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Credit card with id " + id + " not found");
+        }
+
+        Account account = accountService.getAccountById(creditCardRequest.getAccountId());
+        if (account == null) {
+            return ResponseEntity.badRequest().body("Account with id " + creditCardRequest.getAccountId() + " not found");
+        }
+
+        existingCreditCard = creditCardRequest.toCreditCard(account);
+        existingCreditCard.setId(id);
+
+        creditCardService.saveCreditCard(existingCreditCard);
+        return ResponseEntity.ok(new CreditCardResponse(existingCreditCard));
+    }
+
 }

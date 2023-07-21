@@ -72,10 +72,45 @@ public class CustomerController {
         } else {
             List<CreditCard> creditCards = customer.getAccount().getCreditCards();
             List<CreditCardResponse> creditCardResponses = new ArrayList<>();
-            for(CreditCard creditCard : creditCards) {
+            for (CreditCard creditCard : creditCards) {
                 creditCardResponses.add(new CreditCardResponse(creditCard));
             }
             return ResponseEntity.ok().body(creditCardResponses);
         }
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Object> deleteCustomer(@PathVariable("id") int id) {
+        Customer customer = customerService.getCustomerById(id);
+        if (customer == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Customer with id " + id + " not found");
+        }
+
+        customerService.deleteCustomerById(id);
+        return ResponseEntity.ok("Customer with id " + id + " has been deleted successfully.");
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Object> updateCustomer(@PathVariable("id") int id, @RequestBody @Valid CustomerRequest customerRequest, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            List<FieldError> fieldErrors = bindingResult.getFieldErrors();
+            List<String> errors = new ArrayList<>();
+            for (FieldError fieldError : fieldErrors) {
+                errors.add(fieldError.getDefaultMessage());
+            }
+            return ResponseEntity.badRequest().body(errors);
+        }
+
+        Customer existingCustomer = customerService.getCustomerById(id);
+        if (existingCustomer == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Customer with id " + id + " not found");
+        }
+        existingCustomer = customerRequest.toCustomer();
+        existingCustomer.setId(id);
+
+        customerService.saveCustomer(existingCustomer);
+        return ResponseEntity.ok(new CustomerResponse(existingCustomer));
+    }
+
+
 }

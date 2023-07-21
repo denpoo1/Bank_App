@@ -9,7 +9,10 @@ import com.onlinebank.services.AccountService;
 import com.onlinebank.services.PiggyBankService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -79,4 +82,31 @@ public class PiggyBankController {
             return ResponseEntity.ok().body(new PiggyBankResponse(piggyBank));
         }
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Object> updatePiggyBank(@PathVariable("id") int id,
+                                                  @RequestBody @Valid PiggyBankRequest piggyBankRequest,
+                                                  BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            List<FieldError> fieldErrors = bindingResult.getFieldErrors();
+            List<String> errors = new ArrayList<>();
+            for (FieldError fieldError : fieldErrors) {
+                errors.add(fieldError.getDefaultMessage());
+            }
+            return ResponseEntity.badRequest().body(errors);
+        }
+
+        PiggyBank existingPiggyBank = piggyBankService.getPiggyBankById(id);
+        if (existingPiggyBank == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("PiggyBank with id " + id + " not found");
+        }
+        Account account = accountService.getAccountById(piggyBankRequest.getAccountID());
+        if (account == null)
+            return ResponseEntity.badRequest().body("Account with id " + piggyBankRequest.getAccountID() + " not found");
+        existingPiggyBank = piggyBankRequest.toPiggyBank(account);
+        existingPiggyBank.setId(id);
+        piggyBankService.savePiggyBank(existingPiggyBank);
+        return ResponseEntity.ok(new PiggyBankResponse(existingPiggyBank));
+    }
+
 }
