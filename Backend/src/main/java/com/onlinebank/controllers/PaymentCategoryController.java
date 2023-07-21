@@ -62,4 +62,40 @@ public class PaymentCategoryController {
         paymentCategoryService.savePaymentCategory(paymentCategory);
         return ResponseEntity.status(HttpStatus.CREATED).body(new PaymentCategoryResponse(paymentCategory));
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Object> deletePaymentCategory(@PathVariable("id") int id) {
+        PaymentCategory paymentCategory = paymentCategoryService.getPaymentCategoryById(id);
+        if (paymentCategory == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Payment category with id " + id + " not found");
+        }
+
+        paymentCategoryService.deletePaymentCategoryById(id);
+        return ResponseEntity.ok("Payment category with id " + id + " has been deleted successfully.");
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Object> updatePaymentCategory(@PathVariable("id") int id,
+                                                        @RequestBody @Valid PaymentCategoryRequest paymentCategoryRequest,
+                                                        BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            List<FieldError> fieldErrors = bindingResult.getFieldErrors();
+            List<String> errors = new ArrayList<>();
+            for (FieldError fieldError : fieldErrors) {
+                errors.add(fieldError.getDefaultMessage());
+            }
+            return ResponseEntity.badRequest().body(errors);
+        }
+
+        PaymentCategory existingPaymentCategory = paymentCategoryService.getPaymentCategoryById(id);
+        if (existingPaymentCategory == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Payment category with id " + id + " not found");
+        }
+
+        existingPaymentCategory = paymentCategoryRequest.toPaymentCategory();
+        existingPaymentCategory.setId(id);
+
+        paymentCategoryService.savePaymentCategory(existingPaymentCategory);
+        return ResponseEntity.ok(new PaymentCategoryResponse(existingPaymentCategory));
+    }
 }

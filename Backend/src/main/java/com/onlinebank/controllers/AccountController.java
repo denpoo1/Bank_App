@@ -2,6 +2,7 @@ package com.onlinebank.controllers;
 
 import com.onlinebank.dto.AccountRequest;
 import com.onlinebank.dto.AccountResponse;
+import com.onlinebank.dto.AccountUpdateResponse;
 import com.onlinebank.dto.TransactionResponse;
 import com.onlinebank.models.Account;
 import com.onlinebank.models.Customer;
@@ -96,16 +97,56 @@ public class AccountController {
 
 
     @GetMapping("/{id}/{start_day}/{end_day}")
-    public ResponseEntity<Object> getAccountTransactionsByDays(@PathVariable("id") int id, @PathVariable("start_day") @DateTimeFormat(pattern = "yyyy-MM-dd")Date startDay,
-                                                               @PathVariable("end_day") @DateTimeFormat(pattern = "yyyy-MM-dd")Date endDay) {
+    public ResponseEntity<Object> getAccountTransactionsByDays(@PathVariable("id") int id, @PathVariable("start_day") @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDay,
+                                                               @PathVariable("end_day") @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDay) {
         Account account = accountService.getAccountById(id);
-        if (account == null) return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Account with id " + id + " not found");
-        List<Transaction> transactions = transactionService.getAccountTransactionsByDays(id, id ,startDay , endDay);
+        if (account == null)
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Account with id " + id + " not found");
+        List<Transaction> transactions = transactionService.getAccountTransactionsByDays(id, id, startDay, endDay);
         List<TransactionResponse> transactionResponses = new ArrayList<>();
-        if (transactions.isEmpty()) return ResponseEntity.badRequest().body("Transactions between " + startDay + " - " + endDay + " don't found");
-        for(Transaction transaction : transactions) {
+        if (transactions.isEmpty())
+            return ResponseEntity.badRequest().body("Transactions between " + startDay + " - " + endDay + " don't found");
+        for (Transaction transaction : transactions) {
             transactionResponses.add(new TransactionResponse(transaction));
         }
         return ResponseEntity.ok().body(transactionResponses);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Object> deleteAccount(@PathVariable("id") int id) {
+        Account account = accountService.getAccountById(id);
+        if (account == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Account with id " + id + " not found");
+        }
+
+        accountService.deleteAccountById(id);
+        return ResponseEntity.ok("Account with id " + id + " has been deleted successfully.");
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Object> updateAccount(@PathVariable("id") int id, @RequestBody @Valid AccountRequest accountRequest, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            List<FieldError> fieldErrors = bindingResult.getFieldErrors();
+            List<String> errors = new ArrayList<>();
+            for (FieldError fieldError : fieldErrors) {
+                errors.add(fieldError.getDefaultMessage());
+            }
+            return ResponseEntity.badRequest().body(errors);
+        }
+
+        Account existingAccount = accountService.getAccountById(id);
+        if (existingAccount == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Account with id " + id + " not found");
+        }
+
+        Customer customer = customerService.getCustomerById(accountRequest.getCustomerId());
+        if (customer == null) {
+            return ResponseEntity.badRequest().body("Customer with id " + accountRequest.getCustomerId() + " not found");
+        }
+        existingAccount = accountRequest.toAccount(customer);
+        existingAccount.setId(id);
+
+        accountService.saveAccount(existingAccount);
+        return ResponseEntity.ok(new AccountUpdateResponse(existingAccount));
     }
 }
