@@ -1,0 +1,73 @@
+/* Импорт цветовых переменных */
+@import './colors.module.css';
+/* Импорт шрифта из Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap');
+
+/* Глобальные стили */
+body, h1, h2, h3, p, ul, li, button, input {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Корневой контейнер */
+html, body {
+  height: 100%;
+  font-family: 'Poppins', sans-serif; /* Использование шрифта */
+  background-color: var(--background-color); /* Использование переменной */
+  color: var(--text-color); /* Использование переменной */
+}
+
+/* Ширина и центрирование основного контента */
+.container {
+  max-width: 1920px;
+  margin: 0 auto;
+}
+
+/* Стили для заголовков */
+h1 {
+  font-size: 36px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: var(--text-color); /* Использование переменной */
+
+}
+
+h2 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 15px;
+  color: var(--secondary-color); /* Использование переменной */
+}
+
+/* Стили для общего текста */
+p {
+  font-size: 16px;
+  line-height: 1.5;
+  margin-bottom: 10px;
+}
+
+/* Общий стиль для кнопок */
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: var(--primary-color); /* Использование переменной */
+  color: var(--text-color); /* Использование переменной */
+}
+
+/* Стили для текстовых полей */
+input[type="text"],
+input[type="password"] {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%;
+}
+
+
+

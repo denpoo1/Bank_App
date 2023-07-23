@@ -1,0 +1,11 @@
+/* Цветовые переменные */
+:root {
+    --primary-color: #030e1e;      /* Основной цвет (например, синий) */
+    --secondary-color: #6C757D;    /* Вторичный цвет (например, серый) */
+    --text-color: #dadada;         /* Цвет текста (белый) */
+    --background-color: #202020;   /* Цвет фона (темно-серый) */
+    --backgroundElements-color: #000000; /* цвет фона элементов (div`ов) */
+    --separator: #1e1e1e; /* separator */
+    
+  }
+  
