@@ -1,0 +1,4 @@
+.wrap{
+    background-color: var(--backgroundElements-color); 
+    padding: 25px;
+}

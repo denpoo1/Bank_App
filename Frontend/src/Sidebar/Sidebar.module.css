@@ -1,0 +1,12 @@
+@import '../GlobalFonts/colors.module.css';
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 210px;
+  height: 100vh;
+  background-color: #202020;
+  color: #fff;
+  padding-top: 20px;
+}

@@ -1,0 +1,110 @@
+.header {
+    position: fixed;
+    top: 0;
+    left: 300px;
+    /* Учитываем ширину Sidebar */
+    width: calc(100% - 350px);
+    /* Учитываем ширину Sidebar */
+    height: 80px;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 25px;
+}
+
+.headerTitle {
+    font-size: 22px;
+    font-weight: 600;
+    font-family: Poppins;
+}
+
+.search {
+    width: 40px;
+    height: 40px;
+    background-image: url("../images/header/find.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: transparent;
+}
+
+.notification{
+    width: 40px;
+    height: 40px;
+    background-image: url("../images/header/notification.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: transparent;
+    border-radius: 20px;
+}
+.headerWrapper{
+    display: flex;
+    width: 350px;
+    justify-content: space-between;
+}
+.headerSearchWrapper{
+    display: flex;
+    width: 100px;
+    justify-content: space-between;
+}
+
+.profileButton {
+    position: relative;
+    width: 180px;
+    height: 40px;
+    border-radius: 20px;
+    background-color: var(--primary-color);
+  }
+  
+  .profileButton::before {
+    content: ""; /* Очищаем содержимое псевдоэлемента, чтобы не отображался текст */
+    display: block;
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    height: 30px;
+    width: 30px;
+    background-image: url("../images/logo/logo.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 50%;
+  }
+  
+  .profileButton span:first-child {
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    margin-right: 5px;
+  }
+  
+  .dropdown {
+    position: absolute;
+    top: 40px;
+    right: 0;
+    width: 180px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden; /* Начально скроем содержимое меню */
+    max-height: 0; /* Устанавливаем максимальную высоту для анимации */
+    transition: max-height 0.3s ease-in-out; /* Плавный переход для анимации */
+  }
+  
+  /* Стили для опций в меню */
+  .option {
+    padding: 10px;
+    color: #333;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+  }
+  
+  .option:hover {
+    background-color: #f0f0f0;
+  }
+  
+  /* Когда меню открыто, устанавливаем максимальную высоту для отображения всех опций */
+  .dropdown.open {
+    max-height: 200px;
+  }
+  
