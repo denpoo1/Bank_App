@@ -1,0 +1,35 @@
+.wrapLogo {
+    display: flex;
+    justify-content: space-between;
+    width: 150px;
+}
+
+.separator {
+    position: relative;
+}
+
+.separator::after {
+    content: "";
+    display: block;
+    height: 2px;
+    width: 125%;
+    background-color: var(--separator);
+    /* Цвет горизонтальной линии */
+    position: absolute;
+    bottom: -5px;
+    /* Расстояние между сепаратором и предыдущим элементом */
+    left: 0;
+}
+
+.logo {
+    width: 25px;
+    height: 25px;
+    border-radius: 10px;
+}
+
+
+.logoName {
+    font-size: 22px;
+    font-weight: 600;
+    font-family: Poppins;
+}
