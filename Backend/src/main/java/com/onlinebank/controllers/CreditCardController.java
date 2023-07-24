@@ -1,7 +1,7 @@
 package com.onlinebank.controllers;
 
-import com.onlinebank.dto.CreditCardRequest;
-import com.onlinebank.dto.CreditCardResponse;
+import com.onlinebank.dto.request.CreditCardRequest;
+import com.onlinebank.dto.response.CreditCardResponse;
 import com.onlinebank.models.Account;
 import com.onlinebank.models.CreditCard;
 import com.onlinebank.services.AccountService;

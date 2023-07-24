@@ -1,7 +1,7 @@
 package com.onlinebank.controllers;
 
-import com.onlinebank.dto.PaymentCategoryRequest;
-import com.onlinebank.dto.PaymentCategoryResponse;
+import com.onlinebank.dto.request.PaymentCategoryRequest;
+import com.onlinebank.dto.response.PaymentCategoryResponse;
 import com.onlinebank.models.PaymentCategory;
 import com.onlinebank.services.PaymentCategoryService;
 

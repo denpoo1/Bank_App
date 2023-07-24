@@ -1,11 +1,9 @@
 package com.onlinebank.controllers;
 
-import com.onlinebank.dto.CreditCardResponse;
-import com.onlinebank.dto.PaymentRequest;
-import com.onlinebank.dto.PaymentResponse;
+import com.onlinebank.dto.request.PaymentRequest;
+import com.onlinebank.dto.response.PaymentResponse;
 import com.onlinebank.models.CreditCard;
 import com.onlinebank.models.Transaction;
-import com.onlinebank.services.AccountService;
 import com.onlinebank.services.CreditCardService;
 import com.onlinebank.services.TransactionService;
 import jakarta.validation.Valid;
