@@ -1,4 +1,4 @@
-package com.onlinebank.dto;
+package com.onlinebank.dto.request;
 
 import com.onlinebank.models.Customer;
 import jakarta.persistence.Column;
@@ -39,7 +39,6 @@ public class CustomerRequest {
     private String address;
 
     @NotEmpty
-    @Length(max = 50)
     private String password;
 
     @NotEmpty

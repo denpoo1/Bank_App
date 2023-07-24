@@ -1,4 +1,4 @@
-package com.onlinebank.dto;
+package com.onlinebank.dto.response;
 
 import com.onlinebank.models.Account;
 import com.onlinebank.models.PiggyBank;

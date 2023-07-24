@@ -1,30 +1,22 @@
-package com.onlinebank.dto;
+package com.onlinebank.dto.request;
 
 import com.onlinebank.models.Transaction;
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.validation.constraints.Digits;
-import jakarta.validation.constraints.PositiveOrZero;
+import jakarta.validation.constraints.*;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
-public class TransactionResponse {
-    private Integer id;
+public class TransactionRequest {
     private Date date;
+
+    @PositiveOrZero(message = "Amount must be a positive or zero value.")
     private int amount;
+
     private int leftoverAmount;
+
     private int toAccountId;
+
     private int fromAccountId;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public Date getDate() {
         return date;
@@ -66,12 +58,14 @@ public class TransactionResponse {
         this.fromAccountId = fromAccountId;
     }
 
-    public TransactionResponse(Transaction transaction) {
-        this.id = transaction.getId();
-        this.date = transaction.getDate();
-        this.amount = transaction.getAmount();
-        this.leftoverAmount = transaction.getLeftoverAmount();
-        this.toAccountId = transaction.getToAccountId();
-        this.fromAccountId = transaction.getFromAccountId();
+
+    public Transaction toTransaction() {
+        Transaction transaction = new Transaction();
+        transaction.setDate(this.date);
+        transaction.setAmount(this.amount);
+        transaction.setLeftoverAmount(this.leftoverAmount);
+        transaction.setToAccountId(this.toAccountId);
+        transaction.setFromAccountId(this.fromAccountId);
+        return transaction;
     }
 }

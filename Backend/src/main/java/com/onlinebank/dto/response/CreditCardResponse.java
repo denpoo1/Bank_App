@@ -1,38 +1,39 @@
-package com.onlinebank.dto;
+package com.onlinebank.dto.response;
 
 import com.onlinebank.models.Account;
 import com.onlinebank.models.CreditCard;
-import jakarta.validation.constraints.*;
-import org.hibernate.validator.constraints.Length;
+import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class CreditCardRequest {
+public class CreditCardResponse {
 
-    @DecimalMin(value = "1000000000000000", message = "card number must be 16 digits")
-    @DecimalMax(value = "10000000000000000", message = "card number must be 16 digits")
-    @NotNull(message = "Card number must not be null.")
+    private Integer id;
+
     private BigDecimal cardNumber;
 
-    @Min(value = 100, message = "CVV code must be three digits")
-    @Max(value = 999, message = "CVV code must be three digits")
     private int cvv;
 
-    @NotEmpty(message = "Billing address must not be empty.")
-    @Length(max = 100, message = "Billing address length must not exceed 100 characters.")
     private String billingAddress;
 
-    @PositiveOrZero(message = "Credit limit must be a positive or zero value.")
     private int creditLimit;
 
     private int balance;
 
     private Date createdAt;
 
-    @Future(message = "Expiration date must be in the future.")
     private Date expirationDate;
+
     private int accountId;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public BigDecimal getCardNumber() {
         return cardNumber;
@@ -98,16 +99,16 @@ public class CreditCardRequest {
         this.accountId = accountId;
     }
 
-    public CreditCard toCreditCard(Account account) {
-        CreditCard creditCard = new CreditCard();
-        creditCard.setCardNumber(this.cardNumber);
-        creditCard.setCvv(this.cvv);
-        creditCard.setBillingAddress(this.billingAddress);
-        creditCard.setCreditLimit(this.creditLimit);
-        creditCard.setBalance(this.balance);
-        creditCard.setCreatedAt(this.createdAt);
-        creditCard.setExpirationDate(this.expirationDate);
-        creditCard.setAccount(account);
-        return creditCard;
+    public CreditCardResponse(CreditCard creditCard) {
+        this.id = creditCard.getId();
+        this.accountId = creditCard.getId();
+        this.cardNumber = creditCard.getCardNumber();
+        this.cvv = creditCard.getCvv();
+        this.billingAddress = creditCard.getBillingAddress();
+        this.creditLimit = creditCard.getCreditLimit();
+        this.balance = creditCard.getBalance();
+        this.createdAt = creditCard.getCreatedAt();
+        this.expirationDate = creditCard.getExpirationDate();
+        this.accountId = creditCard.getAccount().getId();
     }
 }

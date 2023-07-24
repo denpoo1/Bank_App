@@ -1,4 +1,4 @@
-package com.onlinebank.dto;
+package com.onlinebank.dto.response;
 import com.onlinebank.models.Account;
 import lombok.Getter;
 import lombok.Setter;
@@ -7,11 +7,9 @@ import java.util.Date;
 
 @Getter
 @Setter
-public class AccountResponse {
+public class AccountUpdateResponse {
 
     private int id;
-
-    private int piggyBankId;
 
     private Date date;
 
@@ -19,9 +17,8 @@ public class AccountResponse {
 
     private float transactionRoundingPercentage;
 
-    public AccountResponse(Account account) {
+    public AccountUpdateResponse(Account account) {
         this.id = account.getId();
-        this.piggyBankId = account.getPiggyBank().getId();
         this.date = account.getDate();
         this.customerId = account.getCustomer().getId();
         this.transactionRoundingPercentage = account.getTransactionRoundingPercentage();

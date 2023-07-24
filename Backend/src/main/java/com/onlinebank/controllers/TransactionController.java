@@ -1,7 +1,7 @@
 package com.onlinebank.controllers;
 
-import com.onlinebank.dto.TransactionRequest;
-import com.onlinebank.dto.TransactionResponse;
+import com.onlinebank.dto.request.TransactionRequest;
+import com.onlinebank.dto.response.TransactionResponse;
 import com.onlinebank.models.Account;
 import com.onlinebank.models.Transaction;
 import com.onlinebank.services.AccountService;

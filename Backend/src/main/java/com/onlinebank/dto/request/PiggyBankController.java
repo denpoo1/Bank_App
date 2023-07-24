@@ -1,8 +1,6 @@
-package com.onlinebank.controllers;
+package com.onlinebank.dto.request;
 
-import com.onlinebank.dto.PiggyBankDepositAndWithrawRequest;
-import com.onlinebank.dto.PiggyBankRequest;
-import com.onlinebank.dto.PiggyBankResponse;
+import com.onlinebank.dto.response.PiggyBankResponse;
 import com.onlinebank.models.Account;
 import com.onlinebank.models.PiggyBank;
 import com.onlinebank.services.AccountService;

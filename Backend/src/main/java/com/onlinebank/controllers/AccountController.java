@@ -1,15 +1,14 @@
 package com.onlinebank.controllers;
 
-import com.onlinebank.dto.AccountRequest;
-import com.onlinebank.dto.AccountResponse;
-import com.onlinebank.dto.AccountUpdateResponse;
-import com.onlinebank.dto.TransactionResponse;
+import com.onlinebank.dto.request.AccountRequest;
+import com.onlinebank.dto.response.AccountResponse;
+import com.onlinebank.dto.response.AccountUpdateResponse;
+import com.onlinebank.dto.response.TransactionResponse;
 import com.onlinebank.models.Account;
 import com.onlinebank.models.Customer;
 import com.onlinebank.models.PiggyBank;
 import com.onlinebank.models.Transaction;
 import com.onlinebank.services.AccountService;
-import com.onlinebank.services.CreditCardService;
 import com.onlinebank.services.CustomerService;
 import com.onlinebank.services.TransactionService;
 import jakarta.validation.Valid;

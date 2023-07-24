@@ -1,4 +1,4 @@
-package com.onlinebank.dto;
+package com.onlinebank.dto.request;
 
 import jakarta.validation.constraints.Positive;
 

@@ -5,17 +5,24 @@ import com.onlinebank.repositories.CustomerRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CustomerService {
     private final CustomerRepository customerRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public CustomerService(CustomerRepository customerRepository) {
+    public CustomerService(CustomerRepository customerRepository, PasswordEncoder passwordEncoder) {
         this.customerRepository = customerRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public List<Customer> getAllCustomers() {
@@ -27,6 +34,7 @@ public class CustomerService {
     }
 
     public void saveCustomer(Customer customer) {
+        customer.setPassword(passwordEncoder.encode(customer.getPassword()));
         customerRepository.save(customer);
     }
 
@@ -51,5 +59,13 @@ public class CustomerService {
         } else {
             throw new EntityNotFoundException("Customer with ID " + updatedCustomer.getId() + " not found.");
         }
+    }
+
+    public Customer getCustomerByUsername (String username) {
+        return customerRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User with " + username + " not found"));
+    }
+
+    public boolean existCustomer (String username) {
+        return customerRepository.existsByUsername(username);
     }
 }

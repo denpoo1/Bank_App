@@ -1,4 +1,4 @@
-package com.onlinebank.dto;
+package com.onlinebank.dto.request;
 
 import com.onlinebank.models.PaymentCategory;
 import jakarta.persistence.Column;
