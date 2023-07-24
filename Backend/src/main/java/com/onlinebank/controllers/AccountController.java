@@ -4,10 +4,10 @@ import com.onlinebank.dto.request.AccountRequest;
 import com.onlinebank.dto.response.AccountResponse;
 import com.onlinebank.dto.response.AccountUpdateResponse;
 import com.onlinebank.dto.response.TransactionResponse;
-import com.onlinebank.models.Account;
-import com.onlinebank.models.Customer;
-import com.onlinebank.models.PiggyBank;
-import com.onlinebank.models.Transaction;
+import com.onlinebank.models.AccountModel;
+import com.onlinebank.models.CustomerModel;
+import com.onlinebank.models.PiggyBankModel;
+import com.onlinebank.models.TransactionModel;
 import com.onlinebank.services.AccountService;
 import com.onlinebank.services.CustomerService;
 import com.onlinebank.services.TransactionService;
@@ -23,7 +23,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
+/**
+ * @author Denis Durbalov
+ */
 @RestController
 @RequestMapping("/accounts")
 public class AccountController {
@@ -41,19 +43,19 @@ public class AccountController {
 
     @GetMapping
     public List<AccountResponse> getAccounts() {
-        List<Account> accounts = accountService.getAllAccounts();
+        List<AccountModel> accountModels = accountService.getAllAccounts();
         List<AccountResponse> accountResponses = new ArrayList<>();
-        for (Account account : accounts) {
-            accountResponses.add(new AccountResponse(account));
+        for (AccountModel accountModel : accountModels) {
+            accountResponses.add(new AccountResponse(accountModel));
         }
         return accountResponses;
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Object> getAccount(@PathVariable("id") int id) {
-        Account account = accountService.getAccountById(id);
-        if (account != null) {
-            return ResponseEntity.ok(new AccountResponse(account));
+        AccountModel accountModel = accountService.getAccountById(id);
+        if (accountModel != null) {
+            return ResponseEntity.ok(new AccountResponse(accountModel));
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Account with id " + id + " not found");
         }
@@ -69,26 +71,26 @@ public class AccountController {
             }
             return ResponseEntity.badRequest().body(errors);
         }
-        Customer customer = customerService.getCustomerById(accountRequest.getCustomerId());
-        if (customer == null)
+        CustomerModel customerModel = customerService.getCustomerById(accountRequest.getCustomerId());
+        if (customerModel == null)
             return ResponseEntity.badRequest().body("Customer with id " + accountRequest.getCustomerId() + " don't found");
-        Account account = accountRequest.toAccount(customer);
-        account.setPiggyBank(new PiggyBank(account, accountRequest.getDate(), 0));
-        accountService.saveAccount(account);
-        return ResponseEntity.status(HttpStatus.CREATED).body(new AccountResponse(account));
+        AccountModel accountModel = accountRequest.toAccount(customerModel);
+        accountModel.setPiggyBankModel(new PiggyBankModel(accountModel, accountRequest.getDate(), 0));
+        accountService.saveAccount(accountModel);
+        return ResponseEntity.status(HttpStatus.CREATED).body(new AccountResponse(accountModel));
     }
 
     @GetMapping("/{id}/transaction")
     public ResponseEntity<Object> getAccountTransactions(@PathVariable("id") int accountId) {
-        Account account = accountService.getAccountById(accountId);
-        if (account == null) {
+        AccountModel accountModel = accountService.getAccountById(accountId);
+        if (accountModel == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Account with id " + accountId + " not found");
         }
 
-        List<Transaction> transactions = transactionService.getAccountTransactions(accountId);
+        List<TransactionModel> transactionModels = transactionService.getAccountTransactions(accountId);
         List<TransactionResponse> transactionResponses = new ArrayList<>();
-        for (Transaction transaction : transactions) {
-            transactionResponses.add(new TransactionResponse(transaction));
+        for (TransactionModel transactionModel : transactionModels) {
+            transactionResponses.add(new TransactionResponse(transactionModel));
         }
 
         return ResponseEntity.ok(transactionResponses);
@@ -98,23 +100,23 @@ public class AccountController {
     @GetMapping("/{id}/{start_day}/{end_day}")
     public ResponseEntity<Object> getAccountTransactionsByDays(@PathVariable("id") int id, @PathVariable("start_day") @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDay,
                                                                @PathVariable("end_day") @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDay) {
-        Account account = accountService.getAccountById(id);
-        if (account == null)
+        AccountModel accountModel = accountService.getAccountById(id);
+        if (accountModel == null)
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Account with id " + id + " not found");
-        List<Transaction> transactions = transactionService.getAccountTransactionsByDays(id, id, startDay, endDay);
+        List<TransactionModel> transactionModels = transactionService.getAccountTransactionsByDays(id, id, startDay, endDay);
         List<TransactionResponse> transactionResponses = new ArrayList<>();
-        if (transactions.isEmpty())
+        if (transactionModels.isEmpty())
             return ResponseEntity.badRequest().body("Transactions between " + startDay + " - " + endDay + " don't found");
-        for (Transaction transaction : transactions) {
-            transactionResponses.add(new TransactionResponse(transaction));
+        for (TransactionModel transactionModel : transactionModels) {
+            transactionResponses.add(new TransactionResponse(transactionModel));
         }
         return ResponseEntity.ok().body(transactionResponses);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteAccount(@PathVariable("id") int id) {
-        Account account = accountService.getAccountById(id);
-        if (account == null) {
+        AccountModel accountModel = accountService.getAccountById(id);
+        if (accountModel == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Account with id " + id + " not found");
         }
 
@@ -133,19 +135,19 @@ public class AccountController {
             return ResponseEntity.badRequest().body(errors);
         }
 
-        Account existingAccount = accountService.getAccountById(id);
-        if (existingAccount == null) {
+        AccountModel existingAccountModel = accountService.getAccountById(id);
+        if (existingAccountModel == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Account with id " + id + " not found");
         }
 
-        Customer customer = customerService.getCustomerById(accountRequest.getCustomerId());
-        if (customer == null) {
+        CustomerModel customerModel = customerService.getCustomerById(accountRequest.getCustomerId());
+        if (customerModel == null) {
             return ResponseEntity.badRequest().body("Customer with id " + accountRequest.getCustomerId() + " not found");
         }
-        existingAccount = accountRequest.toAccount(customer);
-        existingAccount.setId(id);
+        existingAccountModel = accountRequest.toAccount(customerModel);
+        existingAccountModel.setId(id);
 
-        accountService.saveAccount(existingAccount);
-        return ResponseEntity.ok(new AccountUpdateResponse(existingAccount));
+        accountService.saveAccount(existingAccountModel);
+        return ResponseEntity.ok(new AccountUpdateResponse(existingAccountModel));
     }
 }

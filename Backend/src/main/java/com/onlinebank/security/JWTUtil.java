@@ -10,6 +10,9 @@ import org.springframework.stereotype.Component;
 import java.time.ZonedDateTime;
 import java.util.Date;
 
+/**
+ * @author Denis Durbalov
+ */
 @Component
 public class JWTUtil {
 

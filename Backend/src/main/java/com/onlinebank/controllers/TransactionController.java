@@ -2,8 +2,8 @@ package com.onlinebank.controllers;
 
 import com.onlinebank.dto.request.TransactionRequest;
 import com.onlinebank.dto.response.TransactionResponse;
-import com.onlinebank.models.Account;
-import com.onlinebank.models.Transaction;
+import com.onlinebank.models.AccountModel;
+import com.onlinebank.models.TransactionModel;
 import com.onlinebank.services.AccountService;
 import com.onlinebank.services.TransactionService;
 import jakarta.validation.Valid;
@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * @author Denis Durbalov
+ */
 @RestController
 @RequestMapping("/transactions")
 public class TransactionController {
@@ -30,15 +32,15 @@ public class TransactionController {
     }
 
     @GetMapping()
-    public List<Transaction> getTransactions() {
+    public List<TransactionModel> getTransactions() {
         return transactionService.getAllTransactions();
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Object> getTransaction(@PathVariable("id") int id) {
-        Transaction transaction = transactionService.getTransactionById(id);
-        if (transaction != null) {
-            return ResponseEntity.ok(transaction);
+        TransactionModel transactionModel = transactionService.getTransactionById(id);
+        if (transactionModel != null) {
+            return ResponseEntity.ok(transactionModel);
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Transaction with id " + id + " don't found");
         }
@@ -54,16 +56,16 @@ public class TransactionController {
             }
             return ResponseEntity.badRequest().body(errors);
         }
-        Transaction transaction = transactionRequest.toTransaction();
+        TransactionModel transactionModel = transactionRequest.toTransaction();
         System.out.println(transactionRequest.getToAccountId());
-        transactionService.saveTransaction(transaction);
-        return ResponseEntity.status(HttpStatus.CREATED).body(new TransactionResponse(transaction));
+        transactionService.saveTransaction(transactionModel);
+        return ResponseEntity.status(HttpStatus.CREATED).body(new TransactionResponse(transactionModel));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteTransaction(@PathVariable("id") int id) {
-        Transaction transaction = transactionService.getTransactionById(id);
-        if (transaction == null) {
+        TransactionModel transactionModel = transactionService.getTransactionById(id);
+        if (transactionModel == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Transaction with id " + id + " not found");
         }
 
@@ -84,20 +86,20 @@ public class TransactionController {
             return ResponseEntity.badRequest().body(errors);
         }
 
-        Transaction existingTransaction = transactionService.getTransactionById(id);
-        if (existingTransaction == null) {
+        TransactionModel existingTransactionModel = transactionService.getTransactionById(id);
+        if (existingTransactionModel == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Transaction with id " + id + " not found");
         }
 
-        Account accountTo = accountService.getAccountById(transactionRequest.getToAccountId());
-        if (accountTo == null) return ResponseEntity.badRequest().body("toAccountId with id " + transactionRequest.getToAccountId() + " not found");
-        Account accountFrom = accountService.getAccountById(transactionRequest.getFromAccountId());
-        if (accountFrom == null) return ResponseEntity.badRequest().body("fromAccountId with id " + transactionRequest.getFromAccountId() + " not found");
-        existingTransaction = transactionRequest.toTransaction();
-        existingTransaction.setId(id);
+        AccountModel accountModelTo = accountService.getAccountById(transactionRequest.getToAccountId());
+        if (accountModelTo == null) return ResponseEntity.badRequest().body("toAccountId with id " + transactionRequest.getToAccountId() + " not found");
+        AccountModel accountModelFrom = accountService.getAccountById(transactionRequest.getFromAccountId());
+        if (accountModelFrom == null) return ResponseEntity.badRequest().body("fromAccountId with id " + transactionRequest.getFromAccountId() + " not found");
+        existingTransactionModel = transactionRequest.toTransaction();
+        existingTransactionModel.setId(id);
 
-        transactionService.saveTransaction(existingTransaction);
-        return ResponseEntity.ok(new TransactionResponse(existingTransaction));
+        transactionService.saveTransaction(existingTransactionModel);
+        return ResponseEntity.ok(new TransactionResponse(existingTransactionModel));
     }
 
 }

@@ -1,44 +1,25 @@
 package com.onlinebank.dto.request;
 
-import com.onlinebank.models.Account;
-import com.onlinebank.models.PiggyBank;
+import com.onlinebank.models.AccountModel;
+import com.onlinebank.models.PiggyBankModel;
+import lombok.Data;
 
 import java.util.Date;
 
+/**
+ * @author Denis Durbalov
+ */
+@Data
 public class PiggyBankRequest {
     private Date createdAt;
     private int amount;
     private int accountID;
 
-    public Date getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public int getAmount() {
-        return amount;
-    }
-
-    public void setAmount(int amount) {
-        this.amount = amount;
-    }
-
-    public int getAccountID() {
-        return accountID;
-    }
-
-    public void setAccountID(int accountID) {
-        this.accountID = accountID;
-    }
-
-    public PiggyBank toPiggyBank (Account account) {
-        PiggyBank piggyBank = new PiggyBank();
-        piggyBank.setAmount(this.amount);
-        piggyBank.setAccount(account);
-        piggyBank.setCreatedAt(this.createdAt);
-        return piggyBank;
+    public PiggyBankModel toPiggyBank(AccountModel accountModel) {
+        PiggyBankModel piggyBankModel = new PiggyBankModel();
+        piggyBankModel.setAmount(this.amount);
+        piggyBankModel.setAccountModel(accountModel);
+        piggyBankModel.setCreatedAt(this.createdAt);
+        return piggyBankModel;
     }
 }

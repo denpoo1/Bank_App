@@ -20,7 +20,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * @author Denis Durbalov
+ */
 @RestController
 @RequestMapping("/auth")
 public class AuthorizationController {

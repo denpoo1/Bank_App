@@ -1,9 +1,10 @@
 package com.onlinebank.dto.request;
 
-import com.onlinebank.models.Customer;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
-
+/**
+ * @author Denis Durbalov
+ */
 @Data
 public class AuthorizationRequest {
     @NotEmpty(message = "username must be not empty")

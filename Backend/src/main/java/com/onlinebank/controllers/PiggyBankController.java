@@ -1,8 +1,10 @@
-package com.onlinebank.dto.request;
+package com.onlinebank.controllers;
 
+import com.onlinebank.dto.request.PiggyBankDepositAndWithrawRequest;
+import com.onlinebank.dto.request.PiggyBankRequest;
 import com.onlinebank.dto.response.PiggyBankResponse;
-import com.onlinebank.models.Account;
-import com.onlinebank.models.PiggyBank;
+import com.onlinebank.models.AccountModel;
+import com.onlinebank.models.PiggyBankModel;
 import com.onlinebank.services.AccountService;
 import com.onlinebank.services.PiggyBankService;
 import jakarta.validation.Valid;
@@ -15,7 +17,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * @author Denis Durbalov
+ */
 @RestController
 @RequestMapping("/piggy-banks")
 public class PiggyBankController {
@@ -32,52 +36,52 @@ public class PiggyBankController {
     @GetMapping
     public List<PiggyBankResponse> getPiggyBanks() {
         List<PiggyBankResponse> piggyBankResponses = new ArrayList<>();
-        List<PiggyBank> piggyBanks = piggyBankService.getAllPiggyBanks();
-        for (PiggyBank piggyBank : piggyBanks) {
-            piggyBankResponses.add(new PiggyBankResponse(piggyBank));
+        List<PiggyBankModel> piggyBankModels = piggyBankService.getAllPiggyBanks();
+        for (PiggyBankModel piggyBankModel : piggyBankModels) {
+            piggyBankResponses.add(new PiggyBankResponse(piggyBankModel));
         }
         return piggyBankResponses;
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Object> getPiggyBank(@PathVariable("id") int id) {
-        PiggyBank piggyBank = piggyBankService.getPiggyBankById(id);
-        if (piggyBank == null) return ResponseEntity.badRequest().body("PiggyBank with id " + id + " don't found");
-        else return ResponseEntity.ok().body(new PiggyBankResponse(piggyBank));
+        PiggyBankModel piggyBankModel = piggyBankService.getPiggyBankById(id);
+        if (piggyBankModel == null) return ResponseEntity.badRequest().body("PiggyBank with id " + id + " don't found");
+        else return ResponseEntity.ok().body(new PiggyBankResponse(piggyBankModel));
     }
 
     @PostMapping
     public ResponseEntity<Object> createPiggyBank(@RequestBody @Valid PiggyBankRequest piggyBankRequest) {
-        Account account = accountService.getAccountById(piggyBankRequest.getAccountID());
-        if (account == null)
+        AccountModel accountModel = accountService.getAccountById(piggyBankRequest.getAccountID());
+        if (accountModel == null)
             return ResponseEntity.badRequest().body("Account with id " + piggyBankRequest.getAccountID() + " don't found");
-        PiggyBank piggyBank = piggyBankRequest.toPiggyBank(account);
-        piggyBankService.savePiggyBank(piggyBank);
-        return ResponseEntity.ok().body(new PiggyBankResponse(piggyBank));
+        PiggyBankModel piggyBankModel = piggyBankRequest.toPiggyBank(accountModel);
+        piggyBankService.savePiggyBank(piggyBankModel);
+        return ResponseEntity.ok().body(new PiggyBankResponse(piggyBankModel));
     }
 
     @PostMapping("/{id}/withraw")
     public ResponseEntity<Object> makeDeposit(@PathVariable("id") int id, @RequestBody @Valid PiggyBankDepositAndWithrawRequest piggyBankDepositAndWithrawRequest) {
-        PiggyBank piggyBank = piggyBankService.getPiggyBankById(id);
-        if (piggyBank == null) return ResponseEntity.badRequest().body("PiggyBank with id " + id + " don't found");
-        else if (piggyBankDepositAndWithrawRequest.getAmount() > piggyBank.getAmount())
+        PiggyBankModel piggyBankModel = piggyBankService.getPiggyBankById(id);
+        if (piggyBankModel == null) return ResponseEntity.badRequest().body("PiggyBank with id " + id + " don't found");
+        else if (piggyBankDepositAndWithrawRequest.getAmount() > piggyBankModel.getAmount())
             return ResponseEntity.badRequest().body("Requested amount exceeds the available balance in the piggy bank.");
         else {
-            piggyBank.setAmount(piggyBank.getAmount() - piggyBankDepositAndWithrawRequest.getAmount());
-            piggyBankService.savePiggyBank(piggyBank);
-            return ResponseEntity.ok().body(new PiggyBankResponse(piggyBank));
+            piggyBankModel.setAmount(piggyBankModel.getAmount() - piggyBankDepositAndWithrawRequest.getAmount());
+            piggyBankService.savePiggyBank(piggyBankModel);
+            return ResponseEntity.ok().body(new PiggyBankResponse(piggyBankModel));
         }
     }
 
     @PostMapping("/{id}/deposit")
     public ResponseEntity<Object> makeWithraw(@PathVariable("id") int id, @RequestBody @Valid PiggyBankDepositAndWithrawRequest piggyBankDepositAndWithrawRequest) {
-        PiggyBank piggyBank = piggyBankService.getPiggyBankById(id);
-        if (piggyBank == null) return ResponseEntity.badRequest().body("PiggyBank with id " + id + " don't found");
+        PiggyBankModel piggyBankModel = piggyBankService.getPiggyBankById(id);
+        if (piggyBankModel == null) return ResponseEntity.badRequest().body("PiggyBank with id " + id + " don't found");
         else {
-            piggyBank.setAmount(piggyBank.getAmount() + piggyBankDepositAndWithrawRequest.getAmount());
-            piggyBankService.savePiggyBank(piggyBank);
-            System.out.println(piggyBank.getId());
-            return ResponseEntity.ok().body(new PiggyBankResponse(piggyBank));
+            piggyBankModel.setAmount(piggyBankModel.getAmount() + piggyBankDepositAndWithrawRequest.getAmount());
+            piggyBankService.savePiggyBank(piggyBankModel);
+            System.out.println(piggyBankModel.getId());
+            return ResponseEntity.ok().body(new PiggyBankResponse(piggyBankModel));
         }
     }
 
@@ -94,17 +98,17 @@ public class PiggyBankController {
             return ResponseEntity.badRequest().body(errors);
         }
 
-        PiggyBank existingPiggyBank = piggyBankService.getPiggyBankById(id);
-        if (existingPiggyBank == null) {
+        PiggyBankModel existingPiggyBankModel = piggyBankService.getPiggyBankById(id);
+        if (existingPiggyBankModel == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("PiggyBank with id " + id + " not found");
         }
-        Account account = accountService.getAccountById(piggyBankRequest.getAccountID());
-        if (account == null)
+        AccountModel accountModel = accountService.getAccountById(piggyBankRequest.getAccountID());
+        if (accountModel == null)
             return ResponseEntity.badRequest().body("Account with id " + piggyBankRequest.getAccountID() + " not found");
-        existingPiggyBank = piggyBankRequest.toPiggyBank(account);
-        existingPiggyBank.setId(id);
-        piggyBankService.savePiggyBank(existingPiggyBank);
-        return ResponseEntity.ok(new PiggyBankResponse(existingPiggyBank));
+        existingPiggyBankModel = piggyBankRequest.toPiggyBank(accountModel);
+        existingPiggyBankModel.setId(id);
+        piggyBankService.savePiggyBank(existingPiggyBankModel);
+        return ResponseEntity.ok(new PiggyBankResponse(existingPiggyBankModel));
     }
 
 }

@@ -1,6 +1,6 @@
 package com.onlinebank.services;
 
-import com.onlinebank.models.CreditCard;
+import com.onlinebank.models.CreditCardModel;
 import com.onlinebank.repositories.CreditCardRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
@@ -9,6 +9,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * @author Denis Durbalov
+ */
 @Service
 public class CreditCardService {
     private final CreditCardRepository creditCardRepository;
@@ -18,16 +21,16 @@ public class CreditCardService {
         this.creditCardRepository = creditCardRepository;
     }
 
-    public List<CreditCard> getAllCreditCards() {
+    public List<CreditCardModel> getAllCreditCards() {
         return creditCardRepository.findAll();
     }
 
-    public CreditCard getCreditCardById(Integer id) {
+    public CreditCardModel getCreditCardById(Integer id) {
         return creditCardRepository.findById(id).orElse(null);
     }
 
-    public void saveCreditCard(CreditCard creditCard) {
-        creditCardRepository.save(creditCard);
+    public void saveCreditCard(CreditCardModel creditCardModel) {
+        creditCardRepository.save(creditCardModel);
     }
 
     public void deleteCreditCardById(Integer id) {
@@ -35,21 +38,21 @@ public class CreditCardService {
     }
 
     @Transactional
-    public void updateCreditCard(CreditCard updatedCreditCard) {
-        CreditCard existingCreditCard = creditCardRepository.findById(updatedCreditCard.getId())
-                .orElseThrow(() -> new EntityNotFoundException("CreditCard with ID " + updatedCreditCard.getId() + " not found."));
+    public void updateCreditCard(CreditCardModel updatedCreditCardModel) {
+        CreditCardModel existingCreditCardModel = creditCardRepository.findById(updatedCreditCardModel.getId())
+                .orElseThrow(() -> new EntityNotFoundException("CreditCard with ID " + updatedCreditCardModel.getId() + " not found."));
 
-        existingCreditCard.setCardNumber(updatedCreditCard.getCardNumber());
-        existingCreditCard.setCvv(updatedCreditCard.getCvv());
-        existingCreditCard.setBillingAddress(updatedCreditCard.getBillingAddress());
-        existingCreditCard.setCreditLimit(updatedCreditCard.getCreditLimit());
-        existingCreditCard.setBalance(updatedCreditCard.getBalance());
-        existingCreditCard.setCreatedAt(updatedCreditCard.getCreatedAt());
-        existingCreditCard.setExpirationDate(updatedCreditCard.getExpirationDate());
+        existingCreditCardModel.setCardNumber(updatedCreditCardModel.getCardNumber());
+        existingCreditCardModel.setCvv(updatedCreditCardModel.getCvv());
+        existingCreditCardModel.setBillingAddress(updatedCreditCardModel.getBillingAddress());
+        existingCreditCardModel.setCreditLimit(updatedCreditCardModel.getCreditLimit());
+        existingCreditCardModel.setBalance(updatedCreditCardModel.getBalance());
+        existingCreditCardModel.setCreatedAt(updatedCreditCardModel.getCreatedAt());
+        existingCreditCardModel.setExpirationDate(updatedCreditCardModel.getExpirationDate());
 
         // Важно обновить связь с аккаунтом, если она была изменена
-        existingCreditCard.setAccount(updatedCreditCard.getAccount());
+        existingCreditCardModel.setAccountModel(updatedCreditCardModel.getAccountModel());
 
-        creditCardRepository.save(existingCreditCard);
+        creditCardRepository.save(existingCreditCardModel);
     }
 }

@@ -1,11 +1,12 @@
 package com.onlinebank.dto.response;
 
-import com.onlinebank.models.Customer;
-import lombok.Getter;
-import lombok.Setter;
+import com.onlinebank.models.CustomerModel;
+import lombok.Data;
 
-@Getter
-@Setter
+/**
+ * @author Denis Durbalov
+ */
+@Data
 public class CustomerResponse {
 
     private int id;
@@ -15,12 +16,12 @@ public class CustomerResponse {
     private String address;
     private String username;
 
-    public CustomerResponse(Customer customer) {
-        this.id = customer.getId();
-        this.first_name = customer.getFirstName();
-        this.last_name = customer.getLastName();
-        this.email = customer.getEmail();
-        this.address = customer.getAddress();
-        this.username = customer.getUsername();
+    public CustomerResponse(CustomerModel customerModel) {
+        this.id = customerModel.getId();
+        this.first_name = customerModel.getFirstName();
+        this.last_name = customerModel.getLastName();
+        this.email = customerModel.getEmail();
+        this.address = customerModel.getAddress();
+        this.username = customerModel.getUsername();
     }
 }

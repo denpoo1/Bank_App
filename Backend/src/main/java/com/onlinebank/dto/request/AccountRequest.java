@@ -1,47 +1,25 @@
 package com.onlinebank.dto.request;
 
-import com.onlinebank.models.Account;
-import com.onlinebank.models.CreditCard;
-import com.onlinebank.models.Customer;
-import com.onlinebank.models.PiggyBank;
-import jakarta.persistence.*;
-import java.util.Date;
+import com.onlinebank.models.AccountModel;
+import com.onlinebank.models.CustomerModel;
+import lombok.Data;
 
+import java.util.Date;
+/**
+ * @author Denis Durbalov
+ */
+@Data
 public class AccountRequest {
 
     private Date date;
     private int customerId;
     private float transactionRoundingPercentage;
 
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    public int getCustomerId() {
-        return customerId;
-    }
-
-    public void setCustomerId(int customerId) {
-        this.customerId = customerId;
-    }
-
-    public float getTransactionRoundingPercentage() {
-        return transactionRoundingPercentage;
-    }
-
-    public void setTransactionRoundingPercentage(float transactionRoundingPercentage) {
-        this.transactionRoundingPercentage = transactionRoundingPercentage;
-    }
-
-    public Account toAccount(Customer customer) {
-        Account account = new Account();
-        account.setDate(this.date);
-        account.setCustomer(customer);
-        account.setTransactionRoundingPercentage(this.transactionRoundingPercentage);
-        return account;
+    public AccountModel toAccount(CustomerModel customerModel) {
+        AccountModel accountModel = new AccountModel();
+        accountModel.setDate(this.date);
+        accountModel.setCustomerModel(customerModel);
+        accountModel.setTransactionRoundingPercentage(this.transactionRoundingPercentage);
+        return accountModel;
     }
 }

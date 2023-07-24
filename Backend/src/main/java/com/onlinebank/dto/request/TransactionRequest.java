@@ -1,11 +1,15 @@
 package com.onlinebank.dto.request;
 
-import com.onlinebank.models.Transaction;
+import com.onlinebank.models.TransactionModel;
 import jakarta.validation.constraints.*;
+import lombok.Data;
 
-import java.math.BigDecimal;
 import java.util.Date;
 
+/**
+ * @author Denis Durbalov
+ */
+@Data
 public class TransactionRequest {
     private Date date;
 
@@ -18,54 +22,13 @@ public class TransactionRequest {
 
     private int fromAccountId;
 
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    public int getAmount() {
-        return amount;
-    }
-
-    public void setAmount(Integer amount) {
-        this.amount = amount;
-    }
-
-    public int getLeftoverAmount() {
-        return leftoverAmount;
-    }
-
-    public void setLeftoverAmount(Integer leftoverAmount) {
-        this.leftoverAmount = leftoverAmount;
-    }
-
-    public int getToAccountId() {
-        return toAccountId;
-    }
-
-    public void setToAccountId(int toAccountId) {
-        this.toAccountId = toAccountId;
-    }
-
-    public int getFromAccountId() {
-        return fromAccountId;
-    }
-
-    public void setFromAccountId(int fromAccountId) {
-        this.fromAccountId = fromAccountId;
-    }
-
-
-    public Transaction toTransaction() {
-        Transaction transaction = new Transaction();
-        transaction.setDate(this.date);
-        transaction.setAmount(this.amount);
-        transaction.setLeftoverAmount(this.leftoverAmount);
-        transaction.setToAccountId(this.toAccountId);
-        transaction.setFromAccountId(this.fromAccountId);
-        return transaction;
+    public TransactionModel toTransaction() {
+        TransactionModel transactionModel = new TransactionModel();
+        transactionModel.setDate(this.date);
+        transactionModel.setAmount(this.amount);
+        transactionModel.setLeftoverAmount(this.leftoverAmount);
+        transactionModel.setToAccountId(this.toAccountId);
+        transactionModel.setFromAccountId(this.fromAccountId);
+        return transactionModel;
     }
 }

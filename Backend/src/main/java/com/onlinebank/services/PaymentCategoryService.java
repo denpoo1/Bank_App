@@ -1,6 +1,6 @@
 package com.onlinebank.services;
 
-import com.onlinebank.models.PaymentCategory;
+import com.onlinebank.models.PaymentCategoryModel;
 import com.onlinebank.repositories.PaymentCategoryRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
@@ -9,6 +9,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * @author Denis Durbalov
+ */
 @Service
 public class PaymentCategoryService {
     private final PaymentCategoryRepository paymentCategoryRepository;
@@ -18,16 +21,16 @@ public class PaymentCategoryService {
         this.paymentCategoryRepository = paymentCategoryRepository;
     }
 
-    public List<PaymentCategory> getAllPaymentCategories() {
+    public List<PaymentCategoryModel> getAllPaymentCategories() {
         return paymentCategoryRepository.findAll();
     }
 
-    public PaymentCategory getPaymentCategoryById(Integer id) {
+    public PaymentCategoryModel getPaymentCategoryById(Integer id) {
         return paymentCategoryRepository.findById(id).orElse(null);
     }
 
-    public void savePaymentCategory(PaymentCategory paymentCategory) {
-        paymentCategoryRepository.save(paymentCategory);
+    public void savePaymentCategory(PaymentCategoryModel paymentCategoryModel) {
+        paymentCategoryRepository.save(paymentCategoryModel);
     }
 
     public void deletePaymentCategoryById(Integer id) {
@@ -35,17 +38,17 @@ public class PaymentCategoryService {
     }
 
     @Transactional
-    public void updatePaymentCategory(PaymentCategory updatedPaymentCategory) {
-        if (paymentCategoryRepository.existsById(updatedPaymentCategory.getId())) {
-            PaymentCategory existingPaymentCategory = paymentCategoryRepository.getOne(updatedPaymentCategory.getId());
+    public void updatePaymentCategory(PaymentCategoryModel updatedPaymentCategoryModel) {
+        if (paymentCategoryRepository.existsById(updatedPaymentCategoryModel.getId())) {
+            PaymentCategoryModel existingPaymentCategoryModel = paymentCategoryRepository.getOne(updatedPaymentCategoryModel.getId());
 
-            existingPaymentCategory.setName(updatedPaymentCategory.getName());
-            existingPaymentCategory.setAmount(updatedPaymentCategory.getAmount());
-            existingPaymentCategory.setMaxAmount(updatedPaymentCategory.getMaxAmount());
+            existingPaymentCategoryModel.setName(updatedPaymentCategoryModel.getName());
+            existingPaymentCategoryModel.setAmount(updatedPaymentCategoryModel.getAmount());
+            existingPaymentCategoryModel.setMaxAmount(updatedPaymentCategoryModel.getMaxAmount());
 
-            paymentCategoryRepository.save(existingPaymentCategory);
+            paymentCategoryRepository.save(existingPaymentCategoryModel);
         } else {
-            throw new EntityNotFoundException("PaymentCategory with ID " + updatedPaymentCategory.getId() + " not found.");
+            throw new EntityNotFoundException("PaymentCategory with ID " + updatedPaymentCategoryModel.getId() + " not found.");
         }
     }
 }
