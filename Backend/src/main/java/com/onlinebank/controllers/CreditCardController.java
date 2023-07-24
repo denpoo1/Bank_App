@@ -2,8 +2,8 @@ package com.onlinebank.controllers;
 
 import com.onlinebank.dto.request.CreditCardRequest;
 import com.onlinebank.dto.response.CreditCardResponse;
-import com.onlinebank.models.Account;
-import com.onlinebank.models.CreditCard;
+import com.onlinebank.models.AccountModel;
+import com.onlinebank.models.CreditCardModel;
 import com.onlinebank.services.AccountService;
 import com.onlinebank.services.CreditCardService;
 import jakarta.validation.Valid;
@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * @author Denis Durbalov
+ */
 @RestController
 @RequestMapping("/credit-cards")
 public class CreditCardController {
@@ -32,19 +34,19 @@ public class CreditCardController {
 
     @GetMapping
     public List<CreditCardResponse> getCreditCards() {
-        List<CreditCard> creditCards = creditCardService.getAllCreditCards();
+        List<CreditCardModel> creditCardModels = creditCardService.getAllCreditCards();
         List<CreditCardResponse> creditCardResponses = new ArrayList<>();
-        for (CreditCard creditCard : creditCards) {
-            creditCardResponses.add(new CreditCardResponse(creditCard));
+        for (CreditCardModel creditCardModel : creditCardModels) {
+            creditCardResponses.add(new CreditCardResponse(creditCardModel));
         }
         return creditCardResponses;
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Object> getCreditCard(@PathVariable("id") int id) {
-        CreditCard creditCard = creditCardService.getCreditCardById(id);
-        if (creditCard != null) {
-            return ResponseEntity.ok(new CreditCardResponse(creditCard));
+        CreditCardModel creditCardModel = creditCardService.getCreditCardById(id);
+        if (creditCardModel != null) {
+            return ResponseEntity.ok(new CreditCardResponse(creditCardModel));
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Credit card with id " + id + " not found");
         }
@@ -60,18 +62,18 @@ public class CreditCardController {
             }
             return ResponseEntity.badRequest().body(errors);
         }
-        Account account = accountService.getAccountById(creditCardRequest.getAccountId());
-        if (account == null)
+        AccountModel accountModel = accountService.getAccountById(creditCardRequest.getAccountId());
+        if (accountModel == null)
             return ResponseEntity.badRequest().body("Account with id " + creditCardRequest.getAccountId() + " don't found");
-        CreditCard creditCard = creditCardRequest.toCreditCard(account);
-        creditCardService.saveCreditCard(creditCard);
-        return ResponseEntity.status(HttpStatus.CREATED).body(new CreditCardResponse(creditCard));
+        CreditCardModel creditCardModel = creditCardRequest.toCreditCard(accountModel);
+        creditCardService.saveCreditCard(creditCardModel);
+        return ResponseEntity.status(HttpStatus.CREATED).body(new CreditCardResponse(creditCardModel));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteCreditCard(@PathVariable("id") int id) {
-        CreditCard creditCard = creditCardService.getCreditCardById(id);
-        if (creditCard == null) {
+        CreditCardModel creditCardModel = creditCardService.getCreditCardById(id);
+        if (creditCardModel == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Credit card with id " + id + " not found");
         }
 
@@ -90,21 +92,21 @@ public class CreditCardController {
             return ResponseEntity.badRequest().body(errors);
         }
 
-        CreditCard existingCreditCard = creditCardService.getCreditCardById(id);
-        if (existingCreditCard == null) {
+        CreditCardModel existingCreditCardModel = creditCardService.getCreditCardById(id);
+        if (existingCreditCardModel == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Credit card with id " + id + " not found");
         }
 
-        Account account = accountService.getAccountById(creditCardRequest.getAccountId());
-        if (account == null) {
+        AccountModel accountModel = accountService.getAccountById(creditCardRequest.getAccountId());
+        if (accountModel == null) {
             return ResponseEntity.badRequest().body("Account with id " + creditCardRequest.getAccountId() + " not found");
         }
 
-        existingCreditCard = creditCardRequest.toCreditCard(account);
-        existingCreditCard.setId(id);
+        existingCreditCardModel = creditCardRequest.toCreditCard(accountModel);
+        existingCreditCardModel.setId(id);
 
-        creditCardService.saveCreditCard(existingCreditCard);
-        return ResponseEntity.ok(new CreditCardResponse(existingCreditCard));
+        creditCardService.saveCreditCard(existingCreditCardModel);
+        return ResponseEntity.ok(new CreditCardResponse(existingCreditCardModel));
     }
 
 }

@@ -1,19 +1,15 @@
 package com.onlinebank.dto.request;
 
-import com.onlinebank.models.Customer;
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.onlinebank.models.CustomerModel;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 import org.hibernate.validator.constraints.Length;
-
-@Getter
-@Setter
+/**
+ * @author Denis Durbalov
+ */
+@Data
 public class CustomerRequest {
 
     @NotEmpty
@@ -45,15 +41,15 @@ public class CustomerRequest {
     @Length(max = 50)
     private String username;
 
-    public Customer toCustomer() {
-        Customer customer = new Customer();
-        customer.setFirstName(this.first_name);
-        customer.setLastName(this.last_name);
-        customer.setEmail(this.email);
-        customer.setPhone(this.phone);
-        customer.setAddress(this.address);
-        customer.setPassword(this.password);
-        customer.setUsername(this.username);
-        return customer;
+    public CustomerModel toCustomer() {
+        CustomerModel customerModel = new CustomerModel();
+        customerModel.setFirstName(this.first_name);
+        customerModel.setLastName(this.last_name);
+        customerModel.setEmail(this.email);
+        customerModel.setPhone(this.phone);
+        customerModel.setAddress(this.address);
+        customerModel.setPassword(this.password);
+        customerModel.setUsername(this.username);
+        return customerModel;
     }
 }

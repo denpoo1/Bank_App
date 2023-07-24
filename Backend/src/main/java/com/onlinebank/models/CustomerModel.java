@@ -6,19 +6,17 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Collection;
-import java.util.List;
-
+/**
+ * @author Denis Durbalov
+ */
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Builder
 @Table(name = "customer")
-public class Customer {
+public class CustomerModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -46,16 +44,13 @@ public class Customer {
     @Column(name = "username")
     private String username;
 
-    @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL)
-    private Account account;
+    @OneToOne(mappedBy = "customerModel", cascade = CascadeType.ALL)
+    private AccountModel accountModel;
 
     @Enumerated(EnumType.STRING)
-    private Role roles;
+    private RoleModel roles;
 
-    public Customer() {
-    }
-
-    public Customer(String firstName, String lastName, String email, String phone, String address, String password, String username) {
+    public CustomerModel(String firstName, String lastName, String email, String phone, String address, String password, String username) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;

@@ -1,13 +1,14 @@
 package com.onlinebank.dto.request;
 
-import com.onlinebank.models.PaymentCategory;
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.onlinebank.models.PaymentCategoryModel;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Positive;
+import lombok.Data;
 
+/**
+ * @author Denis Durbalov
+ */
+@Data
 public class PaymentCategoryRequest {
 
     @NotEmpty(message = "Name must not be empty.")
@@ -19,35 +20,11 @@ public class PaymentCategoryRequest {
     @Positive(message = "Max amount must be a positive value.")
     private int maxAmount;
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getAmount() {
-        return amount;
-    }
-
-    public void setAmount(int amount) {
-        this.amount = amount;
-    }
-
-    public int getMaxAmount() {
-        return maxAmount;
-    }
-
-    public void setMaxAmount(int maxAmount) {
-        this.maxAmount = maxAmount;
-    }
-
-    public PaymentCategory toPaymentCategory() {
-        PaymentCategory paymentCategory = new PaymentCategory();
-        paymentCategory.setAmount(this.amount);
-        paymentCategory.setMaxAmount(this.maxAmount);
-        paymentCategory.setName(this.name);
-        return paymentCategory;
+    public PaymentCategoryModel toPaymentCategory() {
+        PaymentCategoryModel paymentCategoryModel = new PaymentCategoryModel();
+        paymentCategoryModel.setAmount(this.amount);
+        paymentCategoryModel.setMaxAmount(this.maxAmount);
+        paymentCategoryModel.setName(this.name);
+        return paymentCategoryModel;
     }
 }

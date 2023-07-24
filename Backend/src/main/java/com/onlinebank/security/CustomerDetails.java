@@ -1,17 +1,20 @@
 package com.onlinebank.security;
 
-import com.onlinebank.models.Customer;
+import com.onlinebank.models.CustomerModel;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 
+/**
+ * @author Denis Durbalov
+ */
 public class CustomerDetails implements UserDetails {
 
-    private final Customer customer;
+    private final CustomerModel customerModel;
 
-    public CustomerDetails(Customer customer) {
-        this.customer = customer;
+    public CustomerDetails(CustomerModel customerModel) {
+        this.customerModel = customerModel;
     }
 
     @Override
@@ -21,12 +24,12 @@ public class CustomerDetails implements UserDetails {
 
     @Override
     public String getPassword() {
-        return customer.getPassword();
+        return customerModel.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return customer.getUsername();
+        return customerModel.getUsername();
     }
 
     @Override
@@ -49,7 +52,7 @@ public class CustomerDetails implements UserDetails {
         return true;
     }
 
-    public Customer getCustomer() {
-        return this.customer;
+    public CustomerModel getCustomer() {
+        return this.customerModel;
     }
 }

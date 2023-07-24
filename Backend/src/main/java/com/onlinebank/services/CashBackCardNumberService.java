@@ -1,6 +1,6 @@
 package com.onlinebank.services;
 
-import com.onlinebank.models.CashBackCardNumber;
+import com.onlinebank.models.CashBackCardNumberModel;
 import com.onlinebank.repositories.CashBackCardNumberRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +9,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+/**
+ * @author Denis Durbalov
+ */
 @Service
 public class CashBackCardNumberService {
     private final CashBackCardNumberRepository cardNumberRepository;
@@ -18,15 +21,15 @@ public class CashBackCardNumberService {
         this.cardNumberRepository = cardNumberRepository;
     }
 
-    public List<CashBackCardNumber> getAllCashBackCardNumbers() {
+    public List<CashBackCardNumberModel> getAllCashBackCardNumbers() {
         return cardNumberRepository.findAll();
     }
 
-    public CashBackCardNumber getCashBackCardNumberById(Integer id) {
+    public CashBackCardNumberModel getCashBackCardNumberById(Integer id) {
         return cardNumberRepository.findById(id).orElse(null);
     }
 
-    public void saveCashBackCardNumber(CashBackCardNumber cardNumber) {
+    public void saveCashBackCardNumber(CashBackCardNumberModel cardNumber) {
         cardNumberRepository.save(cardNumber);
     }
 
@@ -35,14 +38,14 @@ public class CashBackCardNumberService {
     }
 
     @Transactional
-    public void updateCashBackCardNumber(CashBackCardNumber updateCashBackCardNumber) {
-        CashBackCardNumber existingCardNumber = cardNumberRepository.findById(updateCashBackCardNumber.getId())
-                .orElseThrow(() -> new EntityNotFoundException("CashBackCardNumber with ID " + updateCashBackCardNumber.getId() + " not found."));
+    public void updateCashBackCardNumber(CashBackCardNumberModel updateCashBackCardNumberModel) {
+        CashBackCardNumberModel existingCardNumber = cardNumberRepository.findById(updateCashBackCardNumberModel.getId())
+                .orElseThrow(() -> new EntityNotFoundException("CashBackCardNumber with ID " + updateCashBackCardNumberModel.getId() + " not found."));
 
-        existingCardNumber.setName(updateCashBackCardNumber.getName());
-        existingCardNumber.setDescription(updateCashBackCardNumber.getDescription());
-        existingCardNumber.setAccountNumber(updateCashBackCardNumber.getAccountNumber());
-        existingCardNumber.setCashbackPercentage(updateCashBackCardNumber.getCashbackPercentage());
+        existingCardNumber.setName(updateCashBackCardNumberModel.getName());
+        existingCardNumber.setDescription(updateCashBackCardNumberModel.getDescription());
+        existingCardNumber.setAccountNumber(updateCashBackCardNumberModel.getAccountNumber());
+        existingCardNumber.setCashbackPercentage(updateCashBackCardNumberModel.getCashbackPercentage());
 
         cardNumberRepository.save(existingCardNumber);
     }

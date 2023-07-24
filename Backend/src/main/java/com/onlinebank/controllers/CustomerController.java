@@ -3,8 +3,8 @@ package com.onlinebank.controllers;
 import com.onlinebank.dto.response.CreditCardResponse;
 import com.onlinebank.dto.request.CustomerRequest;
 import com.onlinebank.dto.response.CustomerResponse;
-import com.onlinebank.models.CreditCard;
-import com.onlinebank.models.Customer;
+import com.onlinebank.models.CreditCardModel;
+import com.onlinebank.models.CustomerModel;
 import com.onlinebank.services.CustomerService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * @author Denis Durbalov
+ */
 @RestController
 @RequestMapping("/customers")
 public class CustomerController {
@@ -30,19 +32,19 @@ public class CustomerController {
 
     @GetMapping()
     public List<CustomerResponse> getCustomers() {
-        List<Customer> customerList = customerService.getAllCustomers();
+        List<CustomerModel> customerModelList = customerService.getAllCustomers();
         List<CustomerResponse> customerResponses = new ArrayList<>();
-        for (Customer customer : customerList) {
-            customerResponses.add(new CustomerResponse(customer));
+        for (CustomerModel customerModel : customerModelList) {
+            customerResponses.add(new CustomerResponse(customerModel));
         }
         return customerResponses;
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Object> getCustomer(@PathVariable("id") int id) {
-        Customer customer = customerService.getCustomerById(id);
-        if (customer != null) {
-            return ResponseEntity.ok(new CustomerResponse(customer));
+        CustomerModel customerModel = customerService.getCustomerById(id);
+        if (customerModel != null) {
+            return ResponseEntity.ok(new CustomerResponse(customerModel));
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Customer with id " + id + " not found");
         }
@@ -58,22 +60,22 @@ public class CustomerController {
             }
             return ResponseEntity.badRequest().body(errors);
         }
-        Customer customer = customerRequest.toCustomer();
-        customerService.saveCustomer(customer);
-        return ResponseEntity.status(HttpStatus.CREATED).body(new CustomerResponse(customer));
+        CustomerModel customerModel = customerRequest.toCustomer();
+        customerService.saveCustomer(customerModel);
+        return ResponseEntity.status(HttpStatus.CREATED).body(new CustomerResponse(customerModel));
     }
 
     @GetMapping("/{id}/credit-cards")
     public ResponseEntity<Object> getCustomerCreditCards(@PathVariable("id") int id) {
         System.out.println("Hello");
-        Customer customer = customerService.getCustomerById(id);
-        if (customer == null) {
+        CustomerModel customerModel = customerService.getCustomerById(id);
+        if (customerModel == null) {
             return ResponseEntity.badRequest().body("Customer with id " + id + " not found");
         } else {
-            List<CreditCard> creditCards = customer.getAccount().getCreditCards();
+            List<CreditCardModel> creditCardModels = customerModel.getAccountModel().getCreditCardModels();
             List<CreditCardResponse> creditCardResponses = new ArrayList<>();
-            for (CreditCard creditCard : creditCards) {
-                creditCardResponses.add(new CreditCardResponse(creditCard));
+            for (CreditCardModel creditCardModel : creditCardModels) {
+                creditCardResponses.add(new CreditCardResponse(creditCardModel));
             }
             return ResponseEntity.ok().body(creditCardResponses);
         }
@@ -81,8 +83,8 @@ public class CustomerController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteCustomer(@PathVariable("id") int id) {
-        Customer customer = customerService.getCustomerById(id);
-        if (customer == null) {
+        CustomerModel customerModel = customerService.getCustomerById(id);
+        if (customerModel == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Customer with id " + id + " not found");
         }
 
@@ -101,15 +103,15 @@ public class CustomerController {
             return ResponseEntity.badRequest().body(errors);
         }
 
-        Customer existingCustomer = customerService.getCustomerById(id);
-        if (existingCustomer == null) {
+        CustomerModel existingCustomerModel = customerService.getCustomerById(id);
+        if (existingCustomerModel == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Customer with id " + id + " not found");
         }
-        existingCustomer = customerRequest.toCustomer();
-        existingCustomer.setId(id);
+        existingCustomerModel = customerRequest.toCustomer();
+        existingCustomerModel.setId(id);
 
-        customerService.saveCustomer(existingCustomer);
-        return ResponseEntity.ok(new CustomerResponse(existingCustomer));
+        customerService.saveCustomer(existingCustomerModel);
+        return ResponseEntity.ok(new CustomerResponse(existingCustomerModel));
     }
 
 

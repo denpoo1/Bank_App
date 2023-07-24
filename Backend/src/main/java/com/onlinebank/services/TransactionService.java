@@ -1,6 +1,6 @@
 package com.onlinebank.services;
 
-import com.onlinebank.models.Transaction;
+import com.onlinebank.models.TransactionModel;
 import com.onlinebank.repositories.TransactionRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
@@ -11,6 +11,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * @author Denis Durbalov
+ */
 @Service
 public class TransactionService {
     private final TransactionRepository transactionRepository;
@@ -20,16 +23,16 @@ public class TransactionService {
         this.transactionRepository = transactionRepository;
     }
 
-    public List<Transaction> getAllTransactions() {
+    public List<TransactionModel> getAllTransactions() {
         return transactionRepository.findAll();
     }
 
-    public Transaction getTransactionById(Integer id) {
+    public TransactionModel getTransactionById(Integer id) {
         return transactionRepository.findById(id).orElse(null);
     }
 
-    public void saveTransaction(Transaction transaction) {
-        transactionRepository.save(transaction);
+    public void saveTransaction(TransactionModel transactionModel) {
+        transactionRepository.save(transactionModel);
     }
 
     public void deleteTransactionById(Integer id) {
@@ -37,34 +40,34 @@ public class TransactionService {
     }
 
     @Transactional
-    public void updateTransaction(Transaction updatedTransaction) {
-        if (transactionRepository.existsById(updatedTransaction.getId())) {
+    public void updateTransaction(TransactionModel updatedTransactionModel) {
+        if (transactionRepository.existsById(updatedTransactionModel.getId())) {
             // Получаем текущую версию сущности из базы данных
-            Transaction existingTransaction = transactionRepository.getOne(updatedTransaction.getId());
+            TransactionModel existingTransactionModel = transactionRepository.getOne(updatedTransactionModel.getId());
 
-            existingTransaction.setDate(updatedTransaction.getDate());
-            existingTransaction.setAmount(updatedTransaction.getAmount());
-            existingTransaction.setLeftoverAmount(updatedTransaction.getLeftoverAmount());
-            existingTransaction.setToAccountId(updatedTransaction.getToAccountId());
-            existingTransaction.setFromAccountId(updatedTransaction.getFromAccountId());
+            existingTransactionModel.setDate(updatedTransactionModel.getDate());
+            existingTransactionModel.setAmount(updatedTransactionModel.getAmount());
+            existingTransactionModel.setLeftoverAmount(updatedTransactionModel.getLeftoverAmount());
+            existingTransactionModel.setToAccountId(updatedTransactionModel.getToAccountId());
+            existingTransactionModel.setFromAccountId(updatedTransactionModel.getFromAccountId());
 
-            transactionRepository.save(existingTransaction);
+            transactionRepository.save(existingTransactionModel);
         } else {
-            throw new EntityNotFoundException("Transaction with ID " + updatedTransaction.getId() + " not found.");
+            throw new EntityNotFoundException("Transaction with ID " + updatedTransactionModel.getId() + " not found.");
         }
     }
 
-    public List<Transaction> getAccountTransactions(int accountId) {
-        List<Transaction> transactions = new ArrayList<>();
-        transactions.addAll(transactionRepository.findAllByToAccountId(accountId));
-        transactions.addAll(transactionRepository.findAllByFromAccountId(accountId));
-        return transactions;
+    public List<TransactionModel> getAccountTransactions(int accountId) {
+        List<TransactionModel> transactionModels = new ArrayList<>();
+        transactionModels.addAll(transactionRepository.findAllByToAccountId(accountId));
+        transactionModels.addAll(transactionRepository.findAllByFromAccountId(accountId));
+        return transactionModels;
     }
 
-    public List<Transaction> getAccountTransactionsByDays(int toAccountId, int fromAccountId, Date startDay, Date endDay) {
-        List<Transaction> transactions = new ArrayList<>();
-        transactions.addAll(transactionRepository.findAllByToAccountIdAndDateBetween(toAccountId, startDay, endDay));
-        transactions.addAll(transactionRepository.findAllByFromAccountIdAndDateBetween(fromAccountId, startDay, endDay));
-        return transactions;
+    public List<TransactionModel> getAccountTransactionsByDays(int toAccountId, int fromAccountId, Date startDay, Date endDay) {
+        List<TransactionModel> transactionModels = new ArrayList<>();
+        transactionModels.addAll(transactionRepository.findAllByToAccountIdAndDateBetween(toAccountId, startDay, endDay));
+        transactionModels.addAll(transactionRepository.findAllByFromAccountIdAndDateBetween(fromAccountId, startDay, endDay));
+        return transactionModels;
     }
 }

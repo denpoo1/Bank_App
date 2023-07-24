@@ -1,28 +1,17 @@
 package com.onlinebank.dto.response;
 
-import com.onlinebank.models.Transaction;
+import com.onlinebank.models.TransactionModel;
+import lombok.Data;
 
+/**
+ * @author Denis Durbalov
+ */
+@Data
 public class PaymentResponse {
     private int transaction_id;
     private final String message = "Payment successful.";
 
-    public int getTransaction_id(Transaction transaction) {
-        return transaction_id = transaction.getId();
-    }
-
-    public void setTransaction_id(int transaction_id) {
-        this.transaction_id = transaction_id;
-    }
-
-    public int getTransaction_id() {
-        return transaction_id;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public PaymentResponse(Transaction transaction) {
-        this.transaction_id = transaction.getId();
+    public PaymentResponse(TransactionModel transactionModel) {
+        this.transaction_id = transactionModel.getId();
     }
 }
