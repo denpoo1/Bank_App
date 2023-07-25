@@ -6,6 +6,11 @@ import com.onlinebank.models.AccountModel;
 import com.onlinebank.models.TransactionModel;
 import com.onlinebank.services.AccountService;
 import com.onlinebank.services.TransactionService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,11 +37,16 @@ public class TransactionController {
     }
 
     @GetMapping()
+    @Operation(summary = "Получить список всех транзакций", description = "Получает список всех транзакций")
+    @ApiResponse(responseCode = "200", description = "Успешно", content = @Content(array = @ArraySchema(schema = @Schema(implementation = TransactionModel.class))))
     public List<TransactionModel> getTransactions() {
         return transactionService.getAllTransactions();
     }
 
     @GetMapping("/{id}")
+    @Operation(summary = "Получить транзакцию по ID", description = "Получает транзакцию по указанному ID")
+    @ApiResponse(responseCode = "200", description = "Успешно", content = @Content(schema = @Schema(implementation = TransactionModel.class)))
+    @ApiResponse(responseCode = "404", description = "Транзакция не найдена")
     public ResponseEntity<Object> getTransaction(@PathVariable("id") int id) {
         TransactionModel transactionModel = transactionService.getTransactionById(id);
         if (transactionModel != null) {
@@ -47,6 +57,9 @@ public class TransactionController {
     }
 
     @PostMapping
+    @Operation(summary = "Создать новую транзакцию", description = "Создает новую транзакцию на основе переданных данных")
+    @ApiResponse(responseCode = "201", description = "Транзакция успешно создана", content = @Content(schema = @Schema(implementation = TransactionResponse.class)))
+    @ApiResponse(responseCode = "400", description = "Ошибка в запросе")
     public ResponseEntity<Object> createTransaction(@RequestBody @Valid TransactionRequest transactionRequest, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             List<FieldError> fieldErrors = bindingResult.getFieldErrors();
@@ -63,6 +76,9 @@ public class TransactionController {
     }
 
     @DeleteMapping("/{id}")
+    @Operation(summary = "Удалить транзакцию", description = "Удаляет транзакцию с указанным ID")
+    @ApiResponse(responseCode = "200", description = "Транзакция успешно удалена")
+    @ApiResponse(responseCode = "404", description = "Транзакция не найдена")
     public ResponseEntity<Object> deleteTransaction(@PathVariable("id") int id) {
         TransactionModel transactionModel = transactionService.getTransactionById(id);
         if (transactionModel == null) {
@@ -74,6 +90,10 @@ public class TransactionController {
     }
 
     @PutMapping("/{id}")
+    @Operation(summary = "Обновить информацию о транзакции", description = "Обновляет информацию о транзакции на основе переданных данных")
+    @ApiResponse(responseCode = "200", description = "Информация о транзакции успешно обновлена", content = @Content(schema = @Schema(implementation = TransactionResponse.class)))
+    @ApiResponse(responseCode = "400", description = "Ошибка в запросе")
+    @ApiResponse(responseCode = "404", description = "Транзакция не найдена")
     public ResponseEntity<Object> updateTransaction(@PathVariable("id") int id,
                                                     @RequestBody @Valid TransactionRequest transactionRequest,
                                                     BindingResult bindingResult) {

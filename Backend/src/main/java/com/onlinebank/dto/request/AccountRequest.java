@@ -2,6 +2,7 @@ package com.onlinebank.dto.request;
 
 import com.onlinebank.models.AccountModel;
 import com.onlinebank.models.CustomerModel;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.util.Date;

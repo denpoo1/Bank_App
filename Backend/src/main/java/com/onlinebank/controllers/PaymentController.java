@@ -6,6 +6,11 @@ import com.onlinebank.models.CreditCardModel;
 import com.onlinebank.models.TransactionModel;
 import com.onlinebank.services.CreditCardService;
 import com.onlinebank.services.TransactionService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/payments")
+@Tag(name = "Оплаты", description = "Операции для совершания оплат")
 public class PaymentController {
     private final TransactionService transactionService;
     private final CreditCardService creditCardService;
@@ -26,6 +32,9 @@ public class PaymentController {
     }
 
     @PostMapping
+    @Operation(summary = "Совершить платеж", description = "Осуществляет платеж между кредитными картами")
+    @ApiResponse(responseCode = "201", description = "Платеж успешно выполнен", content = @Content(schema = @Schema(implementation = PaymentResponse.class)))
+    @ApiResponse(responseCode = "400", description = "Ошибка в запросе")
     public ResponseEntity<Object> makePayment(@RequestBody @Valid PaymentRequest paymentRequest) {
         CreditCardModel creditCardModelFrom = creditCardService.getCreditCardById(paymentRequest.getFrom_account_id());
         CreditCardModel creditCardModelTo = creditCardService.getCreditCardById(paymentRequest.getTo_account_id());
@@ -49,6 +58,9 @@ public class PaymentController {
 
 
     @GetMapping("/{transaction_id}")
+    @Operation(summary = "Получить информацию о платеже", description = "Получает информацию о платеже по его уникальному ID")
+    @ApiResponse(responseCode = "200", description = "Информация о платеже успешно получена", content = @Content(schema = @Schema(implementation = TransactionModel.class)))
+    @ApiResponse(responseCode = "404", description = "Платеж с указанным ID не найден")
     public ResponseEntity<Object> gePayment(@PathVariable("transaction_id") int transactionId) {
         TransactionModel transactionModel = transactionService.getTransactionById(transactionId);
         if (transactionModel != null) {

@@ -37,7 +37,11 @@ public class SecurityConfiguration {
                 .disable()
                 .authorizeHttpRequests()
                 .requestMatchers(
-                        "auth/**"
+                        "auth/**",
+                        "swagger-ui.html",
+                        "swagger-ui/**",
+                        "v3/api-docs/**",
+                        "/bankApp/api/**"
                 )
                 .permitAll()
                 .anyRequest().authenticated()
