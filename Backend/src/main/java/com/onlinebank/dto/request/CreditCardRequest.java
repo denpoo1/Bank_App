@@ -2,6 +2,7 @@ package com.onlinebank.dto.request;
 
 import com.onlinebank.models.AccountModel;
 import com.onlinebank.models.CreditCardModel;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.*;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;

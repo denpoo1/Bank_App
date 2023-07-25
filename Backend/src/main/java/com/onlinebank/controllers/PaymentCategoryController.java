@@ -5,6 +5,11 @@ import com.onlinebank.dto.response.PaymentCategoryResponse;
 import com.onlinebank.models.PaymentCategoryModel;
 import com.onlinebank.services.PaymentCategoryService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,6 +25,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/payment-categories")
+@Tag(name = "Категории оплат", description = "Операции связанные с категориями оплат")
 public class PaymentCategoryController {
 
     private final PaymentCategoryService paymentCategoryService;
@@ -30,6 +36,8 @@ public class PaymentCategoryController {
     }
 
     @GetMapping
+    @Operation(summary = "Получить все категории платежей", description = "Получает список всех категорий платежей")
+    @ApiResponse(responseCode = "200", description = "Список категорий платежей успешно получен", content = @Content(schema = @Schema(implementation = PaymentCategoryResponse.class)))
     public List<PaymentCategoryResponse> getPaymentCategories() {
         List<PaymentCategoryModel> paymentCategories = paymentCategoryService.getAllPaymentCategories();
         List<PaymentCategoryResponse> paymentCategoryResponses = new ArrayList<>();
@@ -40,6 +48,9 @@ public class PaymentCategoryController {
     }
 
     @GetMapping("/{id}")
+    @Operation(summary = "Получить категорию платежа по ID", description = "Получает информацию о категории платежа по ее уникальному ID")
+    @ApiResponse(responseCode = "200", description = "Категория платежа успешно получена", content = @Content(schema = @Schema(implementation = PaymentCategoryResponse.class)))
+    @ApiResponse(responseCode = "404", description = "Категория платежа не найдена")
     public ResponseEntity<Object> getPaymentCategory(@PathVariable("id") int id) {
         PaymentCategoryModel paymentCategoryModel = paymentCategoryService.getPaymentCategoryById(id);
         if (paymentCategoryModel != null) {
@@ -50,6 +61,9 @@ public class PaymentCategoryController {
     }
 
     @PostMapping
+    @Operation(summary = "Создать категорию платежа", description = "Создает новую категорию платежа")
+    @ApiResponse(responseCode = "201", description = "Категория платежа успешно создана", content = @Content(schema = @Schema(implementation = PaymentCategoryResponse.class)))
+    @ApiResponse(responseCode = "400", description = "Ошибка в запросе")
     public ResponseEntity<Object> createPaymentCategory(@RequestBody @Valid PaymentCategoryRequest paymentCategoryRequest,
                                                         BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
@@ -66,6 +80,9 @@ public class PaymentCategoryController {
     }
 
     @DeleteMapping("/{id}")
+    @Operation(summary = "Удалить категорию платежа", description = "Удаляет категорию платежа по ее уникальному ID")
+    @ApiResponse(responseCode = "200", description = "Категория платежа успешно удалена")
+    @ApiResponse(responseCode = "404", description = "Категория платежа не найдена")
     public ResponseEntity<Object> deletePaymentCategory(@PathVariable("id") int id) {
         PaymentCategoryModel paymentCategoryModel = paymentCategoryService.getPaymentCategoryById(id);
         if (paymentCategoryModel == null) {
@@ -77,6 +94,10 @@ public class PaymentCategoryController {
     }
 
     @PutMapping("/{id}")
+    @Operation(summary = "Обновить информацию о категории платежа", description = "Обновляет информацию о категории платежа по ее уникальному ID")
+    @ApiResponse(responseCode = "200", description = "Информация о категории платежа успешно обновлена", content = @Content(schema = @Schema(implementation = PaymentCategoryResponse.class)))
+    @ApiResponse(responseCode = "400", description = "Ошибка в запросе")
+    @ApiResponse(responseCode = "404", description = "Категория платежа не найдена")
     public ResponseEntity<Object> updatePaymentCategory(@PathVariable("id") int id,
                                                         @RequestBody @Valid PaymentCategoryRequest paymentCategoryRequest,
                                                         BindingResult bindingResult) {

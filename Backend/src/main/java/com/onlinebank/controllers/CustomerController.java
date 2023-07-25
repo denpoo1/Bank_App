@@ -6,6 +6,11 @@ import com.onlinebank.dto.response.CustomerResponse;
 import com.onlinebank.models.CreditCardModel;
 import com.onlinebank.models.CustomerModel;
 import com.onlinebank.services.CustomerService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,6 +26,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/customers")
+@Tag(name = "Клиенты", description = "Управление клиентами")
 public class CustomerController {
 
     private final CustomerService customerService;
@@ -31,6 +37,8 @@ public class CustomerController {
     }
 
     @GetMapping()
+    @Operation(summary = "Получить список клиентов", description = "Получает список всех клиентов в системе")
+    @ApiResponse(responseCode = "200", description = "Список клиентов", content = @Content(schema = @Schema(implementation = CustomerResponse.class)))
     public List<CustomerResponse> getCustomers() {
         List<CustomerModel> customerModelList = customerService.getAllCustomers();
         List<CustomerResponse> customerResponses = new ArrayList<>();
@@ -41,6 +49,9 @@ public class CustomerController {
     }
 
     @GetMapping("/{id}")
+    @Operation(summary = "Получить клиента по ID", description = "Получает информацию о клиенте по его уникальному ID")
+    @ApiResponse(responseCode = "200", description = "Информация о клиенте", content = @Content(schema = @Schema(implementation = CustomerResponse.class)))
+    @ApiResponse(responseCode = "404", description = "Клиент не найден")
     public ResponseEntity<Object> getCustomer(@PathVariable("id") int id) {
         CustomerModel customerModel = customerService.getCustomerById(id);
         if (customerModel != null) {
@@ -51,6 +62,9 @@ public class CustomerController {
     }
 
     @PostMapping
+    @Operation(summary = "Создать нового клиента", description = "Создает нового клиента в системе")
+    @ApiResponse(responseCode = "201", description = "Клиент успешно создан", content = @Content(schema = @Schema(implementation = CustomerResponse.class)))
+    @ApiResponse(responseCode = "400", description = "Ошибка в запросе")
     public ResponseEntity<Object> createCustomer(@RequestBody @Valid CustomerRequest customerRequest, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             List<FieldError> fieldErrors = bindingResult.getFieldErrors();
@@ -66,6 +80,10 @@ public class CustomerController {
     }
 
     @GetMapping("/{id}/credit-cards")
+    @Operation(summary = "Получить список кредитных карт клиента", description = "Получает список кредитных карт, привязанных к клиенту")
+    @ApiResponse(responseCode = "200", description = "Список кредитных карт", content = @Content(schema = @Schema(implementation = CreditCardResponse.class)))
+    @ApiResponse(responseCode = "400", description = "Ошибка в запросе")
+    @ApiResponse(responseCode = "404", description = "Клиент не найден")
     public ResponseEntity<Object> getCustomerCreditCards(@PathVariable("id") int id) {
         System.out.println("Hello");
         CustomerModel customerModel = customerService.getCustomerById(id);
@@ -82,6 +100,9 @@ public class CustomerController {
     }
 
     @DeleteMapping("/{id}")
+    @Operation(summary = "Удалить клиента", description = "Удаляет клиента из системы по его уникальному ID")
+    @ApiResponse(responseCode = "200", description = "Клиент успешно удален")
+    @ApiResponse(responseCode = "404", description = "Клиент не найден")
     public ResponseEntity<Object> deleteCustomer(@PathVariable("id") int id) {
         CustomerModel customerModel = customerService.getCustomerById(id);
         if (customerModel == null) {
@@ -93,6 +114,10 @@ public class CustomerController {
     }
 
     @PutMapping("/{id}")
+    @Operation(summary = "Обновить информацию о клиенте", description = "Обновляет информацию о клиенте по его уникальному ID")
+    @ApiResponse(responseCode = "200", description = "Информация о клиенте успешно обновлена", content = @Content(schema = @Schema(implementation = CustomerResponse.class)))
+    @ApiResponse(responseCode = "400", description = "Ошибка в запросе")
+    @ApiResponse(responseCode = "404", description = "Клиент не найден")
     public ResponseEntity<Object> updateCustomer(@PathVariable("id") int id, @RequestBody @Valid CustomerRequest customerRequest, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             List<FieldError> fieldErrors = bindingResult.getFieldErrors();

@@ -11,6 +11,11 @@ import com.onlinebank.models.TransactionModel;
 import com.onlinebank.services.AccountService;
 import com.onlinebank.services.CustomerService;
 import com.onlinebank.services.TransactionService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -28,6 +33,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/accounts")
+@Tag(name = "Аккаунты" , description = "Операции связанные с аккаунтами")
 public class AccountController {
 
     private final AccountService accountService;
@@ -42,6 +48,7 @@ public class AccountController {
     }
 
     @GetMapping
+    @Operation(summary = "Получить список всех аккаунтов", description = "Возвращает список всех аккаунтов")
     public List<AccountResponse> getAccounts() {
         List<AccountModel> accountModels = accountService.getAllAccounts();
         List<AccountResponse> accountResponses = new ArrayList<>();
@@ -52,6 +59,9 @@ public class AccountController {
     }
 
     @GetMapping("/{id}")
+    @Operation(summary = "Получить информацию об аккаунте", description = "Возвращает информацию об аккаунте по его идентификатору")
+    @ApiResponse(responseCode = "200", description = "Успешный запрос", content = @Content(schema = @Schema(implementation = AccountResponse.class)))
+    @ApiResponse(responseCode = "404", description = "Аккаунт не найден")
     public ResponseEntity<Object> getAccount(@PathVariable("id") int id) {
         AccountModel accountModel = accountService.getAccountById(id);
         if (accountModel != null) {
@@ -62,6 +72,9 @@ public class AccountController {
     }
 
     @PostMapping
+    @Operation(summary = "Создать новый аккаунт", description = "Создает новый аккаунт на основе данных в теле запроса")
+    @ApiResponse(responseCode = "201", description = "Аккаунт успешно создан", content = @Content(schema = @Schema(implementation = AccountResponse.class)))
+    @ApiResponse(responseCode = "400", description = "Некорректные данные запроса")
     public ResponseEntity<Object> createAccount(@RequestBody @Valid AccountRequest accountRequest, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             List<FieldError> fieldErrors = bindingResult.getFieldErrors();
@@ -81,6 +94,9 @@ public class AccountController {
     }
 
     @GetMapping("/{id}/transaction")
+    @Operation(summary = "Получить транзакции аккаунта", description = "Возвращает список транзакций для аккаунта по его идентификатору")
+    @ApiResponse(responseCode = "200", description = "Успешный запрос", content = @Content(schema = @Schema(implementation = TransactionResponse.class)))
+    @ApiResponse(responseCode = "404", description = "Аккаунт не найден")
     public ResponseEntity<Object> getAccountTransactions(@PathVariable("id") int accountId) {
         AccountModel accountModel = accountService.getAccountById(accountId);
         if (accountModel == null) {
@@ -98,6 +114,9 @@ public class AccountController {
 
 
     @GetMapping("/{id}/{start_day}/{end_day}")
+    @Operation(summary = "Получить транзакции аккаунта по дате", description = "Возвращает список транзакций для аккаунта между указанными датами")
+    @ApiResponse(responseCode = "200", description = "Успешный запрос", content = @Content(schema = @Schema(implementation = TransactionResponse.class)))
+    @ApiResponse(responseCode = "404", description = "Аккаунт не найден или транзакции не найдены")
     public ResponseEntity<Object> getAccountTransactionsByDays(@PathVariable("id") int id, @PathVariable("start_day") @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDay,
                                                                @PathVariable("end_day") @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDay) {
         AccountModel accountModel = accountService.getAccountById(id);
@@ -114,6 +133,9 @@ public class AccountController {
     }
 
     @DeleteMapping("/{id}")
+    @Operation(summary = "Удалить аккаунт", description = "Удаляет аккаунт по его идентификатору")
+    @ApiResponse(responseCode = "200", description = "Аккаунт успешно удален")
+    @ApiResponse(responseCode = "404", description = "Аккаунт не найден")
     public ResponseEntity<Object> deleteAccount(@PathVariable("id") int id) {
         AccountModel accountModel = accountService.getAccountById(id);
         if (accountModel == null) {
@@ -125,6 +147,10 @@ public class AccountController {
     }
 
     @PutMapping("/{id}")
+    @Operation(summary = "Обновить информацию об аккаунте", description = "Обновляет информацию об аккаунте по его идентификатору")
+    @ApiResponse(responseCode = "200", description = "Информация об аккаунте успешно обновлена", content = @Content(schema = @Schema(implementation = AccountUpdateResponse.class)))
+    @ApiResponse(responseCode = "400", description = "Некорректные данные запроса")
+    @ApiResponse(responseCode = "404", description = "Аккаунт или пользователь не найден")
     public ResponseEntity<Object> updateAccount(@PathVariable("id") int id, @RequestBody @Valid AccountRequest accountRequest, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             List<FieldError> fieldErrors = bindingResult.getFieldErrors();
