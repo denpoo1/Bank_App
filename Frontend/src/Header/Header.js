@@ -16,22 +16,27 @@ const Header = () => {
           <button className={styles.search}></button>
           <button className={styles.notification}></button>
         </div>
-        <button className={styles.profileButton} onClick={toggleMenu}>
-          <span>denis lox</span>
-          <span>{isMenuOpen ? "▲" : "▼"}</span>
-        </button>
-        {isMenuOpen && (
-          <div className={styles.dropdown}>
-            {/* Здесь размещаем список с опциями */}
-            <div className={styles.option}>Опция 1</div>
-            <div className={styles.option}>Опция 2</div>
-            <div className={styles.option}>Опция 3</div>
-            {/* ... */}
-          </div>
-        )}
+        <div
+          className={`${styles.profileButtonWrapper} ${
+            isMenuOpen ? styles.activeDropdown : ""
+          }`}
+        >
+          <button className={styles.profileButton} onClick={toggleMenu}>
+            <span>not&gt;Than10</span>
+            <span>{isMenuOpen ? "▲" : "▼"}</span>
+          </button>
+          {isMenuOpen && (
+            <div className={`${styles.dropdown}`}>
+              <div className={styles.option}>Denis</div>
+              <div className={styles.option}>Polnyi </div>
+              <div className={styles.option}>Lox</div>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
 };
 
 export default Header;
+  
