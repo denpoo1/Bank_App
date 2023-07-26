@@ -1,0 +1,30 @@
+package com.onlinebank.dto.request;
+
+import com.onlinebank.models.CreditCardModel;
+import com.onlinebank.models.TransactionModel;
+import jakarta.validation.constraints.Positive;
+import lombok.Data;
+
+import java.util.Date;
+
+/**
+ * @author Denis Durbalov
+ */
+@Data
+public class PaymentRequest {
+
+    private int from_account_id;
+    private int to_account_id;
+    @Positive
+    private int amount;
+
+    public TransactionModel toTransaction(CreditCardModel cardFromPayment, CreditCardModel cardToPayment) {
+        TransactionModel transactionModel = new TransactionModel();
+        transactionModel.setDate(new Date());
+        transactionModel.setAmount(this.amount);
+        transactionModel.setLeftoverAmount(cardFromPayment.getBalance());
+        transactionModel.setToAccountId(cardToPayment.getAccountModel().getId());
+        transactionModel.setFromAccountId(cardFromPayment.getAccountModel().getId());
+        return transactionModel;
+    }
+}

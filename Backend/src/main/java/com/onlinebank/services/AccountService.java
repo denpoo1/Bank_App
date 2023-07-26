@@ -1,6 +1,6 @@
 package com.onlinebank.services;
 
-import com.onlinebank.models.Account;
+import com.onlinebank.models.AccountModel;
 import com.onlinebank.repositories.AccountRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +9,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+/**
+ * @author Denis Durbalov
+ */
 @Service
 public class AccountService {
     private final AccountRepository accountRepository;
@@ -18,16 +21,16 @@ public class AccountService {
         this.accountRepository = accountRepository;
     }
 
-    public List<Account> getAllAccounts() {
+    public List<AccountModel> getAllAccounts() {
         return accountRepository.findAll();
     }
 
-    public Account getAccountById(Integer id) {
+    public AccountModel getAccountById(Integer id) {
         return accountRepository.findById(id).orElse(null);
     }
 
-    public void saveAccount(Account account) {
-        accountRepository.save(account);
+    public void saveAccount(AccountModel accountModel) {
+        accountRepository.save(accountModel);
     }
 
     public void deleteAccountById(Integer id) {
@@ -35,18 +38,18 @@ public class AccountService {
     }
 
     @Transactional
-    public void updateAccount(Account updatedAccount) {
-        if (accountRepository.existsById(updatedAccount.getId())) {
+    public void updateAccount(AccountModel updatedAccountModel) {
+        if (accountRepository.existsById(updatedAccountModel.getId())) {
             // Получаем текущую версию сущности из базы данных
-            Account existingAccount = accountRepository.getOne(updatedAccount.getId());
+            AccountModel existingAccountModel = accountRepository.getOne(updatedAccountModel.getId());
 
-            existingAccount.setDate(updatedAccount.getDate());
-            existingAccount.setCustomer(updatedAccount.getCustomer());
-            existingAccount.setTransactionRoundingPercentage(updatedAccount.getTransactionRoundingPercentage());
+            existingAccountModel.setDate(updatedAccountModel.getDate());
+            existingAccountModel.setCustomerModel(updatedAccountModel.getCustomerModel());
+            existingAccountModel.setTransactionRoundingPercentage(updatedAccountModel.getTransactionRoundingPercentage());
 
-            accountRepository.save(existingAccount);
+            accountRepository.save(existingAccountModel);
         } else {
-            throw new EntityNotFoundException("Account with ID " + updatedAccount.getId() + " not found.");
+            throw new EntityNotFoundException("Account with ID " + updatedAccountModel.getId() + " not found.");
         }
     }
 }

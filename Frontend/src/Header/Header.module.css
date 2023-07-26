@@ -1,0 +1,137 @@
+.header {
+    position: fixed;
+    top: 0;
+    left: 300px;
+    /* Учитываем ширину Sidebar */
+    width: calc(100% - 350px);
+    /* Учитываем ширину Sidebar */
+    height: 80px;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 25px;
+}
+
+.headerTitle {
+    font-size: 22px;
+    font-weight: 600;
+    font-family: Poppins;
+}
+
+.search {
+    width: 40px;
+    height: 40px;
+    background-image: url("../images/header/find.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: transparent;
+}
+
+.notification{
+    width: 40px;
+    height: 40px;
+    background-image: url("../images/header/notification.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: transparent;
+}
+.headerWrapper{
+    display: flex;
+    width: 350px;
+    justify-content: space-between;
+}
+.headerSearchWrapper{
+    display: flex;
+    width: 100px;
+    justify-content: space-between;
+}
+
+.profileButton {
+  position: relative;
+  z-index: 1;
+  width: 180px;
+  height: 40px;
+  border-radius: 20px;
+  background-color: var(--primary-color);
+  display: flex; /* Use flexbox to control the positioning of the spans */
+  align-items: center; /* Center items vertically */
+  justify-content: space-between; /* Space items evenly along the container */
+  padding-left: 45px; /* To make space for ::before pseudo-element */
+}
+.profileButton span:first-child {
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  margin: 0 auto;
+}
+
+.profileButton span:last-child {
+  font-size: 20px;
+  color: white;
+  margin-left: auto;
+}
+  
+  .profileButton::before {
+    content: ""; /* Очищаем содержимое псевдоэлемента, чтобы не отображался текст */
+    display: block;
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    height: 30px;
+    width: 30px;
+    background-image: url("../images/logo/logo.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 50%;
+  }
+  
+
+  
+ 
+  
+.profileButtonWrapper{
+  position: relative;
+  border-radius: 20px;
+
+}
+
+
+/* Стили для выпадающего меню */
+.dropdown {
+  position: absolute;
+  background-color: var(--primary-color);
+  width: 161px;
+  padding: 10px;
+  z-index: 0;
+  margin-top: -39px;
+  border-radius: 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(-10px); /* Move the dropdown up a bit initially */
+  transition: opacity 0.3s ease, transform 0.3s ease, height 0.3s ease;
+  
+}
+
+.profileButtonWrapper.activeDropdown .dropdown {
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+  .option {
+    padding: 8px 12px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    text-align: center;
+  }
+
+.option:first-child{
+  margin-top: 30px;
+}
+
+.option:hover {
+  background-color: #082e66; /* Цвет фона при наведении курсора на опцию */
+}

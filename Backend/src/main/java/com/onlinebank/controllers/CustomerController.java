@@ -1,11 +1,16 @@
 package com.onlinebank.controllers;
 
-import com.onlinebank.dto.CreditCardResponse;
-import com.onlinebank.dto.CustomerRequest;
-import com.onlinebank.dto.CustomerResponse;
-import com.onlinebank.models.CreditCard;
-import com.onlinebank.models.Customer;
+import com.onlinebank.dto.response.CreditCardResponse;
+import com.onlinebank.dto.request.CustomerRequest;
+import com.onlinebank.dto.response.CustomerResponse;
+import com.onlinebank.models.CreditCardModel;
+import com.onlinebank.models.CustomerModel;
 import com.onlinebank.services.CustomerService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,9 +21,12 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * @author Denis Durbalov
+ */
 @RestController
 @RequestMapping("/customers")
+@Tag(name = "Клиенты", description = "Управление клиентами")
 public class CustomerController {
 
     private final CustomerService customerService;
@@ -29,26 +37,34 @@ public class CustomerController {
     }
 
     @GetMapping()
+    @Operation(summary = "Получить список клиентов", description = "Получает список всех клиентов в системе")
+    @ApiResponse(responseCode = "200", description = "Список клиентов", content = @Content(schema = @Schema(implementation = CustomerResponse.class)))
     public List<CustomerResponse> getCustomers() {
-        List<Customer> customerList = customerService.getAllCustomers();
+        List<CustomerModel> customerModelList = customerService.getAllCustomers();
         List<CustomerResponse> customerResponses = new ArrayList<>();
-        for (Customer customer : customerList) {
-            customerResponses.add(new CustomerResponse(customer));
+        for (CustomerModel customerModel : customerModelList) {
+            customerResponses.add(new CustomerResponse(customerModel));
         }
         return customerResponses;
     }
 
     @GetMapping("/{id}")
+    @Operation(summary = "Получить клиента по ID", description = "Получает информацию о клиенте по его уникальному ID")
+    @ApiResponse(responseCode = "200", description = "Информация о клиенте", content = @Content(schema = @Schema(implementation = CustomerResponse.class)))
+    @ApiResponse(responseCode = "404", description = "Клиент не найден")
     public ResponseEntity<Object> getCustomer(@PathVariable("id") int id) {
-        Customer customer = customerService.getCustomerById(id);
-        if (customer != null) {
-            return ResponseEntity.ok(new CustomerResponse(customer));
+        CustomerModel customerModel = customerService.getCustomerById(id);
+        if (customerModel != null) {
+            return ResponseEntity.ok(new CustomerResponse(customerModel));
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Customer with id " + id + " not found");
         }
     }
 
     @PostMapping
+    @Operation(summary = "Создать нового клиента", description = "Создает нового клиента в системе")
+    @ApiResponse(responseCode = "201", description = "Клиент успешно создан", content = @Content(schema = @Schema(implementation = CustomerResponse.class)))
+    @ApiResponse(responseCode = "400", description = "Ошибка в запросе")
     public ResponseEntity<Object> createCustomer(@RequestBody @Valid CustomerRequest customerRequest, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             List<FieldError> fieldErrors = bindingResult.getFieldErrors();
@@ -58,31 +74,38 @@ public class CustomerController {
             }
             return ResponseEntity.badRequest().body(errors);
         }
-        Customer customer = customerRequest.toCustomer();
-        customerService.saveCustomer(customer);
-        return ResponseEntity.status(HttpStatus.CREATED).body(new CustomerResponse(customer));
+        CustomerModel customerModel = customerRequest.toCustomer();
+        customerService.saveCustomer(customerModel);
+        return ResponseEntity.status(HttpStatus.CREATED).body(new CustomerResponse(customerModel));
     }
 
     @GetMapping("/{id}/credit-cards")
+    @Operation(summary = "Получить список кредитных карт клиента", description = "Получает список кредитных карт, привязанных к клиенту")
+    @ApiResponse(responseCode = "200", description = "Список кредитных карт", content = @Content(schema = @Schema(implementation = CreditCardResponse.class)))
+    @ApiResponse(responseCode = "400", description = "Ошибка в запросе")
+    @ApiResponse(responseCode = "404", description = "Клиент не найден")
     public ResponseEntity<Object> getCustomerCreditCards(@PathVariable("id") int id) {
         System.out.println("Hello");
-        Customer customer = customerService.getCustomerById(id);
-        if (customer == null) {
+        CustomerModel customerModel = customerService.getCustomerById(id);
+        if (customerModel == null) {
             return ResponseEntity.badRequest().body("Customer with id " + id + " not found");
         } else {
-            List<CreditCard> creditCards = customer.getAccount().getCreditCards();
+            List<CreditCardModel> creditCardModels = customerModel.getAccountModel().getCreditCardModels();
             List<CreditCardResponse> creditCardResponses = new ArrayList<>();
-            for (CreditCard creditCard : creditCards) {
-                creditCardResponses.add(new CreditCardResponse(creditCard));
+            for (CreditCardModel creditCardModel : creditCardModels) {
+                creditCardResponses.add(new CreditCardResponse(creditCardModel));
             }
             return ResponseEntity.ok().body(creditCardResponses);
         }
     }
 
     @DeleteMapping("/{id}")
+    @Operation(summary = "Удалить клиента", description = "Удаляет клиента из системы по его уникальному ID")
+    @ApiResponse(responseCode = "200", description = "Клиент успешно удален")
+    @ApiResponse(responseCode = "404", description = "Клиент не найден")
     public ResponseEntity<Object> deleteCustomer(@PathVariable("id") int id) {
-        Customer customer = customerService.getCustomerById(id);
-        if (customer == null) {
+        CustomerModel customerModel = customerService.getCustomerById(id);
+        if (customerModel == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Customer with id " + id + " not found");
         }
 
@@ -91,6 +114,10 @@ public class CustomerController {
     }
 
     @PutMapping("/{id}")
+    @Operation(summary = "Обновить информацию о клиенте", description = "Обновляет информацию о клиенте по его уникальному ID")
+    @ApiResponse(responseCode = "200", description = "Информация о клиенте успешно обновлена", content = @Content(schema = @Schema(implementation = CustomerResponse.class)))
+    @ApiResponse(responseCode = "400", description = "Ошибка в запросе")
+    @ApiResponse(responseCode = "404", description = "Клиент не найден")
     public ResponseEntity<Object> updateCustomer(@PathVariable("id") int id, @RequestBody @Valid CustomerRequest customerRequest, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             List<FieldError> fieldErrors = bindingResult.getFieldErrors();
@@ -101,15 +128,15 @@ public class CustomerController {
             return ResponseEntity.badRequest().body(errors);
         }
 
-        Customer existingCustomer = customerService.getCustomerById(id);
-        if (existingCustomer == null) {
+        CustomerModel existingCustomerModel = customerService.getCustomerById(id);
+        if (existingCustomerModel == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Customer with id " + id + " not found");
         }
-        existingCustomer = customerRequest.toCustomer();
-        existingCustomer.setId(id);
+        existingCustomerModel = customerRequest.toCustomer();
+        existingCustomerModel.setId(id);
 
-        customerService.saveCustomer(existingCustomer);
-        return ResponseEntity.ok(new CustomerResponse(existingCustomer));
+        customerService.saveCustomer(existingCustomerModel);
+        return ResponseEntity.ok(new CustomerResponse(existingCustomerModel));
     }
 
 
