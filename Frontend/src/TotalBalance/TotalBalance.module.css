@@ -1,0 +1,81 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300&display=swap');
+
+.wrapperTotalBAlance {
+  border-radius: 20px;
+  width: 370px;
+}
+
+.amountTitle {
+  font-family: 'Quicksand', sans-serif;  
+  font-size: 20px;
+  margin-bottom: 20px;
+  color: var(--secondary-color);
+}
+
+.amountWrapper {
+  display: flex;
+    align-content: space-around;
+    align-items: center;
+    justify-content: flex-start;
+    margin-bottom: 40px;
+
+}
+
+.amount {
+  font-size: 42px;
+  font-weight: bold;
+  color: var(--text-color);
+  margin-right: 20px;
+}
+
+.amount span {
+  font-size: 25px;
+  color: #838383;
+}
+
+
+.amountPercentageWrapper {
+  padding: 2px 13px;
+  border-radius: 20px;
+  background-color: #07f8b5;
+  display: flex;
+  /* Use flexbox to align the content */
+  justify-content: center;
+  /* Center the content horizontally */
+  align-items: center;
+  height: 35px;
+}
+
+.amountPercentageWrapper span{
+  color: black;
+}
+
+.spendingsWrapper{
+
+}
+
+.income,
+.expenses {
+  font-size: 15px;
+  color: #b1b1b1;
+  display: inline-flex; /* Use inline-flex to make them appear in one line */
+  align-items: center; /* Center the content vertically */
+}
+
+.expenses {
+  
+  margin-left: 30px; /* Add a small margin between income and expenses */
+}
+
+.income::after {
+  content: "(Income)"; /* Text to be displayed in the ::after pseudo-element */
+  color: rgb(48, 142, 48); /* Green color for the text */
+  margin-left: 5px; /* Add a small margin between the numbers and the ::after pseudo-element */
+}
+
+
+.expenses::after {
+  content: "(Expenses)"; /* Text to be displayed in the ::after pseudo-element */
+  color: rgb(167, 31, 31); /* Green color for the text */
+  margin-left: 5px; /* Add a small margin between the numbers and the ::after pseudo-element */
+}
