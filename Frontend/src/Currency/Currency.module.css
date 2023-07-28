@@ -1,0 +1,38 @@
+.currenceWrapper {
+    border-radius: 20px;
+    width: calc(100% - 490px);
+    height: 280px;
+    display: flex;
+    flex-direction: column;
+}
+
+.currenceWrapper h1{
+    margin-bottom: 30px;
+    font-size: 26px;
+}
+
+.currencyRow{
+    display: flex;
+    justify-content: space-between;
+}
+
+.currencyIconAndName{
+    display: flex;
+    width: 65px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.currencyIconAndName img{
+    height: 35px;
+    width: 35px;
+}
+
+.currencyName{
+    color: #e5e5e5;
+    text-transform: uppercase;
+}
+
+.currencyAmount{
+    color: #b6b6b6;
+}
