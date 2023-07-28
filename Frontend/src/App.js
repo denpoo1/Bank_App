@@ -9,8 +9,8 @@ function App() {
     <section className={styles.container}>
       <Sidebar/>
       <Header/>
-      <Body/>
-    </section>
+    <Body />
+      </section>
   );
 }
 

@@ -38,14 +38,17 @@
 .amountPercentageWrapper {
   padding: 2px 13px;
   border-radius: 20px;
-  background-color: #07f8b5;
   display: flex;
   /* Use flexbox to align the content */
   justify-content: center;
   /* Center the content horizontally */
   align-items: center;
   height: 35px;
+  /* Add transition properties for smooth color change */
+  transition: background-color 0.3s ease;
+  /* Set the initial background color to green */
 }
+
 
 .amountPercentageWrapper span{
   color: black;
@@ -70,13 +73,16 @@
 
 .income::after {
   content: "(Income)"; /* Text to be displayed in the ::after pseudo-element */
-  color: rgb(48, 142, 48); /* Green color for the text */
+  color: #308e30; /* Green color for the text */
   margin-left: 5px; /* Add a small margin between the numbers and the ::after pseudo-element */
 }
 
 
 .expenses::after {
   content: "(Expenses)"; /* Text to be displayed in the ::after pseudo-element */
-  color: rgb(167, 31, 31); /* Green color for the text */
+  color: #a71f1f; /* Green color for the text */
   margin-left: 5px; /* Add a small margin between the numbers and the ::after pseudo-element */
 }
+
+
+
