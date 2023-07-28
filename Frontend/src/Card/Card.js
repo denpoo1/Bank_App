@@ -4,7 +4,6 @@ import Wrap from "../Wrap/Wrap";
 import settingsSign from "../images/other/settings.png";
 import map from '../images/card/map.png'
 import chip from '../images/card/chip.png'
-import pattern from '../images/card/pattern.png'
 import visa from '../images/card/visa.png'
 
 const Body = () => {

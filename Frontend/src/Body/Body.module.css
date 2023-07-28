@@ -1,9 +1,10 @@
-.firstRow{
+.firstRow {
     display: flex;
     justify-content: space-between;
     margin-bottom: 30px;
 }
 
-.secondRow{
-
+.secondRow {
+    display: flex;
+    justify-content: space-between;
 }

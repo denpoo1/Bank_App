@@ -4,6 +4,7 @@ import BodyWrap from '../Wrap/BodyWrap'
 import TotalBalance from "../TotalBalance/TotalBalance";
 import MarketButtons from "../MarketButtons/MarketButtons";
 import Card from '../Card/Card'
+import Currency from "../Currency/Currency";
 
 const Body = () => {
     return(
@@ -15,6 +16,7 @@ const Body = () => {
 
             <div className={styles.secondRow}>
                 <Card/>
+                <Currency/>
             </div>
             
         
