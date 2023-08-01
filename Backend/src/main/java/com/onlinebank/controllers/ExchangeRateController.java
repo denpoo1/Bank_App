@@ -1,5 +1,6 @@
 package com.onlinebank.controllers;
 
+import com.onlinebank.dto.response.CustomResponseInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -7,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/exchange-rates")
@@ -18,7 +21,9 @@ public class ExchangeRateController {
 
     @Autowired
     public ExchangeRateController(RestTemplate restTemplate) {
+        List<String> headersToRemove = List.of("Access-Control-Allow-Origin"); // Здесь укажите имена заголовков, которые необходимо удалить из ответа на CORS
         this.restTemplate = restTemplate;
+        this.restTemplate.getInterceptors().add(new CustomResponseInterceptor(headersToRemove));
     }
 
     @GetMapping("/latest/{currency}")
