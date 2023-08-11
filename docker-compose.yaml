@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   backend:
-    image: denpool/backend:version3
+    image: denpool/backend:version5
     ports:
       - 8080:8080
     environment:
