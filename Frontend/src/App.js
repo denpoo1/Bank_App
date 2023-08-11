@@ -1,15 +1,19 @@
 import React from 'react';
-import styles from './GlobalFonts/Global.module.css'
-import Sidebar from './Sidebar/Sidebar';
-import Header from './Header/Header';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Login from './Login/Login';
+import BankPage from './BankPages/MainPage';
+import Signup from './Login/SignUp';
 
-function App() {
+const App = () => {
   return (
-    <section className={styles.container}>
-      <Sidebar/>
-      <Header/>
-    </section>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/bank-page" element={<BankPage />} />
+        <Route path="/sign-up" element={<Signup />} />
+      </Routes>
+    </Router>
   );
-}
+};
 
 export default App;
