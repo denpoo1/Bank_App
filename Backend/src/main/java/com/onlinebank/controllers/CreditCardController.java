@@ -1,18 +1,20 @@
 package com.onlinebank.controllers;
 
 import com.onlinebank.dto.request.CreditCardRequest;
-import com.onlinebank.dto.response.AccountResponse;
 import com.onlinebank.dto.response.CreditCardResponse;
 import com.onlinebank.models.AccountModel;
 import com.onlinebank.models.CreditCardModel;
 import com.onlinebank.services.AccountService;
 import com.onlinebank.services.CreditCardService;
+import com.onlinebank.utils.MoonAlgorithm;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,8 +22,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+
 /**
  * @author Denis Durbalov
  */
@@ -81,6 +85,8 @@ public class CreditCardController {
         if (accountModel == null)
             return ResponseEntity.badRequest().body("Account with id " + creditCardRequest.getAccountId() + " don't found");
         CreditCardModel creditCardModel = creditCardRequest.toCreditCard(accountModel);
+        if (creditCardService.getCreditCardByCardNumber(creditCardModel.getCardNumber()) != null)
+            return ResponseEntity.badRequest().body("such a credit card is exist");
         creditCardService.saveCreditCard(creditCardModel);
         return ResponseEntity.status(HttpStatus.CREATED).body(new CreditCardResponse(creditCardModel));
     }
@@ -130,5 +136,19 @@ public class CreditCardController {
         creditCardService.saveCreditCard(existingCreditCardModel);
         return ResponseEntity.ok(new CreditCardResponse(existingCreditCardModel));
     }
-
+    @GetMapping("/generate/card-number/{length}")
+    @Operation(summary = "Сгенерировать номер кредитной карты", description = "Генерирует случайный номер кредитной карты указанной длины")
+    @ApiResponse(responseCode = "200", description = "Сгенерированный номер кредитной карты", content = @Content(schema = @Schema(implementation = BigDecimal.class)))
+    @ApiResponse(responseCode = "400", description = "Ошибка в запросе")
+    @ApiResponse(responseCode = "500", description = "Внутренняя ошибка сервера")
+    public ResponseEntity<BigDecimal> generateCardNumber(@PathVariable("length") @Min(1) @Max(Integer.MAX_VALUE) int length) {
+        try {
+            BigDecimal generatedCardNumber = MoonAlgorithm.generateCardNumber(length);
+            return ResponseEntity.ok().body(generatedCardNumber);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
 }

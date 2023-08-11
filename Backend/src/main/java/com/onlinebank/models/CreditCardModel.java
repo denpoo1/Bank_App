@@ -21,7 +21,7 @@ public class CreditCardModel {
     @Column(name = "id")
     private Integer id;
 
-    @Column(name = "card_number")
+    @Column(name = "card_number", unique = true)
     private BigDecimal cardNumber;
 
     @Column(name = "cvv")
