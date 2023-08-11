@@ -1,0 +1,92 @@
+.leftSideLoginWrapper {
+    background-color: #202020;
+    width: 1070px;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.wrapperForCard {
+    width: 430px;
+    height: 480px;
+    border-radius: 20px;
+    background-color: #434343;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    padding: 15px;
+}
+
+.log {
+    width: 125px;
+    height: 125px;
+    border-radius: 50px;
+    margin-bottom: 20px;
+}
+
+.wrapperForCard h1 {
+    font-size: 30px;
+}
+
+.wrapperForCard p {
+    text-align: center;
+    width: 300px;
+    margin-bottom: 50px;
+}
+
+.wrapperForCard span {
+    text-align: center;
+    font-family: cursive;
+    color: #4174bc;
+}
+
+.wrapperForCard span:first-of-type {
+    color: #3c7dd7;
+}
+
+.signWrap {
+    display: flex;
+    justify-content: space-between;
+    height: 60px;
+    flex-direction: column;
+}
+
+.doubleWrap {
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.footerWrapper{
+    display: flex;
+}
+
+.trustedBy{
+     border-radius: 40px;
+    width: 90px;
+    height: 90px;
+
+}
+
+.footer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.footer img{
+    margin-right: 10px;
+}
+
+.footer h1{
+    font-size: 15px;
+    color: #686868;
+}
