@@ -5,8 +5,23 @@ import settingsSign from "../images/other/settings.png";
 import map from '../images/card/map.png'
 import chip from '../images/card/chip.png'
 import visa from '../images/card/visa.png'
+import axios from "axios";
+import Cookies from "js-cookie";
 
-const Body = () => {
+const Card = () => {
+
+
+
+
+
+
+
+
+
+
+
+
+
   return (
     <Wrap className={styles.cardWrapper}>
       <div className={styles.titleWrapper}>
@@ -53,4 +68,4 @@ const Body = () => {
   );
 };
 
-export default Body;
+export default Card;

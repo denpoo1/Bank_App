@@ -5,8 +5,9 @@ import Cookies from "js-cookie";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [userId, setUserId] = useState(null);
+    const [userId, setUserId] = useState(null);
   const [username, setUsername] = useState(""); // Добавили состояние для хранения юзернейма
+  const [userData, setUserData] = useState(null); // Добавили состояние для хранения данных пользователя
 
   useEffect(() => {
     // Получаем токен из куки
@@ -48,7 +49,28 @@ const Header = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  useEffect(() => {
+    // Получаем токен из куки
+    const tokenFromCookie = Cookies.get("token");
 
+    if (tokenFromCookie && userId) {
+      // Выполняем GET-запрос для получения данных пользователя по его идентификатору
+      axios
+        .get(`http://localhost:8080/customers/${userId}`, {
+          headers: {
+            Authorization: `Bearer ${tokenFromCookie}`,
+          },
+        })
+        .then((response) => {
+          // Устанавливаем данные пользователя в состояние
+          console.log(response.data)
+          setUserData(response.data);
+        })
+        .catch((error) => {
+          console.error("Error fetching user data:", error);
+        });
+    }
+  }, [userId]); // Эффект срабатывает при изменении userId
   
   return (
     <div className={styles.header}>
