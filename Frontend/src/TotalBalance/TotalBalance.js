@@ -1,23 +1,38 @@
 import React, { useState, useEffect } from "react";
 import styles from "./TotalBalance.module.css";
 import Wrap from "../Wrap/Wrap";
+import axios from "axios";
+import Cookies from "js-cookie";
 
-const TotalBalance = () => {
-  // Sample data for income and expenses
-  const [income, setIncome] = useState(400);
-  const [expenses, setExpenses] = useState(5000);
+
+const TotalBalance = ({ cardId }) => {
+  const [balance, setBalance] = useState(0);
+  const [income, setIncome] = useState(0);
+  const [expenses, setExpenses] = useState(0);
   const [percentage, setPercentage] = useState(0);
   const [isPositive, setIsPositive] = useState(false);
-
   useEffect(() => {
-    // Calculate the percentage
-    const calculatedPercentage =
-      expenses === 0
-        ? income * 100
-        : (((income - expenses) / expenses) * 100).toFixed(2);
-    setPercentage(calculatedPercentage);
-    setIsPositive(calculatedPercentage >= 0);
-  }, [income, expenses]);
+    const token = Cookies.get('token');
+    const headers = {
+      Authorization: `Bearer ${token}`
+    };
+    console.log(cardId)
+
+    // Здесь используем получение баланса для конкретной карты по её айди
+    axios.get(`http://localhost:8080/credit-cards/${cardId}`, { headers })
+      .then(response => {
+        const cardData = response.data;
+        setBalance(cardData.balance);
+        setIncome(cardData.income);
+        setExpenses(cardData.expenses);
+        const calculatedPercentage = (cardData.income - cardData.expenses) / cardData.expenses * 100;
+        setPercentage(calculatedPercentage);
+        setIsPositive(calculatedPercentage >= 0);
+      })
+      .catch(error => {
+        console.error('Произошла ошибка при получении данных о балансе', error);
+      });
+  }, [cardId]);
 
   return (
     <Wrap className={styles.wrapperTotalBAlance}>
@@ -25,7 +40,7 @@ const TotalBalance = () => {
       <h1 className={styles.amountTitle}>Balance</h1>
       <div className={styles.amountWrapper}>
         <span className={styles.amount}>
-          $120<span>.20</span>
+          ${balance.toFixed(2)}
         </span>
         <div
           className={styles.amountPercentageWrapper}
@@ -43,7 +58,7 @@ const TotalBalance = () => {
             </span>
           ) : null}
           <span className={styles.amountPercentage}>
-            {percentage !== 0 ? Math.abs(percentage) + "%" : "N/A"}
+            {percentage !== 0 ? Math.abs(percentage).toFixed(2) + "%" : "N/A"}
           </span>
         </div>
       </div>
@@ -53,7 +68,7 @@ const TotalBalance = () => {
       </div>
     </Wrap>
 
-    
+
   );
 };
 
