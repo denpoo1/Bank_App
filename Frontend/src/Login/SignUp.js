@@ -102,44 +102,44 @@ const Signup = () => {
       console.log(`+${phoneCode}${trimmedPhone}`)
 
       Cookies.set('token', response.data.token);
-// Get customerId by making a GET request to /customers
-const customersResponse = await axios.get('http://localhost:8080/customers', {
-      headers: {
-        Authorization: `Bearer ${response.data.token}`, // Use the token from the signup response
-      },
-    });
+      // Get customerId by making a GET request to /customers
+      const customersResponse = await axios.get('http://localhost:8080/customers', {
+        headers: {
+          Authorization: `Bearer ${response.data.token}`, // Use the token from the signup response
+        },
+      });
 
-    // Find the customer with the matching username
-    const customerWithMatchingUsername = customersResponse.data.find(
-      (customer) => customer.username === trimmedUsername
-    );
+      // Find the customer with the matching username
+      const customerWithMatchingUsername = customersResponse.data.find(
+        (customer) => customer.username === trimmedUsername
+      );
 
-    if (!customerWithMatchingUsername) {
-      // If the user with the entered username is not found
-      setError(new Error('User with the entered username not found'));
-      return;
-    }
+      if (!customerWithMatchingUsername) {
+        // If the user with the entered username is not found
+        setError(new Error('User with the entered username not found'));
+        return;
+      }
 
-    // Now you have the user ID of the customer being registered
-    const userId = customerWithMatchingUsername.id;
+      // Now you have the user ID of the customer being registered
+      const userId = customerWithMatchingUsername.id;
 
-    // Create an account using userId
-    const accountData = {
-      date: new Date().toISOString(),
-      customerId: userId,
-      transactionRoundingPercentage: 0,
-    };
+      // Create an account using userId
+      const accountData = {
+        date: new Date().toISOString(),
+        customerId: userId,
+        transactionRoundingPercentage: 0,
+      };
 
-    const accountResponse = await axios.post('http://localhost:8080/accounts', accountData, {
-      headers: {
-        Authorization: `Bearer ${response.data.token}`, // Use the token from the signup response
-      },
-    });
+      const accountResponse = await axios.post('http://localhost:8080/accounts', accountData, {
+        headers: {
+          Authorization: `Bearer ${response.data.token}`, // Use the token from the signup response
+        },
+      });
 
-    console.log('Account created:', accountResponse.data);
+      console.log('Account created:', accountResponse.data);
 
-    // Redirect to the login page after successful signup
-    navigate('/');
+      // Redirect to the login page after successful signup
+      navigate('/');
     } catch (error) {
       if (error.response && error.response.status === 400) {
         setError(new Error(error.response.data)); // Set the error message from the server response
