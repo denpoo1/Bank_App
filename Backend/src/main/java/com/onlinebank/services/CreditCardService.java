@@ -7,6 +7,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -54,5 +55,9 @@ public class CreditCardService {
         existingCreditCardModel.setAccountModel(updatedCreditCardModel.getAccountModel());
 
         creditCardRepository.save(existingCreditCardModel);
+    }
+
+    public CreditCardModel getCreditCardByCardNumber (BigDecimal cardNumber) {
+        return creditCardRepository.findCreditCardModelByCardNumber(cardNumber);
     }
 }
