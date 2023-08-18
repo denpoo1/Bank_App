@@ -63,7 +63,6 @@ const Header = () => {
         })
         .then((response) => {
           // Устанавливаем данные пользователя в состояние
-          console.log(response.data)
           setUserData(response.data);
         })
         .catch((error) => {
