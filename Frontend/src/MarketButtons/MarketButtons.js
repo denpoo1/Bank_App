@@ -58,12 +58,14 @@ const MarketButtons = () => {
                     // Convert the amount to cents if it's in dollars
     
                     // Send the payment request
+                    console.log(typeof(from_account_id))
+                    console.log(typeof(to_account_id))
+                    console.log(typeof(+amount))
                     const paymentData = {
-                        from_account_id,
-                        to_account_id,
-                        amount: amount
+                        from_card_id: from_account_id,
+                        to_card_id: to_account_id,
+                        amount: +amount
                     };
-                    console.log(amount)
                     const paymentResponse = await axios.post('http://localhost:8080/payments', paymentData, { headers });
                     setError(null);
                     console.log('Payment successful:', paymentResponse.data);
