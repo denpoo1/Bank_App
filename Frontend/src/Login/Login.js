@@ -1,6 +1,7 @@
 import styles from './Login.module.css'
 import LeftSideLogin from './LeftSideLogin/LeftSideLogin';
 import RightSideLogin from './RightSideLogin/RightSideLogin';
+import Cookies from 'js-cookie';
 
 
 const Login = () => {
