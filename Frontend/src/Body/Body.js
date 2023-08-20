@@ -36,11 +36,17 @@ const Body = () => {
             });
     }, []); // Empty dependency array to run the effect only once
 
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const handleModalToggle = () => {
+        setIsModalOpen(!isModalOpen);
+    };
     return (
         <BodyWrap>
             <div className={styles.firstRow}>
                 <TotalBalance cardId={selectedCardId} />
-                <MarketButtons />
+                <MarketButtons onModalToggle={handleModalToggle} />
             </div>
 
             <div className={styles.secondRow}>

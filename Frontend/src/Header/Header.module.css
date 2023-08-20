@@ -1,6 +1,5 @@
 .header {
-  z-index: 1;
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 300px;
     /* Учитываем ширину Sidebar */
@@ -49,8 +48,6 @@
 }
 
 .profileButton {
-  position: relative;
-  z-index: 1;
   width: 180px;
   height: 40px;
   border-radius: 20px;
@@ -58,7 +55,6 @@
   display: flex; /* Use flexbox to control the positioning of the spans */
   align-items: center; /* Center items vertically */
   justify-content: space-between; /* Space items evenly along the container */
-  padding-left: 45px; /* To make space for ::before pseudo-element */
 }
 .profileButton span:first-child {
   font-size: 16px;
@@ -70,22 +66,8 @@
 .profileButton span:last-child {
   font-size: 20px;
   color: white;
-  margin-left: auto;
 }
-  
-  .profileButton::before {
-    content: ""; /* Очищаем содержимое псевдоэлемента, чтобы не отображался текст */
-    display: block;
-    position: absolute;
-    top: 5px;
-    left: 5px;
-    height: 30px;
-    width: 30px;
-    background-image: url("../images/logo/logo.jpg");
-    background-repeat: no-repeat;
-    background-size: cover;
-    border-radius: 50%;
-  }
+
   
 
   
@@ -134,5 +116,25 @@
 }
 
 .option:hover {
-  background-color: #082e66; /* Цвет фона при наведении курсора на опцию */
+  background-color: #082e66; /* Цвёет фона при наведении курсора на опцию */
+}
+
+
+.userLogo{
+  width: 25px;
+  height: 25px;
+  border-radius: 15px;
+}
+
+.avatarAndName {
+  display: flex;
+  align-items: center;
+}
+
+.username {
+  margin-left: 8px;
+}
+
+.dropdownIcon {
+  margin-left: 8px;
 }

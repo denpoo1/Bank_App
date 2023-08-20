@@ -1,46 +1,233 @@
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300&display=swap');
 
-.marketButtonsWrapper{
-    border-radius: 20px;
+.marketButtonsWrapper {
+  border-radius: 20px;
 }
 
-.buttonsWrapper{
-    width: 700px;
-    display: flex;
-    justify-content: space-between;
+.buttonsWrapper {
+  width: 700px;
+  display: flex;
+  justify-content: space-between;
 }
 
 .wrapForMarketElement {
-    display: flex;
-    flex-direction: column;
-    padding: 10px;
-    margin-top: 20px;
-    background-color: transparent;
-    position: relative; /* Required for positioning the ::after pseudo-element */
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  margin-top: 20px;
+  background-color: transparent;
+  position: relative;
+  /* Required for positioning the ::after pseudo-element */
+  align-items: center;
 }
-  
-  .wrapForMarketElement img {
-    width: 50px;
-    height: 50px;
-    margin-bottom: 5px;
-  }
-  
-  .wrapForMarketElement span {
-    font-family: 'Quicksand', sans-serif;  
-}
-  
-  .wrapForMarketElement::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    right: -10px; /* Adjust the value based on your design */
-    width: 1px; /* Width of the vertical bar */
-    height: 100%; /* Set the height to 100% to match the button height */
-    background-color: var(--separator); /* Color of the vertical bar */
-  }
 
-  .wrapForMarketElement:last-child::after {
-   width: 0px; /* Width of the vertical bar */
-   }
-  
+.wrapForMarketElement img {
+  width: 50px;
+  height: 50px;
+  margin-bottom: 5px;
+}
+
+.wrapForMarketElement span {
+  font-family: 'Quicksand', sans-serif;
+}
+
+.wrapForMarketElement::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: -10px;
+  /* Adjust the value based on your design */
+  width: 1px;
+  /* Width of the vertical bar */
+  height: 100%;
+  /* Set the height to 100% to match the button height */
+  background-color: var(--separator);
+  /* Color of the vertical bar */
+}
+
+.wrapForMarketElement:last-child::after {
+  width: 0px;
+  /* Width of the vertical bar */
+}
+
+.withdrawTitle {
+  color: var(--text-color);
+  font-size: 14px;
+}
+
+.withdrawWrapper {
+  border-radius: 10px;
+  margin-bottom: 20px;
+  padding: 15px;
+  background-color: #181818;
+}
+
+.depForm {}
+
+
+.cardWrapper {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.cardImage {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  align-items: flex-end;
+  padding: 1px 5px;
+  text-align: end;
+  border-radius: 5px;
+  background-image: linear-gradient(45deg, #0045c7, #ff2c7d);
+  width: 75px;
+  height: 45px;
+}
+
+.cardImage span {
+  font-family: 'Quicksand';
+}
+
+.cardImage img {
+  width: 30px;
+  margin-bottom: 3px;
+}
+
+.cardNameAndWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-left: 15px;
+}
+
+.cardNameAndWrapper span:first-child {
+  font-family: 'Quicksand';
+}
+
+
+
+.cardList {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: -webkit-fill-available;
+  background-color: #181818;
+  box-shadow: 0px -2px 10px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+
+}
+
+.cardListElementWrapper {
+  padding: 20px;
+}
+
+
+.cardListItem {
+  margin-top: 17px;
+  display: flex;
+  cursor: pointer;
+  position: relative;
+}
+
+
+
+
+
+
+.backdropVisible {
+  display: block;
+}
+
+.backdrop {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  /* Здесь можно настроить прозрачность */
+  backdrop-filter: blur(5px);
+  /* Здесь можно настроить степень размытия */
+  z-index: 1000;
+  /* Поднимите значение z-index, чтобы оверлей находился над другими элементами */
+}
+
+
+.qwe {
+  backdrop-filter: blur(5px);
+
+  /* Здесь можно настроить степень размытия */
+}
+
+
+.cardTitleAndCloseButton {
+  display: flex;
+  justify-content: space-between;
+}
+
+.cardTitleAndCloseButton span:last-child {
+  cursor: pointer;
+}
+
+.inputForCardNumber{
+  background-color: transparent;
+  border: 2px solid #757474;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  color: var(--text-color);
+  height: 45px;
+  outline: none;
+  transition: background-color 0.5s, box-shadow 0.5s;
+}
+
+.inputForCardNumber:focus {
+  background-color: rgba(0, 86, 179, 0.2);
+  /* Цвет фона при ховере */
+  box-shadow: 0 0 20px rgba(0, 86, 179, 0.5);
+  /* Расплывчатый эффект */
+}
+
+.errorText{
+  color: red;
+}
+
+.amountTitle{
+  color: var(--text-color);
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+.inputForAmount{
+  font-family: 'Poppins';
+  background-color: #4c4b4b;
+  border-color: transparent;
+  border-radius: 8px;
+  color: var(--text-color);
+  height: 45px;
+  outline: none;
+}
+
+.formButton {
+  margin-top: 39px;
+  cursor: pointer;
+  pointer-events: none;
+  text-transform: uppercase;
+  background-color: #767676;
+  border-radius: 8px;
+  width: 100%;
+  height: 50px;
+  transition: background-color 0.5s, box-shadow 0.5s;
+  /* Add transition here */
+}
+
+.formButtonActive {
+  pointer-events: all;
+  background-color: #0056b3;
+}
+
+.errorMessage {
+  color: red;
+  font-size: 14px;
+  margin-top: 8px;
+}
