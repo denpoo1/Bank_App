@@ -22,12 +22,12 @@ const TotalBalance = ({ cardId }) => {
     axios.get(`http://localhost:8080/credit-cards/${cardId}`, { headers })
       .then(response => {
         const cardData = response.data;
+        console.log(cardData)
         setBalance(cardData.balance);
-        setIncome(cardData.income);
-        setExpenses(cardData.expenses);
-        const calculatedPercentage = (cardData.income - cardData.expenses) / cardData.expenses * 100;
-        setPercentage(calculatedPercentage);
-        setIsPositive(calculatedPercentage >= 0);
+        /* вот сюда вот надо запихнуть эту залупу с експенсес и инкам */
+        // const calculatedPercentage = (cardData.income - cardData.expenses) / cardData.expenses * 100;
+        // setPercentage(calculatedPercentage);
+        // setIsPositive(calculatedPercentage >= 0);
       })
       .catch(error => {
         console.error('Произошла ошибка при получении данных о балансе', error);

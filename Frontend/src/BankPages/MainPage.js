@@ -11,7 +11,7 @@ function MainPage() {
 
       <Sidebar/>
       <Header/>
-    <Body />
+    <Body/>
       </section>
   );
 }
