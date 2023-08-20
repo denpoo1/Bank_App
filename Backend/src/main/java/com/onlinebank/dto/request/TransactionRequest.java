@@ -16,8 +16,6 @@ public class TransactionRequest {
     @PositiveOrZero(message = "Amount must be a positive or zero value.")
     private int amount;
 
-    private int leftoverAmount;
-
     private int toAccountId;
 
     private int fromAccountId;
@@ -26,7 +24,6 @@ public class TransactionRequest {
         TransactionModel transactionModel = new TransactionModel();
         transactionModel.setDate(this.date);
         transactionModel.setAmount(this.amount);
-        transactionModel.setLeftoverAmount(this.leftoverAmount);
         transactionModel.setToAccountId(this.toAccountId);
         transactionModel.setFromAccountId(this.fromAccountId);
         return transactionModel;

@@ -36,36 +36,24 @@ public class PaymentController {
     @ApiResponse(responseCode = "201", description = "Платеж успешно выполнен", content = @Content(schema = @Schema(implementation = PaymentResponse.class)))
     @ApiResponse(responseCode = "400", description = "Ошибка в запросе")
     public ResponseEntity<Object> makePayment(@RequestBody @Valid PaymentRequest paymentRequest) {
-        CreditCardModel creditCardModelFrom = creditCardService.getCreditCardByCardNumber(paymentRequest.getFrom_card_number());
-        CreditCardModel creditCardModelTo = creditCardService.getCreditCardByCardNumber(paymentRequest.getTo_card_number());
+        CreditCardModel creditCardModelFrom = creditCardService.getCreditCardById(paymentRequest.getFrom_card_id());
+        CreditCardModel creditCardModelTo = creditCardService.getCreditCardById(paymentRequest.getTo_card_id());
         if (creditCardModelFrom == null) {
-            return ResponseEntity.badRequest().body("Credit card with card number " + paymentRequest.getFrom_card_number() + " not found.");
+            return ResponseEntity.badRequest().body("Credit card with card id " + paymentRequest.getFrom_card_id() + " not found.");
         } else if (creditCardModelTo == null) {
-            return ResponseEntity.badRequest().body("Credit card with card number " + paymentRequest.getTo_card_number() + " not found.");
+            return ResponseEntity.badRequest().body("Credit card with card id " + paymentRequest.getTo_card_id() + " not found.");
         }
         if (paymentRequest.getAmount() > creditCardModelFrom.getBalance() + creditCardModelFrom.getCreditLimit()) {
             return ResponseEntity.badRequest().body("Insufficient funds in the 'from' account.");
         }
-        creditCardModelFrom.setBalance(creditCardModelFrom.getBalance() - paymentRequest.getAmount());
-        creditCardModelTo.setBalance(creditCardModelTo.getBalance() + paymentRequest.getAmount());
+        int amountFromCard = creditCardModelFrom.getBalance() - paymentRequest.getAmount();
+        int amountToCard = creditCardModelTo.getBalance() + paymentRequest.getAmount();
+        creditCardModelFrom.setBalance(amountFromCard);
+        creditCardModelTo.setBalance(amountToCard);
         creditCardService.saveCreditCard(creditCardModelFrom);
         creditCardService.saveCreditCard(creditCardModelTo);
         TransactionModel transactionModel = paymentRequest.toTransaction(creditCardModelFrom, creditCardModelTo);
         transactionService.saveTransaction(transactionModel);
-        return ResponseEntity.status(HttpStatus.CREATED).body(new PaymentResponse(transactionModel));
-    }
-
-
-    @GetMapping("/{transaction_id}")
-    @Operation(summary = "Получить информацию о платеже", description = "Получает информацию о платеже по его уникальному ID")
-    @ApiResponse(responseCode = "200", description = "Информация о платеже успешно получена", content = @Content(schema = @Schema(implementation = TransactionModel.class)))
-    @ApiResponse(responseCode = "404", description = "Платеж с указанным ID не найден")
-    public ResponseEntity<Object> gePayment(@PathVariable("transaction_id") int transactionId) {
-        TransactionModel transactionModel = transactionService.getTransactionById(transactionId);
-        if (transactionModel != null) {
-            return ResponseEntity.ok(transactionModel);
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Payment with id " + transactionId + " not found");
-        }
+        return ResponseEntity.status(HttpStatus.CREATED).body(new PaymentResponse(transactionModel, amountFromCard, paymentRequest.getAmount()));
     }
 }
