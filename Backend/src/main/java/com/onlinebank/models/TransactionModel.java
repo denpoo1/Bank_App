@@ -27,19 +27,19 @@ public class TransactionModel {
     @Column(name = "amount")
     private Integer amount;
 
-    @Column(name = "to_account_id")
-    private int to_card_id;
+    @Column(name = "to_card_id")
+    private int toCardId;
 
-    @Column(name = "credit_card_id")
-    private int from_card_Id;
+    @Column(name = "from_card_id")
+    private int fromCardId;
 
     @ManyToMany(mappedBy = "transactionModels")
     private List<PaymentCategoryModel> paymentCategoryModelList;
 
-    public TransactionModel(Date date, Integer amount, int to_card_id, int from_card_Id) {
+    public TransactionModel(Date date, Integer amount, int toCardId, int fromCardId) {
         this.date = date;
         this.amount = amount;
-        this.to_card_id = to_card_id;
-        this.from_card_Id = from_card_Id;
+        this.toCardId = toCardId;
+        this.fromCardId = fromCardId;
     }
 }

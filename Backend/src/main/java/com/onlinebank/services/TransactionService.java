@@ -47,8 +47,8 @@ public class TransactionService {
 
             existingTransactionModel.setDate(updatedTransactionModel.getDate());
             existingTransactionModel.setAmount(updatedTransactionModel.getAmount());
-            existingTransactionModel.setTo_card_id(updatedTransactionModel.getTo_card_id());
-            existingTransactionModel.setFrom_card_Id(updatedTransactionModel.getFrom_card_Id());
+            existingTransactionModel.setToCardId(updatedTransactionModel.getToCardId());
+            existingTransactionModel.setFromCardId(updatedTransactionModel.getFromCardId());
 
             transactionRepository.save(existingTransactionModel);
         } else {
@@ -58,15 +58,15 @@ public class TransactionService {
 
     public List<TransactionModel> getAccountTransactions(int accountId) {
         List<TransactionModel> transactionModels = new ArrayList<>();
-        transactionModels.addAll(transactionRepository.findAllByToAccountId(accountId));
-        transactionModels.addAll(transactionRepository.findAllByFromAccountId(accountId));
+        transactionModels.addAll(transactionRepository.findAllByToCardId(accountId));
+        transactionModels.addAll(transactionRepository.findAllByFromCardId(accountId));
         return transactionModels;
     }
 
     public List<TransactionModel> getAccountTransactionsByDays(int toAccountId, int fromAccountId, Date startDay, Date endDay) {
         List<TransactionModel> transactionModels = new ArrayList<>();
-        transactionModels.addAll(transactionRepository.findAllByToAccountIdAndDateBetween(toAccountId, startDay, endDay));
-        transactionModels.addAll(transactionRepository.findAllByFromAccountIdAndDateBetween(fromAccountId, startDay, endDay));
+        transactionModels.addAll(transactionRepository.findAllByToCardIdAndDateBetween(toAccountId, startDay, endDay));
+        transactionModels.addAll(transactionRepository.findAllByFromCardIdAndDateBetween(fromAccountId, startDay, endDay));
         return transactionModels;
     }
 }

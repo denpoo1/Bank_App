@@ -24,8 +24,8 @@ public class TransactionRequest {
         TransactionModel transactionModel = new TransactionModel();
         transactionModel.setDate(this.date);
         transactionModel.setAmount(this.amount);
-        transactionModel.setTo_card_id(this.to_card_id);
-        transactionModel.setFrom_card_Id(this.from_card_id);
+        transactionModel.setToCardId(this.to_card_id);
+        transactionModel.setFromCardId(this.from_card_id);
         return transactionModel;
     }
 }

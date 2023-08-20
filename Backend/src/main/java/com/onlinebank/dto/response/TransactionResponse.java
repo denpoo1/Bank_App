@@ -20,7 +20,7 @@ public class TransactionResponse {
         this.id = transactionModel.getId();
         this.date = transactionModel.getDate();
         this.amount = transactionModel.getAmount();
-        this.toAccountId = transactionModel.getTo_card_id();
-        this.fromAccountId = transactionModel.getFrom_card_Id();
+        this.toAccountId = transactionModel.getToCardId();
+        this.fromAccountId = transactionModel.getFromCardId();
     }
 }

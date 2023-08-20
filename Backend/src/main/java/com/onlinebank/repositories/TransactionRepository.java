@@ -13,12 +13,21 @@ import java.util.List;
 @Repository
 public interface TransactionRepository extends JpaRepository<TransactionModel, Integer> {
 
-    List<TransactionModel> findAllByToAccountId(int toAccountId);
+    List<TransactionModel> findAllByToCardId(int to_card_id);
 
-    List<TransactionModel> findAllByFromAccountId(int fromAccountId);
+    List<TransactionModel> findAllByFromCardId(int from_card_Id);
 
-    List<TransactionModel> findAllByToAccountIdAndDateBetween(int toAccountId, Date startDate, Date endDate);
+    List<TransactionModel> findAllByToCardIdAndDateBetween(int to_card_id, Date startDate, Date endDate);
 
-    List<TransactionModel> findAllByFromAccountIdAndDateBetween(int fromAccountId, Date startDate, Date endDate);
+    List<TransactionModel> findAllByFromCardIdAndDateBetween(int from_card_Id, Date startDate, Date endDate);
 
 }
+
+//    List<TransactionModel> findAllByTo_card_id(int to_card_id);
+//
+//    List<TransactionModel> findAllByFrom_card_Id(int from_card_Id);
+//
+//    List<TransactionModel> findAllByTo_card_idAndDateBetween(int to_card_id, Date startDate, Date endDate);
+//
+//    List<TransactionModel> findAllByFrom_card_IdAndDateBetween(int from_card_Id, Date startDate, Date endDate);
+
