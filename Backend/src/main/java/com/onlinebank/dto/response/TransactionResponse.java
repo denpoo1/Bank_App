@@ -13,7 +13,6 @@ public class TransactionResponse {
     private Integer id;
     private Date date;
     private int amount;
-    private int leftoverAmount;
     private int toAccountId;
     private int fromAccountId;
 
@@ -21,7 +20,6 @@ public class TransactionResponse {
         this.id = transactionModel.getId();
         this.date = transactionModel.getDate();
         this.amount = transactionModel.getAmount();
-        this.leftoverAmount = transactionModel.getLeftoverAmount();
         this.toAccountId = transactionModel.getToAccountId();
         this.fromAccountId = transactionModel.getFromAccountId();
     }

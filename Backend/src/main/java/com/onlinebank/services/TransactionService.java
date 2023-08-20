@@ -47,7 +47,6 @@ public class TransactionService {
 
             existingTransactionModel.setDate(updatedTransactionModel.getDate());
             existingTransactionModel.setAmount(updatedTransactionModel.getAmount());
-            existingTransactionModel.setLeftoverAmount(updatedTransactionModel.getLeftoverAmount());
             existingTransactionModel.setToAccountId(updatedTransactionModel.getToAccountId());
             existingTransactionModel.setFromAccountId(updatedTransactionModel.getFromAccountId());
 

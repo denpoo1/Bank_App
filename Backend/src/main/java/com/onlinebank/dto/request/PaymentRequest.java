@@ -2,9 +2,13 @@ package com.onlinebank.dto.request;
 
 import com.onlinebank.models.CreditCardModel;
 import com.onlinebank.models.TransactionModel;
+import jakarta.validation.constraints.DecimalMax;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -12,9 +16,8 @@ import java.util.Date;
  */
 @Data
 public class PaymentRequest {
-
-    private int from_account_id;
-    private int to_account_id;
+    private int from_card_id;
+    private int to_card_id;
     @Positive
     private int amount;
 
@@ -22,7 +25,6 @@ public class PaymentRequest {
         TransactionModel transactionModel = new TransactionModel();
         transactionModel.setDate(new Date());
         transactionModel.setAmount(this.amount);
-        transactionModel.setLeftoverAmount(cardFromPayment.getBalance());
         transactionModel.setToAccountId(cardToPayment.getAccountModel().getId());
         transactionModel.setFromAccountId(cardFromPayment.getAccountModel().getId());
         return transactionModel;

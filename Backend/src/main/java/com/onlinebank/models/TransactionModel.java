@@ -27,9 +27,6 @@ public class TransactionModel {
     @Column(name = "amount")
     private Integer amount;
 
-    @Column(name = "leftover_amount")
-    private int leftoverAmount;
-
     @Column(name = "to_account_id")
     private int toAccountId;
 
@@ -39,10 +36,9 @@ public class TransactionModel {
     @ManyToMany(mappedBy = "transactionModels")
     private List<PaymentCategoryModel> paymentCategoryModelList;
 
-    public TransactionModel(Date date, Integer amount, Integer leftoverAmount, int toAccountId, int fromAccountId) {
+    public TransactionModel(Date date, Integer amount, int toAccountId, int fromAccountId) {
         this.date = date;
         this.amount = amount;
-        this.leftoverAmount = leftoverAmount;
         this.toAccountId = toAccountId;
         this.fromAccountId = fromAccountId;
     }
