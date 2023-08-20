@@ -47,8 +47,8 @@ public class TransactionService {
 
             existingTransactionModel.setDate(updatedTransactionModel.getDate());
             existingTransactionModel.setAmount(updatedTransactionModel.getAmount());
-            existingTransactionModel.setToAccountId(updatedTransactionModel.getToAccountId());
-            existingTransactionModel.setFromAccountId(updatedTransactionModel.getFromAccountId());
+            existingTransactionModel.setTo_card_id(updatedTransactionModel.getTo_card_id());
+            existingTransactionModel.setFrom_card_Id(updatedTransactionModel.getFrom_card_Id());
 
             transactionRepository.save(existingTransactionModel);
         } else {
