@@ -21,8 +21,8 @@ public class PaymentRequest {
         TransactionModel transactionModel = new TransactionModel();
         transactionModel.setDate(new Date());
         transactionModel.setAmount(this.amount);
-        transactionModel.setToCardId(cardToPayment.getAccountModel().getId());
-        transactionModel.setFromCardId(cardFromPayment.getAccountModel().getId());
+        transactionModel.setToCardId(cardToPayment.getId());
+        transactionModel.setFromCardId(cardFromPayment.getId());
         return transactionModel;
     }
 }
