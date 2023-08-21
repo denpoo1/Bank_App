@@ -15,6 +15,7 @@ public class CustomerResponse {
     private String email;
     private String address;
     private String username;
+    private String phone;
 
     public CustomerResponse(CustomerModel customerModel) {
         this.id = customerModel.getId();
@@ -23,5 +24,6 @@ public class CustomerResponse {
         this.email = customerModel.getEmail();
         this.address = customerModel.getAddress();
         this.username = customerModel.getUsername();
+        this.phone = customerModel.getPhone();
     }
 }

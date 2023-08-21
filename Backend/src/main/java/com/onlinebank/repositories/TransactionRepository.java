@@ -2,6 +2,8 @@ package com.onlinebank.repositories;
 
 import com.onlinebank.models.TransactionModel;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.Date;
@@ -13,21 +15,16 @@ import java.util.List;
 @Repository
 public interface TransactionRepository extends JpaRepository<TransactionModel, Integer> {
 
-    List<TransactionModel> findAllByToCardId(int to_card_id);
+    @Query("SELECT t FROM TransactionModel t WHERE t.toCardId = :toCardId")
+    List<TransactionModel> findAllByToCardId(@Param("toCardId") int toCardId);
 
-    List<TransactionModel> findAllByFromCardId(int from_card_Id);
+    @Query("SELECT t FROM TransactionModel t WHERE t.fromCardId = :fromCardId")
+    List<TransactionModel> findAllByFromCardId(@Param("fromCardId") int fromCardId);
 
-    List<TransactionModel> findAllByToCardIdAndDateBetween(int to_card_id, Date startDate, Date endDate);
+    @Query("SELECT t FROM TransactionModel t WHERE t.toCardId = :toCardId AND t.date BETWEEN :startDate AND :endDate")
+    List<TransactionModel> findAllByToCardIdAndDateBetween(@Param("toCardId") int toCardId, @Param("startDate") Date startDate, @Param("endDate") Date endDate);
 
-    List<TransactionModel> findAllByFromCardIdAndDateBetween(int from_card_Id, Date startDate, Date endDate);
-
+    @Query("SELECT t FROM TransactionModel t WHERE t.fromCardId = :fromCardId AND t.date BETWEEN :startDate AND :endDate")
+    List<TransactionModel> findAllByFromCardIdAndDateBetween(@Param("fromCardId") int fromCardId, @Param("startDate") Date startDate, @Param("endDate") Date endDate);
 }
-
-//    List<TransactionModel> findAllByTo_card_id(int to_card_id);
-//
-//    List<TransactionModel> findAllByFrom_card_Id(int from_card_Id);
-//
-//    List<TransactionModel> findAllByTo_card_idAndDateBetween(int to_card_id, Date startDate, Date endDate);
-//
-//    List<TransactionModel> findAllByFrom_card_IdAndDateBetween(int from_card_Id, Date startDate, Date endDate);
 
