@@ -33,13 +33,17 @@ public class TransactionModel {
     @Column(name = "from_card_id")
     private int fromCardId;
 
+    @Column
+    private String transferType;
+
     @ManyToMany(mappedBy = "transactionModels")
     private List<PaymentCategoryModel> paymentCategoryModelList;
 
-    public TransactionModel(Date date, Integer amount, int toCardId, int fromCardId) {
+    public TransactionModel(Date date, Integer amount, int toCardId, int fromCardId, String transferType) {
         this.date = date;
         this.amount = amount;
         this.toCardId = toCardId;
         this.fromCardId = fromCardId;
+        this.transferType = transferType;
     }
 }

@@ -6,6 +6,7 @@ import com.onlinebank.models.CreditCardModel;
 import com.onlinebank.models.TransactionModel;
 import com.onlinebank.services.CreditCardService;
 import com.onlinebank.services.TransactionService;
+import com.onlinebank.utils.TransferTypeEnum;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -53,6 +54,7 @@ public class PaymentController {
         creditCardService.saveCreditCard(creditCardModelFrom);
         creditCardService.saveCreditCard(creditCardModelTo);
         TransactionModel transactionModel = paymentRequest.toTransaction(creditCardModelFrom, creditCardModelTo);
+        transactionModel.setTransferType(TransferTypeEnum.CARD_TO_CARD.toString());
         transactionService.saveTransaction(transactionModel);
         return ResponseEntity.status(HttpStatus.CREATED).body(new PaymentResponse(transactionModel, amountFromCard, paymentRequest.getAmount()));
     }

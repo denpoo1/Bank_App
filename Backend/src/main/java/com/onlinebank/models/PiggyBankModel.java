@@ -26,6 +26,12 @@ public class PiggyBankModel {
     @Column(name = "amount")
     private Integer amount;
 
+    @Column
+    private int limitAmount;
+
+    @Column
+    private String description;
+
     @OneToOne
     @JoinColumn(name = "account_id", referencedColumnName = "id")
     private AccountModel accountModel;

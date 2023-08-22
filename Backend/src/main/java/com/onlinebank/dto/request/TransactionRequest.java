@@ -20,12 +20,15 @@ public class TransactionRequest {
 
     private int from_card_id;
 
+    private String transfer_type;
+
     public TransactionModel toTransaction() {
         TransactionModel transactionModel = new TransactionModel();
         transactionModel.setDate(this.date);
         transactionModel.setAmount(this.amount);
         transactionModel.setToCardId(this.to_card_id);
         transactionModel.setFromCardId(this.from_card_id);
+        transactionModel.setTransferType(this.transfer_type);
         return transactionModel;
     }
 }

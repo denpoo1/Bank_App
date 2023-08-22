@@ -14,12 +14,16 @@ public class PiggyBankRequest {
     private Date createdAt;
     private int amount;
     private int accountID;
+    private int limit;
+    private String description;
 
     public PiggyBankModel toPiggyBank(AccountModel accountModel) {
         PiggyBankModel piggyBankModel = new PiggyBankModel();
         piggyBankModel.setAmount(this.amount);
         piggyBankModel.setAccountModel(accountModel);
         piggyBankModel.setCreatedAt(this.createdAt);
+        piggyBankModel.setLimitAmount(this.limit);
+        piggyBankModel.setDescription(this.description);
         return piggyBankModel;
     }
 }
