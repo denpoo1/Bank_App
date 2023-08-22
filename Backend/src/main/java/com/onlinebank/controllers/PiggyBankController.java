@@ -86,8 +86,6 @@ public class PiggyBankController {
         piggyBankService.savePiggyBank(piggyBankModel);
         return ResponseEntity.ok().body(new PiggyBankResponse(piggyBankModel));
     }
-
-    //todo создать транзакцию с тегом определенным
     @PostMapping("/{id}/withraw")
     @Operation(summary = "Снять средства с копилки", description = "Снимает указанную сумму с копилки")
     @ApiResponse(responseCode = "200", description = "Средства успешно сняты", content = @Content(schema = @Schema(implementation = PiggyBankResponse.class)))
@@ -114,8 +112,6 @@ public class PiggyBankController {
         }
 
     }
-
-    //todo создать транзакцию с тегом определенным
     @PostMapping("/{id}/deposit")
     @Operation(summary = "Внести средства на копилку", description = "Вносит указанную сумму на копилку")
     @ApiResponse(responseCode = "200", description = "Средства успешно внесены", content = @Content(schema = @Schema(implementation = PiggyBankResponse.class)))
