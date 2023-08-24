@@ -30,13 +30,14 @@ const RightSideLogin = () => {
 
       // Save the token in cookies for 1 day
       Cookies.set('token', token, { expires: 1 });
+      Cookies.set('password', password, { expires: 1 });
       Cookies.set('username', username, { expires: 1 });
       
 
       setError(null);
 
       // Redirect to the main page
-      navigate('/bank-page');
+      navigate('/home-page');
     } catch (error) {
       if (error.response && error.response.status === 400) {
         setError("Username is wrong");
