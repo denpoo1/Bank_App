@@ -1,0 +1,153 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap');
+
+.portfolioPageWrap {
+    position: fixed;
+    top: 20%;
+    width: 35%;
+    left: 40%;
+}
+
+.qwe {
+    position: relative;
+    /* Добавляем позиционирование для относительности */
+    border-radius: 20px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: visible;
+    /* Разрешаем содержимому выходить за пределы контейнера */
+    height: 100px;
+}
+
+.img {
+    position: absolute;
+    /* Абсолютное позиционирование для картинки */
+    width: 130px;
+    height: 130px;
+    top: -65px;
+    /* Половина высоты картинки (половина от 150px) */
+    left: 50%;
+    /* Положение по горизонтали */
+    transform: translateX(-50%);
+    /* Центрирование картинки */
+    border-radius: 100px;
+}
+
+
+.infWrapper {
+    height: 50px;
+    justify-content: space-between;
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.secElemProf {
+    border-radius: 20px;
+    margin-top: 20px;
+    padding: 25px 15px;
+}
+
+
+.enmailAndPhoneWrapper {
+    font-size: 15px;
+}
+
+.tableWrapper {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 16px;
+
+}
+
+
+.fullElemWrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+.apiElemWrapper {
+    width: 83%;
+    border-radius: 10px;
+    padding: 5px 10px;
+    border: 1px solid #808080;
+    background-color: #202020;
+    color: gray;
+    font-size: 15px;
+}
+
+.nameOfElem {
+    margin-right: 20px;
+}
+
+.tableWrapper:last-child {
+    margin-bottom: 0;
+}
+
+.editIcon {
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+    margin-left: 5px;
+}
+
+.divEdit {
+    display: flex;
+    width: 72%;
+    align-items: center;
+
+}
+
+.backdrop {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Здесь можно настроить прозрачность */
+    backdrop-filter: blur(5px);
+    /* Здесь можно настроить степень размытия */
+    z-index: 1000;
+    /* Поднимите значение z-index, чтобы оверлей находился над другими элементами */
+}
+
+.editWrapper {
+    height: 30%;
+    width: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.editWrapper input {
+    background-color: transparent;
+    border: 2px solid #757474;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    color: var(--text-color);
+    height: 45px;
+    outline: none;
+    width: 70%;
+    transition: background-color 0.5s, box-shadow 0.5s;
+}
+
+.editWrapper input:focus {
+    background-color: rgba(0, 86, 179, 0.2);
+    /* Цвет фона при ховере */
+    box-shadow: 0 0 20px rgba(0, 86, 179, 0.5);
+    /* Расплывчатый эффект */
+}
+
+.zxc{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.zxc button{
+    width: 70%;
+}

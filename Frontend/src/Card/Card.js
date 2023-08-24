@@ -19,6 +19,8 @@ const Card = ({ onCardSelect }) => {
   const isOnFirstCard = currentCardIndex === 0;
   const isOnLastCard = currentCardIndex === cards.length - 1;
   const [userID, setUserID] = useState(null);
+  const [isLoadingCards, setIsLoadingCards] = useState(true);
+
 
   useEffect(() => {
     const token = Cookies.get('token');
@@ -132,7 +134,8 @@ const Card = ({ onCardSelect }) => {
         </button>
       </div>
       <div className={styles.container}>
-        {currentCard && (
+      {(
+          currentCard && (
           <div className={styles.cardButtonsContainer}>
             <button
               className={`${styles.cardButtons} ${styles.leftButton} ${isOnFirstCard ? styles.transparentButton : ""
@@ -180,7 +183,7 @@ const Card = ({ onCardSelect }) => {
               </button>
             )}
           </div>
-        )}
+        ))}
       </div>
     </Wrap>
   );

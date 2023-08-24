@@ -31,45 +31,43 @@ const MarketButtons = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault(); // Prevent form submission if it's not valid
-    
+
         if (isFormValid) {
             const token = Cookies.get('token');
             const headers = {
                 Authorization: `Bearer ${token}`
             };
-    
+
             try {
                 // Request to get all credit card numbers
                 const creditCardsResponse = await axios.get('http://localhost:8080/credit-cards', { headers });
                 const creditCardNumbers = creditCardsResponse.data.map(creditCard => creditCard.cardNumber);
-    
+
                 // Convert entered card number to an integer
                 const enteredCardNumber = parseInt(cardNumber.replace(/\D/g, ''), 10);
-    
+
                 // Check if the entered card number exists in the list of all credit card numbers
                 if (creditCardNumbers.includes(enteredCardNumber)) {
                     // Find the from_account_id (id of the selectedCard)
-                    const from_account_id = selectedCard.id;
-    
+                    const from_card_id = selectedCard.id;
+
                     // Find the to_account_id using the entered card number
                     const matchingCard = creditCardsResponse.data.find(creditCard => creditCard.cardNumber === enteredCardNumber);
-                    const to_account_id = matchingCard.id;
-    
+                    const to_card_id = matchingCard.id;
+
                     // Convert the amount to cents if it's in dollars
-    
+
                     // Send the payment request
-                    console.log(typeof(from_account_id))
-                    console.log(typeof(to_account_id))
-                    console.log(typeof(+amount))
                     const paymentData = {
-                        from_card_id: from_account_id,
-                        to_card_id: to_account_id,
-                        amount: +amount
+                        from_card_id,
+                        to_card_id,
+                        amount: amount
                     };
+                    console.log(amount)
                     const paymentResponse = await axios.post('http://localhost:8080/payments', paymentData, { headers });
                     setError(null);
                     console.log('Payment successful:', paymentResponse.data);
-    
+
                     // Reload the page after successful payment
                     window.location.reload();
                 } else {
@@ -80,7 +78,7 @@ const MarketButtons = () => {
             }
         }
     };
-    
+
 
 
     const handleCardNumberChange = (e) => {
@@ -100,11 +98,11 @@ const MarketButtons = () => {
     const marketButtons = [
         { img: deposit, text: "Deposit" },
         { img: deposit, text: "Send" },
-        { img: deposit, text: "kakaya_to" },
-        { img: deposit, text: "xuynya" },
-        { img: deposit, text: "xuy" },
-        { img: deposit, text: "ne_ebu" },
-        { img: deposit, text: "lox" },
+        { img: deposit, text: "Statisticks" },
+        { img: deposit, text: "Transaction" },
+        { img: deposit, text: "Piggy" },
+        { img: deposit, text: "Piggy" },
+        { img: deposit, text: "Piggy" },
     ];
 
     const [isDepositModalOpen, setIsDepositModalOpen] = useState(false);
@@ -221,7 +219,7 @@ const MarketButtons = () => {
                                     )}
                                 </div>
                             </div>
-                           
+
                             {isCardListOpen && (
                                 <animated.div
                                     className={`${styles.cardList} 
@@ -295,10 +293,10 @@ const MarketButtons = () => {
                             Submit
                         </button>
                         {error && (
-                                <p className={`${styles.errorText} ${styles.errorMessage}`}>
-                                    {error}
-                                </p>
-                            )}  
+                            <p className={`${styles.errorText} ${styles.errorMessage}`}>
+                                {error}
+                            </p>
+                        )}
                     </animated.form>
 
                 </Modal>

@@ -11,30 +11,40 @@ import Cookies from "js-cookie"; // Import Cookies
 const Body = () => {
     const [selectedCardId, setSelectedCardId] = useState(null);
 
+
     // Function to handle card selection
     const handleCardSelection = (cardId) => {
         setSelectedCardId(cardId);
     }
 
     useEffect(() => {
-        // Fetch user's cards data from the API
         const token = Cookies.get('token');
+        const username = Cookies.get('username');
         const headers = {
             Authorization: `Bearer ${token}`
         };
-
-        axios.get("http://localhost:8080/customers/84/credit-cards", { headers })
-            .then(response => {
-                const userCards = response.data; // Assuming the API returns an array of user cards
-                if (userCards.length > 0) {
-                    // Set the ID of the first card initially
-                    setSelectedCardId(userCards[0].id);
-                }
-            })
-            .catch(error => {
-                console.error('An error occurred while fetching user card data', error);
-            });
-    }, []); // Empty dependency array to run the effect only once
+        axios.get("http://localhost:8080/customers", { headers })
+        .then(response => {
+            const matchingUser = response.data.find(user => user.username === username);
+            
+            if (matchingUser) {
+                
+                axios.get(`http://localhost:8080/customers/${matchingUser.id}/credit-cards`, { headers })
+                    .then(response => {
+                        const userCards = response.data;
+                        if (userCards.length > 0) {
+                            setSelectedCardId(userCards[0].id);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('An error occurred while fetching user card data', error);
+                    });
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching customer data', error);
+        });
+    }, []);
 
 
     const [isModalOpen, setIsModalOpen] = useState(false);

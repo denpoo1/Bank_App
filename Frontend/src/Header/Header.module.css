@@ -68,6 +68,19 @@
   color: white;
 }
 
+  .profileButton::before {
+    content: ""; /* Очищаем содержимое псевдоэлемента, чтобы не отображался текст */
+    display: block;
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    height: 30px;
+    width: 30px;
+    background-image: url("../images/logo/liza2.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 50%;
+  }
   
 
   

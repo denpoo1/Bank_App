@@ -22,7 +22,6 @@ const Header = () => {
 
     // Получаем токен из куки
     const tokenFromCookie = Cookies.get("token");
-
     if (tokenFromCookie) {
       // Выполняем GET-запрос для получения данных пользователя
       axios
@@ -32,6 +31,7 @@ const Header = () => {
           },
         })
         .then((response) => {
+
           // Получаем массив аккаунтов
           const accounts = response.data;
 

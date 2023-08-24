@@ -1,21 +1,39 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import styles from "./SidebarNavigation.module.css";
 
 const SidebarNavigation = () => {
   const [activeButtonIndex, setActiveButtonIndex] = useState(-1);
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  // Обновляем активную кнопку при изменении пути
+  useEffect(() => {
+    const activeIndex = mainButtons.findIndex(
+      (button) =>
+        (button.index === 0 && location.pathname === "/") ||
+        location.pathname.includes(button.text.toLowerCase())
+    );
+
+    setActiveButtonIndex(activeIndex);
+  }, [location]);
 
   const handleButtonClick = (index) => {
     if (activeButtonIndex === index) {
-      return; // Ничего не делаем, если нажали на уже активную кнопку
+      return;
     }
+
+    const newPath = mainButtons[index].index === 10 ? "/" : `/${mainButtons[index].text.toLowerCase()}-page`;
+    navigate(newPath);
+
     setActiveButtonIndex(index);
   };
 
   const mainButtons = [
-    { text: "Home", style: "" },
-    { text: "Transaction", style: styles.trans },
-    { text: "Portfolio", style: styles.port },
-    { text: "Wallet", style: styles.wallet },
+    { text: "Home", style: styles.home, index: 0 },
+    { text: "Transaction", style: styles.trans, index: 1 },
+    { text: "Portfolio", style: styles.port, index: 2 },
+    { text: "Wallet", style: styles.wallet, index: 3 },
   ];
 
   return (
