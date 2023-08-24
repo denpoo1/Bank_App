@@ -6,6 +6,7 @@ import Cookies from "js-cookie";
 
 
 const TotalBalance = ({ cardId }) => {
+  const [customerId, setId] = useState(null)
   const [balance, setBalance] = useState(0);
   const [income, setIncome] = useState(0);
   const [expenses, setExpenses] = useState(0);
@@ -15,10 +16,45 @@ const TotalBalance = ({ cardId }) => {
 
 
   useEffect(() => {
+    const username = Cookies.get('username');
     const token = Cookies.get('token');
     const headers = {
       Authorization: `Bearer ${token}`
     };
+  
+    axios.get('http://localhost:8080/customers', { headers }).then((res) => {
+      const matchingUser = res.data.find(arr => arr.username === username);
+      if (matchingUser) {
+        setId(matchingUser.id);
+      }
+    }).catch(error => {
+      console.error('Error fetching customer data', error);
+    });
+  
+    axios.get('http://localhost:8080/accounts', { headers }).then((res) => {
+      const accounts = res.data; // Получаем массив всех аккаунтов
+  
+      // Проходим по каждому аккаунту и сравниваем customerId
+      accounts.forEach(account => {
+        if (account.customerId === customerId) {
+          console.log('Matching customerId found! Account id:', account.id);
+          if (customerId != null) {
+            axios.get(`http://localhost:8080/accounts/${account.id}/transaction`, { headers }).then((res) => {
+              console.log(res.data);
+            });
+          }
+        }
+      });
+    }).catch(error => {
+      console.error('Error fetching accounts data', error);
+    });
+
+
+  
+    
+
+
+
 
     axios.get(`http://localhost:8080/transactions`, { headers }) // Запрос транзакций
       .then(response => {
@@ -76,7 +112,7 @@ const TotalBalance = ({ cardId }) => {
       .catch(error => {
         console.error('Произошла ошибка при получении данных о балансе', error);
       });
-  }, [cardId]);
+  }, [cardId, customerId]);
 
   return (
     <Wrap className={styles.wrapperTotalBAlance}>
