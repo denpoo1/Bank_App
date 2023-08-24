@@ -2,13 +2,9 @@ package com.onlinebank.dto.request;
 
 import com.onlinebank.models.CreditCardModel;
 import com.onlinebank.models.TransactionModel;
-import jakarta.validation.constraints.DecimalMax;
-import jakarta.validation.constraints.DecimalMin;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.Data;
 
-import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -25,8 +21,8 @@ public class PaymentRequest {
         TransactionModel transactionModel = new TransactionModel();
         transactionModel.setDate(new Date());
         transactionModel.setAmount(this.amount);
-        transactionModel.setToAccountId(cardToPayment.getAccountModel().getId());
-        transactionModel.setFromAccountId(cardFromPayment.getAccountModel().getId());
+        transactionModel.setTo_card_id(cardToPayment.getAccountModel().getId());
+        transactionModel.setFrom_card_Id(cardFromPayment.getAccountModel().getId());
         return transactionModel;
     }
 }

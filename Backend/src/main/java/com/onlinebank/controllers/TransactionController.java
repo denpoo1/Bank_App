@@ -70,7 +70,7 @@ public class TransactionController {
             return ResponseEntity.badRequest().body(errors);
         }
         TransactionModel transactionModel = transactionRequest.toTransaction();
-        System.out.println(transactionRequest.getToAccountId());
+        System.out.println(transactionRequest.getTo_card_id());
         transactionService.saveTransaction(transactionModel);
         return ResponseEntity.status(HttpStatus.CREATED).body(new TransactionResponse(transactionModel));
     }
@@ -111,10 +111,10 @@ public class TransactionController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Transaction with id " + id + " not found");
         }
 
-        AccountModel accountModelTo = accountService.getAccountById(transactionRequest.getToAccountId());
-        if (accountModelTo == null) return ResponseEntity.badRequest().body("toAccountId with id " + transactionRequest.getToAccountId() + " not found");
-        AccountModel accountModelFrom = accountService.getAccountById(transactionRequest.getFromAccountId());
-        if (accountModelFrom == null) return ResponseEntity.badRequest().body("fromAccountId with id " + transactionRequest.getFromAccountId() + " not found");
+        AccountModel accountModelTo = accountService.getAccountById(transactionRequest.getTo_card_id());
+        if (accountModelTo == null) return ResponseEntity.badRequest().body("toAccountId with id " + transactionRequest.getTo_card_id() + " not found");
+        AccountModel accountModelFrom = accountService.getAccountById(transactionRequest.getFrom_card_id());
+        if (accountModelFrom == null) return ResponseEntity.badRequest().body("fromAccountId with id " + transactionRequest.getFrom_card_id() + " not found");
         existingTransactionModel = transactionRequest.toTransaction();
         existingTransactionModel.setId(id);
 
