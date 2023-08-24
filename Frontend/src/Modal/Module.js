@@ -3,7 +3,7 @@ import modalStyles from './Modal.module.css';
 import { useSpring, animated } from 'react-spring';
 
 
-const Modal = ({ children, onClose, className }) => {
+const Modal = ({ children, onClose, className, clasName }) => {
     const modalRef = useRef(null);
 
     const handleOutsideClick = (e) => {
@@ -27,7 +27,7 @@ const Modal = ({ children, onClose, className }) => {
     return (
         <div className={`${modalStyles['modal-overlay']} ${className}`}>
             <div className={`${modalStyles['dark-layer']}`} />
-            <animated.div className={`${modalStyles['modal-content']}`} style={modalAnimation} ref={modalRef}>
+            <animated.div className={`${modalStyles['modal-content']} ${clasName}`} style={modalAnimation} ref={modalRef}>
                 <span
                     className={`${modalStyles['close-button']} ${modalStyles['close-button-right']}`}
                     onClick={onClose}
