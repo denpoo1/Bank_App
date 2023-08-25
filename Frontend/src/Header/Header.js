@@ -91,7 +91,7 @@ const Header = () => {
         </div>
         <div className={`${styles.profileButtonWrapper} ${isMenuOpen ? styles.activeDropdown : ""}`}>
           <button className={styles.profileButton} onClick={toggleMenu}>
-            <img className={styles.userLogo} alt="we" src={userImg} />
+            {/* <img className={styles.userLogo} alt="we" src={userImg} /> */}
             <span className={styles.username}>{username}</span>
             <span className={styles.dropdownIcon}>{isMenuOpen ? "▲" : "▼"}</span>
           </button>

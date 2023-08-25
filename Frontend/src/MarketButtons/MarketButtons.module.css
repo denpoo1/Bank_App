@@ -177,7 +177,7 @@
 }
 
 .inputForCardNumber:focus {
-  background-color: rgba(0, 86, 179, 0.2);
+  background-color: hsla(211, 100%, 35%, 0.2);
   /* Цвет фона при ховере */
   box-shadow: 0 0 20px rgba(0, 86, 179, 0.5);
   /* Расплывчатый эффект */

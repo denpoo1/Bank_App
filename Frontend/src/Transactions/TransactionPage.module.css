@@ -1,0 +1,90 @@
+.transactionPageWrap {
+    position: fixed;
+    top: 30%;
+    width: 74%;
+    left: 21%;
+    border-radius: 20px;
+}
+
+.wholePageWrapper {
+    position: fixed;
+    top: 10%;
+    width: 74%;
+    left: 21%;
+}
+
+.cardTitleAndCloseButton {
+    margin-bottom: 10px;
+}
+
+.cardTitleAndCloseButton {
+    font-size: 13px;
+
+}
+
+.tableNamesWrapper {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    font-size: 13px;
+    color: #a6a1a1;
+}
+
+.cardWrapper {
+    background-color: transparent;
+    border: 2px solid #757474;
+    padding: 10px;
+    border-radius: 10px;
+    margin-right: 20px;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+
+}
+
+.cardListItem {
+    margin-top: 17px;
+    display: flex;
+    cursor: pointer;
+    justify-content: flex-start;
+    width: 100%;
+
+}
+
+.cardImage {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    align-items: flex-end;
+    text-align: end;
+    border-radius: 5px;
+    padding: 1px 5px;
+    background-image: linear-gradient(45deg, #0045c7, #ff2c7d);
+    height: 45px;
+    width: 70px;
+}
+
+.cardImage span{
+    font-size: 14px;
+}
+
+.cardImage img {
+    width: 30px;
+    margin-bottom: 3px;
+}
+
+.cardNameAndWrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-left: 15px;
+}
+
+.cardNameAndWrapper span:first-child {
+    font-family: 'Quicksand';
+}
+
+.selectedCard {
+    background-color: #0056b333;
+    box-shadow: 0 0 20px rgba(22, 75, 132, 0.5);
+    /* Добавьте другие стили анимации, если необходимо */
+  }
