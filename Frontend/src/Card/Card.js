@@ -49,7 +49,7 @@ const Card = ({ onCardSelect }) => {
         .then(response => {
           setCards(response.data);
         })
-        .catch(error => {
+        .catch(error => {  
           console.error('Error fetching credit cards data', error);
         })
         .finally(() => {

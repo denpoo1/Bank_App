@@ -1,9 +1,10 @@
 .transactionPageWrap {
     position: fixed;
-    top: 30%;
+    top: 28%;
     width: 74%;
     left: 21%;
     border-radius: 20px;
+    overflow: auto;
 }
 
 .wholePageWrapper {
@@ -23,11 +24,16 @@
 }
 
 .tableNamesWrapper {
+    padding: 10px;
     display: flex;
-    width: 100%;
     justify-content: space-between;
     font-size: 13px;
-    color: #a6a1a1;
+}
+
+.twoElem {
+    display: flex;
+    width: 300px;
+    justify-content: space-between;
 }
 
 .cardWrapper {
@@ -63,7 +69,7 @@
     width: 70px;
 }
 
-.cardImage span{
+.cardImage span {
     font-size: 14px;
 }
 
@@ -87,4 +93,122 @@
     background-color: #0056b333;
     box-shadow: 0 0 20px rgba(22, 75, 132, 0.5);
     /* Добавьте другие стили анимации, если необходимо */
+}
+
+
+.transactionContent {
+
+    position: relative;
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    margin-top: 25px;
+}
+
+.devider {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 2px 6px;
+    background-color: var(--separator);
+    font-size: 13px;
+    font-size: 13px;
+    color: #a6a1a1;
+    background-color: #323232;
+
+}
+
+.devider div {
+    display: flex;
+    justify-content: space-between;
+    width: 77%;
+}
+
+.qwe {
+    font-size: 13px;
+    color: #a6a1a1;
+    background-color: #323232;
+    border-radius: 15px;
+    border-bottom: 3px solid #a6a1a1;
+    /* Adjust the color and thickness as needed */
+}
+
+
+.date {
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    width: 77%;
+}
+
+.sad {
+    padding: 0px 13px;
+}
+
+.transactionContainer {
+    position: relative;
+}
+
+.scrollableContainer {
+    max-height: 400px;
+    overflow-y: scroll;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+.scrollableContainer::-webkit-scrollbar {
+    width: 10px;
+}
+
+.scrollableContainer::-webkit-scrollbar-thumb {
+    background-color: #aaa;
+    border-radius: 5px;
+}
+
+.scrollableContainer::-webkit-scrollbar-thumb:hover {
+    background-color: #888;
+}
+
+.scrollableContainer::-webkit-scrollbar-track {
+    background-color: #f9f9f9;
+    border-radius: 5px;
+}
+
+.separator {
+    position: relative;
+  }
+  
+  .separator::before {
+    content: "";
+    position: absolute;
+    top: -14px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    border-top: 1px solid #ddd; /* Adjust the color and style as needed */
+  }
+
+  .pagination{
+
+  }
+
+
+  .loadMoreButtonContainer {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .loadMoreButton {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .loadMoreButton:hover {
+    background-color: #0056b3;
   }
