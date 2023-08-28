@@ -36,14 +36,18 @@ public class TransactionModel {
     @Column
     private String transferType;
 
+    @Column
+    private int balanceAfterTransaction;
+
     @ManyToMany(mappedBy = "transactionModels")
     private List<PaymentCategoryModel> paymentCategoryModelList;
 
-    public TransactionModel(Date date, Integer amount, int toCardId, int fromCardId, String transferType) {
+    public TransactionModel(Date date, Integer amount, int toCardId, int fromCardId, String transferType, int balanceAfterTransaction) {
         this.date = date;
         this.amount = amount;
         this.toCardId = toCardId;
         this.fromCardId = fromCardId;
         this.transferType = transferType;
+        this.balanceAfterTransaction = balanceAfterTransaction;
     }
 }
