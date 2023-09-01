@@ -88,7 +88,9 @@ public class AccountController {
         if (customerModel == null)
             return ResponseEntity.badRequest().body("Customer with id " + accountRequest.getCustomerId() + " don't found");
         AccountModel accountModel = accountRequest.toAccount(customerModel);
-        accountModel.setPiggyBankModel(new PiggyBankModel(accountModel, accountRequest.getDate(), 0));
+        List<PiggyBankModel> piggyBankModels = new ArrayList<>();
+        piggyBankModels.add(new PiggyBankModel(accountModel, accountRequest.getDate(), 0));
+        accountModel.setPiggyBankModels(piggyBankModels);
         accountService.saveAccount(accountModel);
         return ResponseEntity.status(HttpStatus.CREATED).body(new AccountResponse(accountModel));
     }
