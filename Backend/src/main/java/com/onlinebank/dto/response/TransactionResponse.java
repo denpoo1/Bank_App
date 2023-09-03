@@ -16,6 +16,7 @@ public class TransactionResponse {
     private int toAccountId;
     private int fromAccountId;
     private String transfer_type;
+    private int balanceAfterTransaction;
 
     public TransactionResponse(TransactionModel transactionModel) {
         this.id = transactionModel.getId();
@@ -24,5 +25,6 @@ public class TransactionResponse {
         this.toAccountId = transactionModel.getToCardId();
         this.fromAccountId = transactionModel.getFromCardId();
         this.transfer_type = transactionModel.getTransferType();
+        this.balanceAfterTransaction = transactionModel.getBalanceAfterTransaction();
     }
 }

@@ -22,6 +22,8 @@ public class TransactionRequest {
 
     private String transfer_type;
 
+    private int balanceAfterTransaction;
+
     public TransactionModel toTransaction() {
         TransactionModel transactionModel = new TransactionModel();
         transactionModel.setDate(this.date);
@@ -29,6 +31,7 @@ public class TransactionRequest {
         transactionModel.setToCardId(this.to_card_id);
         transactionModel.setFromCardId(this.from_card_id);
         transactionModel.setTransferType(this.transfer_type);
+        transactionModel.setBalanceAfterTransaction(this.balanceAfterTransaction);
         return transactionModel;
     }
 }

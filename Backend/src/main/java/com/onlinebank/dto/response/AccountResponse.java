@@ -1,9 +1,11 @@
 package com.onlinebank.dto.response;
 
 import com.onlinebank.models.AccountModel;
+import com.onlinebank.models.PiggyBankModel;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author Denis Durbalov
@@ -13,7 +15,7 @@ public class AccountResponse {
 
     private int id;
 
-    private int piggyBankId;
+    private List<PiggyBankModel> piggyBankId;
 
     private Date date;
 
@@ -23,7 +25,7 @@ public class AccountResponse {
 
     public AccountResponse(AccountModel accountModel) {
         this.id = accountModel.getId();
-        this.piggyBankId = accountModel.getPiggyBankModel().getId();
+        this.piggyBankId = accountModel.getPiggyBankModels();
         this.date = accountModel.getDate();
         this.customerId = accountModel.getCustomerModel().getId();
         this.transactionRoundingPercentage = accountModel.getTransactionRoundingPercentage();

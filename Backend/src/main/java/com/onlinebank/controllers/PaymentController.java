@@ -54,6 +54,7 @@ public class PaymentController {
         creditCardService.saveCreditCard(creditCardModelFrom);
         creditCardService.saveCreditCard(creditCardModelTo);
         TransactionModel transactionModel = paymentRequest.toTransaction(creditCardModelFrom, creditCardModelTo);
+        transactionModel.setBalanceAfterTransaction(amountFromCard);
         transactionModel.setTransferType(TransferTypeEnum.CARD_TO_CARD.toString());
         transactionService.saveTransaction(transactionModel);
         return ResponseEntity.status(HttpStatus.CREATED).body(new PaymentResponse(transactionModel, amountFromCard, paymentRequest.getAmount()));

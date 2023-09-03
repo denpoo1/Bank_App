@@ -2,6 +2,7 @@ package com.onlinebank.controllers;
 
 import com.onlinebank.dto.request.PiggyBankDepositAndWithrawRequest;
 import com.onlinebank.dto.request.PiggyBankRequest;
+import com.onlinebank.dto.response.PiggyBankPaymentResponse;
 import com.onlinebank.dto.response.PiggyBankResponse;
 import com.onlinebank.models.AccountModel;
 import com.onlinebank.models.CreditCardModel;
@@ -103,12 +104,14 @@ public class PiggyBankController {
                     piggyBankDepositAndWithrawRequest.getAmount(),
                     creditCardModel.getId(),
                     piggyBankModel.getId(),
-                    TransferTypeEnum.PIGGY_BANK_TO_CARD.toString()));
+                    TransferTypeEnum.PIGGY_BANK_TO_CARD.toString(),
+                    piggyBankModel.getAmount() - piggyBankDepositAndWithrawRequest.getAmount()
+                    ));
             piggyBankModel.setAmount(piggyBankModel.getAmount() - piggyBankDepositAndWithrawRequest.getAmount());
             piggyBankService.savePiggyBank(piggyBankModel);
             creditCardModel.setBalance(creditCardModel.getBalance() + piggyBankDepositAndWithrawRequest.getAmount());
             creditCardService.saveCreditCard(creditCardModel);
-            return ResponseEntity.ok().body(new PiggyBankResponse(piggyBankModel));
+            return ResponseEntity.ok().body(new PiggyBankPaymentResponse(piggyBankModel, piggyBankModel.getAmount() - piggyBankDepositAndWithrawRequest.getAmount()));
         }
 
     }
@@ -129,11 +132,12 @@ public class PiggyBankController {
                     piggyBankDepositAndWithrawRequest.getAmount(),
                     piggyBankModel.getId(),
                     creditCardModel.getId(),
-                    TransferTypeEnum.CARD_TO_PIGGY_BANK.toString()));
+                    TransferTypeEnum.CARD_TO_PIGGY_BANK.toString(),
+                    creditCardModel.getBalance() - piggyBankDepositAndWithrawRequest.getAmount()));
             piggyBankModel.setAmount(piggyBankModel.getAmount() + piggyBankDepositAndWithrawRequest.getAmount());
             piggyBankService.savePiggyBank(piggyBankModel);
             System.out.println(piggyBankModel.getId());
-            return ResponseEntity.ok().body(new PiggyBankResponse(piggyBankModel));
+            return ResponseEntity.ok().body(new PiggyBankPaymentResponse(piggyBankModel, creditCardModel.getBalance() - piggyBankDepositAndWithrawRequest.getAmount()));
         }
     }
 
