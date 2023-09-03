@@ -32,8 +32,14 @@
 
 .twoElem {
     display: flex;
-    width: 300px;
+    width: 395px;
+    /* flex-direction: row; */
+    align-items: center;
     justify-content: space-between;
+}
+
+.tableNames:last-child {
+    margin-right: 60px;
 }
 
 .cardWrapper {
@@ -176,30 +182,29 @@
 
 .separator {
     position: relative;
-  }
-  
-  .separator::before {
+}
+
+.separator::before {
     content: "";
     position: absolute;
     top: -14px;
     left: 50%;
     transform: translate(-50%, -50%);
     width: 100%;
-    border-top: 1px solid #ddd; /* Adjust the color and style as needed */
-  }
+    border-top: 1px solid #ddd;
+    /* Adjust the color and style as needed */
+}
 
-  .pagination{
-
-  }
+.pagination {}
 
 
-  .loadMoreButtonContainer {
+.loadMoreButtonContainer {
     display: flex;
     justify-content: center;
     margin-top: 20px;
-  }
-  
-  .loadMoreButton {
+}
+
+.loadMoreButton {
     padding: 10px 20px;
     background-color: #007bff;
     color: #fff;
@@ -207,8 +212,45 @@
     border-radius: 6px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+}
+
+.loadMoreButton:hover {
+    background-color: #0056b3;
+}
+
+
+
+
+.asd {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.asd span:last-child{
+    margin-left:150px;
+
+}
+.qaz {
+    margin-right: 65px;
+}
+
+.qas {
+    margin-left: 18px;
+}
+
+.income {
+    color: green;
   }
   
-  .loadMoreButton:hover {
-    background-color: #0056b3;
-  }
+.arrow{
+    width: 25px;
+    height: 25px;
+}
+
+.imgWrapper{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;    
+    width: 100px;
+}

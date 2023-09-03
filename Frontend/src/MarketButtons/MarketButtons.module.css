@@ -2,10 +2,10 @@
 
 .marketButtonsWrapper {
   border-radius: 20px;
+  width: 200px;
 }
 
 .buttonsWrapper {
-  width: 700px;
   display: flex;
   justify-content: space-between;
 }
@@ -165,7 +165,7 @@
   cursor: pointer;
 }
 
-.inputForCardNumber{
+.inputForCardNumber {
   background-color: transparent;
   border: 2px solid #757474;
   margin-bottom: 20px;
@@ -183,17 +183,17 @@
   /* Расплывчатый эффект */
 }
 
-.errorText{
+.errorText {
   color: red;
 }
 
-.amountTitle{
+.amountTitle {
   color: var(--text-color);
   font-size: 14px;
   margin-bottom: 5px;
 }
 
-.inputForAmount{
+.inputForAmount {
   font-family: 'Poppins';
   background-color: #4c4b4b;
   border-color: transparent;
@@ -226,5 +226,3 @@
   font-size: 14px;
   margin-top: 8px;
 }
-
-

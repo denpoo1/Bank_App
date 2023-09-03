@@ -4,9 +4,9 @@
   flex-wrap: wrap;
   flex-direction: column;
   align-content: flex-start;
-  height: 220px;
+  height: 150px;
   justify-content: space-between;
-  margin-bottom: 250px;
+  margin-bottom: 320px;
 }
 
 .navigationSeparator {

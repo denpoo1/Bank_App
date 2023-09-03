@@ -27,7 +27,7 @@ const Modal = ({ children, onClose, className, clasName }) => {
     return (
         <div className={`${modalStyles['modal-overlay']} ${className}`}>
             <div className={`${modalStyles['dark-layer']}`} />
-            <animated.div className={`${modalStyles['modal-content']} ${clasName}`} style={modalAnimation} ref={modalRef}>
+            <animated.div className={`${clasName} ${modalStyles['modal-content']} `} style={modalAnimation} ref={modalRef}>
                 <span
                     className={`${modalStyles['close-button']} ${modalStyles['close-button-right']}`}
                     onClick={onClose}

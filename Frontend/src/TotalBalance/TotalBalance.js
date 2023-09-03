@@ -37,10 +37,8 @@ const TotalBalance = ({ cardId }) => {
       // Проходим по каждому аккаунту и сравниваем customerId
       accounts.forEach(account => {
         if (account.customerId === customerId) {
-          console.log('Matching customerId found! Account id:', account.id);
           if (customerId != null) {
             axios.get(`http://localhost:8080/accounts/${account.id}/transaction`, { headers }).then((res) => {
-              console.log(res.data);
             });
           }
         }
@@ -75,23 +73,21 @@ const TotalBalance = ({ cardId }) => {
           incomeExpensesMap[fromCardId].expenses += amount; // Увеличение расходов
           incomeExpensesMap[toCardId].income += amount;     // Увеличение доходов
         });
-
+       
         // Обновление состояний income и expenses для текущей карты
         setIncome(incomeExpensesMap[cardId]?.income || 0);
         setExpenses(incomeExpensesMap[cardId]?.expenses || 0);
 
         const calculatedIncome = incomeExpensesMap[cardId]?.income || 0;
         const calculatedExpenses = incomeExpensesMap[cardId]?.expenses || 0;
-        const calculatedPercentage = calculatedExpenses === 0 ? calculatedIncome * 100 : (calculatedIncome - calculatedExpenses) / calculatedExpenses * 100;
-        console.log(calculatedPercentage)
-        console.log(isPositive)
+        const calculatedPercentage = calculatedExpenses === 0 ? calculatedIncome * 100 : (calculatedIncome - calculatedExpenses) / calculatedIncome * 100; //пофиткстать хуйню с процентом, если там доход равен 0
         setPercentage(calculatedPercentage);
         setIsPositive(calculatedPercentage >= 0);
       })
       .catch(error => {
         console.error('Произошла ошибка при получении данных о транзакциях', error);
       });
-  }, [cardId]);
+  }, [cardId, isPositive, customerId]);
 
   useEffect(() => {
     const token = Cookies.get('token');

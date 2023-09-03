@@ -4,6 +4,8 @@ import Wrap from "../Wrap/Wrap";
 import Cookies from "js-cookie";
 import axios from "axios";
 import visa from '../images/card/visa.png';
+import arrowPlus from '../images/other/arrowPlus.png'
+import arrowMinus from '../images/other/arrowMinus.png'
 
 const PortfolioPage = () => {
     const [cards, setCards] = useState([]);
@@ -14,6 +16,8 @@ const PortfolioPage = () => {
     const [prevDate, setPrevDate] = useState(null); // Добавлено состояние для отслеживания предыдущей даты
     const pageSize = 6; // Number of transactions per page
     const [transactionsToShow, setTransactionsToShow] = useState(pageSize); // Add this state
+    const [cardHolder, setCardHolder] = useState(""); // Add this state
+    const [loading, setLoading] = useState(true);
 
 
     const handleCardSelection = (cardId) => {
@@ -45,22 +49,27 @@ const PortfolioPage = () => {
 
         // Then, fetch credit cards for the specific user (if userID is set)
         if (userID !== null) {
+            setLoading(true);
             axios.get(`http://localhost:8080/customers/${userID}/credit-cards`, { headers })
                 .then(response => {
                     setCards(response.data);
 
-                    // Set the selectedCard to the first card by default
                     if (response.data.length > 0) {
                         setSelectedCard(response.data[0].id);
                     }
+
+                    setLoading(false);
                 })
                 .catch(error => {
                     console.error('Error fetching credit cards data', error);
-                })
+                    setLoading(false);
+                });
         }
     }, [userID]);
 
     useEffect(() => {
+        setSelectedCardTransactions([]);
+
         if (selectedCard !== null) {
             const headers = {
                 Authorization: `Bearer ${Cookies.get('token')}`
@@ -74,12 +83,24 @@ const PortfolioPage = () => {
                     transactionsForSelectedCard.sort((a, b) => new Date(b.date) - new Date(a.date));
 
                     setSelectedCardTransactions(transactionsForSelectedCard);
+
+                    // Fetch the selected card info based on the selected card ID
+                    const selectedCardInfo = cards.find(card => card.id === selectedCard);
+                    if (selectedCardInfo) {
+                        setCardHolder(selectedCardInfo.billingAddress);
+                    }
                 })
                 .catch(error => {
                     console.error('Error fetching transactions data', error);
                 });
         }
-    }, [selectedCard]);
+    }, [selectedCard, cards]);
+
+
+
+
+
+
 
     const transactionsToDisplay = selectedCardTransactions.slice(0, transactionsToShow);
     const loadMoreTransactions = () => {
@@ -141,15 +162,20 @@ const PortfolioPage = () => {
                             {groupedTransactions[transactionDate].map((transaction, innerIndex) => (
                                 <div className={styles.transactionContainer} key={transaction.id}>
                                     <div className={`${styles.transactionContent} ${innerIndex > 0 ? styles.separator : ''}`}>
-                                        <div className={styles.twoElem}>
-                                            {new Date(transaction.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                                        <div className={`${styles.twoElem} ${styles.asd}`}>
+                                            <div className={styles.imgWrapper}>
+                                                <span>{new Date(transaction.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+                                                <img className={styles.arrow} alt="qwe" src={transaction.fromCardId === selectedCard ? arrowPlus : arrowMinus} />
+                                            </div>
                                             <span className={styles.transactionContentElem}>
-                                                {transaction.fromCardId === selectedCard ? `to card **${transaction.toCardId}` : `from card **${transaction.fromCardId}`}
+                                                {transaction.fromCardId === selectedCard
+                                                    ? `to card ${cardHolder}`
+                                                    : `from ${cardHolder}'s card`}
                                             </span>
                                         </div>
                                         <div className={styles.twoElem}>
-                                            <span className={styles.transactionContentElem}>{transaction.amount}</span>
-                                            <span className={styles.transactionContentElem}>{transaction.amount}</span>
+                                            <span className={`${styles.transactionContentElem} ${styles.qas} ${transaction.fromCardId === selectedCard ? styles.expense : styles.income}`}>{transaction.amount}</span>
+                                            <span className={`${styles.transactionContentElem} ${styles.qaz}`}>{transaction.amount}</span>
                                         </div>
                                     </div>
                                 </div>

@@ -16,9 +16,31 @@ const RightSideLogin = () => {
     // Check if both username and password are filled to enable the button
     setIsFormValid(username.trim() !== '' && password.trim() !== '');
   }, [username, password]);
+  useEffect(() => {
+    checkTokenExpiration(); // Добавляем проверку срока действия токена при загрузке компонента
+  }, []);
+
+
+  const checkTokenExpiration = () => {
+    const token = Cookies.get('token');
+    if (!token) {
+      navigate('/'); // Перенаправляем на страницу входа, если токен отсутствует
+      return;
+    }
+
+    const tokenExpirationDate = new Date(Cookies.get('tokenExpiration'));
+    const currentTime = new Date();
+    if (currentTime > tokenExpirationDate) {
+      Cookies.remove('token');
+      navigate('/'); // Перенаправляем на страницу входа, если токен истек
+    }
+  };
+
+
+
+
 
   const handleLogin = async () => {
-
     try {
       const response = await axios.post('http://localhost:8080/auth/signin', {
         username,
@@ -28,21 +50,22 @@ const RightSideLogin = () => {
       const token = response.data.token;
       console.log('Токен:', token);
 
-      // Save the token in cookies for 1 day
-      Cookies.set('token', token, { expires: 1 });
+      const tokenExpirationDate = new Date();
+      tokenExpirationDate.setDate(tokenExpirationDate.getDate() + 1);
+
+      Cookies.set('token', token, { expires: tokenExpirationDate });
+      Cookies.set('tokenExpiration', tokenExpirationDate, { expires: tokenExpirationDate });
       Cookies.set('password', password, { expires: 1 });
       Cookies.set('username', username, { expires: 1 });
-      
 
       setError(null);
 
-      // Redirect to the main page
       navigate('/home-page');
     } catch (error) {
       if (error.response && error.response.status === 400) {
-        setError("Username is wrong");
-      }else if(error.response && error.response.status === 403){
-        setError("Password is wrong");
+        setError('Username is wrong');
+      } else if (error.response && error.response.status === 403) {
+        setError('Password is wrong');
       } else {
         setError(error);
       }
@@ -54,6 +77,8 @@ const RightSideLogin = () => {
     // Redirect to the signup page
     navigate('/sign-up');
   };
+
+  
   return (
     <div className={styles.rightSide}>
       <div className={styles.rightSideLoginWrapper}>

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Wrap from "../Wrap/Wrap";
+import PiggyBank from "../PiggyBank/PiggyBank";
 import styles from './MarketButtons.module.css';
 import deposit from '../images/MarketButtons/deposit.png';
 import Modal from '../Modal/Module'; // Импортируем компонент модального окна
@@ -97,15 +98,11 @@ const MarketButtons = () => {
 
     const marketButtons = [
         { img: deposit, text: "Deposit" },
-        { img: deposit, text: "Send" },
-        { img: deposit, text: "Statisticks" },
-        { img: deposit, text: "Transaction" },
-        { img: deposit, text: "Piggy" },
-        { img: deposit, text: "Piggy" },
-        { img: deposit, text: "Piggy" },
+        { img: deposit, text: "Piggy Bank" },
     ];
 
     const [isDepositModalOpen, setIsDepositModalOpen] = useState(false);
+    const [isPiggyBankOpen, setIsPiggyBankOpen] = useState(false);
 
     const handleDepositClick = (e) => {
         e.preventDefault();
@@ -115,13 +112,22 @@ const MarketButtons = () => {
         setIsDepositModalOpen(true); // Открываем модальное окно
     };
 
+    const handlePiggyBank = (e) => {
+        e.preventDefault();
+        setIsPiggyBankOpen(true); // Открываем модальное окно
+    };
+
     const handleCloseDepositModal = () => {
         if (!isCardListOpen) {
             setIsDepositModalOpen(false);
         }
     };
 
-
+    const handleClosePiggyBank = () => {
+        if (!isCardListOpen) {/* TODO: -заменить isCardListOpen на внутренний компонент банки, который будет открываться */
+            setIsPiggyBankOpen(false);
+        }
+    };
 
     const handleCardSelect = (card) => {
         setSelectedCard(card);
@@ -186,7 +192,7 @@ const MarketButtons = () => {
                     <button
                         key={index}
                         className={styles.wrapForMarketElement}
-                        onClick={button.text === "Deposit" ? handleDepositClick : undefined}
+                        onClick={button.text === "Deposit" ? handleDepositClick : (button.text === "Piggy Bank" ? handlePiggyBank : undefined)}
                     >
                         <img src={button.img} alt='qwe'></img>
                         <span>{button.text}</span>
@@ -298,6 +304,13 @@ const MarketButtons = () => {
                             </p>
                         )}
                     </animated.form>
+
+                </Modal>
+            )}
+            {isPiggyBankOpen && (
+                <Modal className={isCardListOpen ? `${styles.qwe}` : ''} onClose={handleClosePiggyBank}>
+
+                    <PiggyBank/>
 
                 </Modal>
             )}

@@ -33,7 +33,6 @@ const SidebarNavigation = () => {
     { text: "Home", style: styles.home, index: 0 },
     { text: "Transaction", style: styles.trans, index: 1 },
     { text: "Portfolio", style: styles.port, index: 2 },
-    { text: "Wallet", style: styles.wallet, index: 3 },
   ];
 
   return (
