@@ -5,11 +5,21 @@ import Cookies from "js-cookie";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const [userId, setUserId] = useState(null);
+  const [userId, setUserId] = useState(null);
   const [username, setUsername] = useState(""); // Добавили состояние для хранения юзернейма
   const [userData, setUserData] = useState(null); // Добавили состояние для хранения данных пользователя
+  const [userImg, setUserImg] = useState('')
+
 
   useEffect(() => {
+    const userName = Cookies.get('username');
+
+    // Здесь вам нужно выполнить проверку токена и вернуть путь к соответствующей картинке
+    if (userName === "liza") {
+      console.log("qwe");
+      setUserImg('../images/logo/liza.jpg');
+    } 
+
     // Получаем токен из куки
     const tokenFromCookie = Cookies.get("token");
     if (tokenFromCookie) {
@@ -70,7 +80,7 @@ const Header = () => {
         });
     }
   }, [userId]); // Эффект срабатывает при изменении userId
-  
+
   return (
     <div className={styles.header}>
       <h1 className={styles.headerTitle}>Wallet</h1>
@@ -79,14 +89,11 @@ const Header = () => {
           <button className={styles.search}></button>
           <button className={styles.notification}></button>
         </div>
-        <div
-          className={`${styles.profileButtonWrapper} ${
-            isMenuOpen ? styles.activeDropdown : ""
-          }`}
-        >
+        <div className={`${styles.profileButtonWrapper} ${isMenuOpen ? styles.activeDropdown : ""}`}>
           <button className={styles.profileButton} onClick={toggleMenu}>
-            <span>{username}</span> {/* Используем состояние с юзернеймом */}
-            <span>{isMenuOpen ? "▲" : "▼"}</span>
+            {/* <img className={styles.userLogo} alt="we" src={userImg} /> */}
+            <span className={styles.username}>{username}</span>
+            <span className={styles.dropdownIcon}>{isMenuOpen ? "▲" : "▼"}</span>
           </button>
           {isMenuOpen && (
             <div className={`${styles.dropdown}`}>
@@ -96,6 +103,8 @@ const Header = () => {
             </div>
           )}
         </div>
+
+
       </div>
     </div>
   );

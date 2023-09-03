@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import styles from './PortfolioPage.module.css';
 import Wrap from "../Wrap/Wrap";
@@ -10,6 +11,7 @@ import { useSpring, animated } from 'react-spring';
 
 const PortfolioPage = () => {
   const [customerId, setCustomerId] = useState(null);
+
   const [userData, setUserData] = useState({
     id: null,
     username: '',
@@ -67,7 +69,7 @@ const PortfolioPage = () => {
     </div>
   );
 
-  
+
 };
 
 const UserInfoRow = ({ label, value }) => {
@@ -82,7 +84,7 @@ const UserInfoRow = ({ label, value }) => {
     address: "",
     password: "",
   });
-  
+
   const [userId, setUserID] = useState(null)
   const [isEditing, setIsEditing] = useState(false);
   const [editedValue, setEditedValue] = useState(value);
@@ -119,7 +121,7 @@ const UserInfoRow = ({ label, value }) => {
               address: matchingUser.address,
               password: userPassword,
             });
-          }else if (label.toLowerCase() === "email") {
+          } else if (label.toLowerCase() === "email") {
             setPutInfData({
               username: matchingUser.username,
               email: editedValue,
@@ -129,7 +131,7 @@ const UserInfoRow = ({ label, value }) => {
               address: matchingUser.address,
               password: userPassword,
             });
-          }else if (label.toLowerCase() === "phone") {
+          } else if (label.toLowerCase() === "phone") {
             setPutInfData({
               username: matchingUser.username,
               email: matchingUser.email,
@@ -139,7 +141,7 @@ const UserInfoRow = ({ label, value }) => {
               address: matchingUser.address,
               password: userPassword,
             });
-          }else if (label.toLowerCase() === "first name") {
+          } else if (label.toLowerCase() === "first name") {
             setPutInfData({
               username: matchingUser.username,
               email: matchingUser.email,
@@ -149,7 +151,7 @@ const UserInfoRow = ({ label, value }) => {
               address: matchingUser.address,
               password: userPassword,
             });
-          }else if (label.toLowerCase() === "last name") {
+          } else if (label.toLowerCase() === "last name") {
             setPutInfData({
               username: matchingUser.username,
               email: matchingUser.email,
@@ -159,7 +161,7 @@ const UserInfoRow = ({ label, value }) => {
               address: matchingUser.address,
               password: userPassword,
             });
-          }else if (label.toLowerCase() === "address") {
+          } else if (label.toLowerCase() === "address") {
             setPutInfData({
               username: matchingUser.username,
               email: matchingUser.email,
@@ -169,7 +171,7 @@ const UserInfoRow = ({ label, value }) => {
               address: editedValue,
               password: userPassword,
             });
-          }else if (label.toLowerCase() === "password") {
+          } else if (label.toLowerCase() === "password") {
             setPutInfData({
               username: matchingUser.username,
               email: matchingUser.email,
@@ -185,7 +187,7 @@ const UserInfoRow = ({ label, value }) => {
       .catch(error => {
         console.error('Error fetching customer data', error);
       });
-  }, [editedValue, label]);
+  }, [editedValue, label, userPassword]);
 
 
   const handleSave = () => {
@@ -198,17 +200,17 @@ const UserInfoRow = ({ label, value }) => {
         Authorization: `Bearer ${token}`
       }
     })
-    .then(response => {
-      console.log('Profile updated successfully:', response.data);
-      // You might want to update the UI or perform other actions after a successful update
-      setIsEditing(false);
-    })
-    .catch(error => {
-      console.error('Error updating profile:', error);
-      // Handle errors here
-    });
+      .then(response => {
+        console.log('Profile updated successfully:', response.data);
+        // You might want to update the UI or perform other actions after a successful update
+        setIsEditing(false);
+      })
+      .catch(error => {
+        console.error('Error updating profile:', error);
+        // Handle errors here
+      });
   };
-  
+
   const formatValue = (value) => {
     if (label === "Phone") {
       return `+${value}`;

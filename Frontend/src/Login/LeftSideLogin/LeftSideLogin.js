@@ -21,7 +21,7 @@ const LeftSideLogin = () => {
         <div className={styles.leftSideLoginWrapper}>
             <div className={styles.wrapperForCard}>
                 <img className={styles.log} src={logo12} alt="xuy"></img>
-                <h1>Diagrams changed my life!</h1>
+                <h1>Sold soul for nudes</h1>
                 <p>Meet our talented backend web developer for the banking system! With a passion for cutting-edge technology and a keen eye for detail, they play a pivotal role in ensuring the smooth and secure functioning of our web-based banking platform. Armed with a deep understanding of programming languages and frameworks </p>
                 <div className={styles.signWrap}>
                 <span>Denis Durbalov &nbsp;(Backender, Springboy)</span>
