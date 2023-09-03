@@ -32,8 +32,8 @@ public class PiggyBankModel {
     @Column
     private String description;
 
-    @OneToOne
-    @JoinColumn(name = "account_id", referencedColumnName = "id")
+    @ManyToOne
+    @JoinColumn(name = "account_id")
     private AccountModel accountModel;
 
     public PiggyBankModel(AccountModel accountModel, Date createdAt, Integer amount) {

@@ -21,8 +21,8 @@ public class AccountModel {
     @Column(name = "id")
     private int id;
 
-    @OneToOne(mappedBy = "accountModel", cascade = CascadeType.ALL)
-    private PiggyBankModel piggyBankModel;
+    @OneToMany(mappedBy = "accountModel", cascade = CascadeType.ALL)
+    private List<PiggyBankModel> piggyBankModels;
 
     @Column(name = "date_opened")
     private Date date;
@@ -35,7 +35,7 @@ public class AccountModel {
     private float transactionRoundingPercentage;
 
     @OneToMany(mappedBy = "accountModel", cascade = CascadeType.ALL)
-    List<CreditCardModel> creditCardModels;
+    private List<CreditCardModel> creditCardModels;
 
     @ManyToMany
     @JoinTable(
