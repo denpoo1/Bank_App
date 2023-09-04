@@ -10,8 +10,10 @@ import com.onlinebank.models.PiggyBankModel;
 import com.onlinebank.models.TransactionModel;
 import com.onlinebank.services.AccountService;
 import com.onlinebank.services.CustomerService;
+import com.onlinebank.services.StorageService;
 import com.onlinebank.services.TransactionService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -24,27 +26,32 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 /**
  * @author Denis Durbalov
  */
 @RestController
 @RequestMapping("/accounts")
-@Tag(name = "Аккаунты" , description = "Операции связанные с аккаунтами")
+@Tag(name = "Аккаунты", description = "Операции связанные с аккаунтами")
 public class AccountController {
 
     private final AccountService accountService;
     private final CustomerService customerService;
     private final TransactionService transactionService;
 
+    private final StorageService storageService;
+
     @Autowired
-    public AccountController(AccountService accountService, CustomerService customerService, TransactionService transactionService) {
+    public AccountController(AccountService accountService, CustomerService customerService, TransactionService transactionService, StorageService storageService) {
         this.accountService = accountService;
         this.customerService = customerService;
         this.transactionService = transactionService;
+        this.storageService = storageService;
     }
 
     @GetMapping
@@ -85,6 +92,7 @@ public class AccountController {
             return ResponseEntity.badRequest().body(errors);
         }
         CustomerModel customerModel = customerService.getCustomerById(accountRequest.getCustomerId());
+        System.out.println(accountRequest.getCustomerId());
         if (customerModel == null)
             return ResponseEntity.badRequest().body("Customer with id " + accountRequest.getCustomerId() + " don't found");
         AccountModel accountModel = accountRequest.toAccount(customerModel);
@@ -177,5 +185,49 @@ public class AccountController {
 
         accountService.saveAccount(existingAccountModel);
         return ResponseEntity.ok(new AccountUpdateResponse(existingAccountModel));
+    }
+
+    @PostMapping("/{account_id}/upload-avatar")
+    @Operation(summary = "Загрузить аватарку", description = "Загружает аватарку на сервер")
+    @ApiResponse(responseCode = "200", description = "Файл успешно загружен")
+    @ApiResponse(responseCode = "400", description = "Ошибка при загрузке файла")
+    public ResponseEntity<String> uploadFile(
+            @Parameter(description = "Аватарка для загрузки")
+            @RequestParam("file") MultipartFile file,
+
+            @PathVariable("account_id") int accountId
+    ) {
+        try {
+            return new ResponseEntity<>(storageService.uploadFile(file, accountId), HttpStatus.OK);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/download-avatar")
+    @Operation(summary = "Скачать аватарку пользователя", description = "Скачивает аватарку по его URL")
+    @ApiResponse(responseCode = "200", description = "Файл успешно скачан")
+    @ApiResponse(responseCode = "404", description = "Файл не найден")
+    public ResponseEntity<byte[]> downloadFile(
+            @Parameter(description = "URL файла для скачивания")
+            @RequestParam("file-url") String fileUrl
+    ) {
+        byte[] data = storageService.downloadFile(fileUrl);
+        return ResponseEntity
+                .ok()
+                .header("Content-type", "application/octet-stream")
+                .header("Content-disposition", "attachment; filename=\"" + fileUrl + "\"")
+                .body(data);
+    }
+
+    @DeleteMapping("/delete-avatar")
+    @Operation(summary = "Удалить аватарку пользователя", description = "Удаляет файл по его URL")
+    @ApiResponse(responseCode = "200", description = "Файл успешно удален")
+    @ApiResponse(responseCode = "404", description = "Файл не найден")
+    public ResponseEntity<String> deleteFile(
+            @Parameter(description = "URL файла для удаления")
+            @RequestParam("file-url") String fileUrl
+    ) {
+        return new ResponseEntity<>(storageService.deleteFile(fileUrl), HttpStatus.OK);
     }
 }

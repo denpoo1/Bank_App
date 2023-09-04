@@ -23,11 +23,14 @@ public class AccountResponse {
 
     private float transactionRoundingPercentage;
 
+    private String avatar_url;
+
     public AccountResponse(AccountModel accountModel) {
         this.id = accountModel.getId();
         this.piggyBankId = accountModel.getPiggyBankModels();
         this.date = accountModel.getDate();
         this.customerId = accountModel.getCustomerModel().getId();
         this.transactionRoundingPercentage = accountModel.getTransactionRoundingPercentage();
+        this.avatar_url = accountModel.getAvatarUrl();
     }
 }
