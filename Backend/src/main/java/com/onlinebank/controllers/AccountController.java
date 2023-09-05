@@ -220,14 +220,21 @@ public class AccountController {
                 .body(data);
     }
 
-    @DeleteMapping("/delete-avatar")
+    @DeleteMapping("/delete-avatar/{account-id}")
     @Operation(summary = "Удалить аватарку пользователя", description = "Удаляет файл по его URL")
     @ApiResponse(responseCode = "200", description = "Файл успешно удален")
     @ApiResponse(responseCode = "404", description = "Файл не найден")
     public ResponseEntity<String> deleteFile(
             @Parameter(description = "URL файла для удаления")
-            @RequestParam("file-url") String fileUrl
+            @RequestParam("file-url") String fileUrl,
+            @PathVariable("account-id") int id
     ) {
+        AccountModel existingAccountModel = accountService.getAccountById(id);
+        if (existingAccountModel == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Account with id " + id + " not found");
+        }
+        existingAccountModel.setAvatarUrl("DEFAULT");
+        accountService.saveAccount(existingAccountModel);
         return new ResponseEntity<>(storageService.deleteFile(fileUrl), HttpStatus.OK);
     }
 }

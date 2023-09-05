@@ -48,8 +48,6 @@ public class StorageService {
     public byte[] downloadFile(String url) {
         String bucketName = this.bucketName;
         String objectKey = getObjectKeyFromS3URI(url);
-        System.out.println("bucketName: " + bucketName);
-        System.out.println("objectKey: " + objectKey);
         S3Object s3Object = s3Client.getObject(bucketName, objectKey);
         S3ObjectInputStream inputStream = s3Object.getObjectContent();
         try {
