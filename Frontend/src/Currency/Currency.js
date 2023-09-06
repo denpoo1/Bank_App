@@ -7,10 +7,10 @@ import gbpIcon from "../images/currencyFlags/gbp.png";
 import plnIcon from "../images/currencyFlags/pln.png";
 import axios from "axios";
 import Cookies from "js-cookie";
-
+import baseUrl from "../config";
 const Currency = () => {
   const [exchangeRates, setExchangeRates] = useState(null);
-  const baseUrl = "http://localhost:8080/"
+  
 
   useEffect(() => {
     const tokenFromCookie = Cookies.get("token");

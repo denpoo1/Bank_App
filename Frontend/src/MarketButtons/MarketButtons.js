@@ -8,6 +8,7 @@ import axios from 'axios';
 import Cookies from "js-cookie";
 import visa from '../images/card/visa.png';
 import { useSpring, animated } from 'react-spring';
+import baseUrl from "../config";
 
 
 
@@ -22,7 +23,6 @@ const MarketButtons = () => {
     const [isAmountValid, setIsAmountValid] = useState(true);
     const [error, setError] = useState(null);
     const isFormValid = isCardNumberValid && isAmountValid && amount.trim() !== '' && cardNumber.trim() !== '';
-    const baseUrl = "http://localhost:8080/"
 
 
     const handleAmountChange = (e) => {

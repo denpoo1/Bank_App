@@ -4,6 +4,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import { useNavigate } from 'react-router-dom';
 import defaulLogo from "../images/logo/defaultPhoto.png";
+import baseUrl from "../config";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -16,7 +17,6 @@ const Header = () => {
   const [customerId, setCustomerId] = useState(null);
   const [accountId, setAccountId] = useState(null);
   const [avatar, setAvatar] = useState(null)
-  const baseUrl = "http://localhost:8080/"
 
   useEffect(() => {
     const token = Cookies.get('token');

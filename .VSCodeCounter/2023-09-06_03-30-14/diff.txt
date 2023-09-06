@@ -1,0 +1,115 @@
+Date : 2023-09-06 03:30:14
+Directory : c:\Users\Илья\Desktop\Bank_App
+Total : 49 files,  234 codes, 69 comments, 164 blanks, all 467 lines
+
+Languages
++------------+------------+------------+------------+------------+------------+
+| language   | files      | code       | comment    | blank      | total      |
++------------+------------+------------+------------+------------+------------+
+| JavaScript |         19 |         96 |        166 |         39 |        301 |
+| CSS        |         19 |         82 |        -98 |        117 |        101 |
+| Java       |          8 |         39 |          0 |          7 |         46 |
+| XML        |          1 |         15 |          1 |          0 |         16 |
+| YAML       |          1 |          2 |          0 |         -1 |          1 |
+| Properties |          1 |          0 |          0 |          2 |          2 |
++------------+------------+------------+------------+------------+------------+
+
+Directories
++----------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                                           | files      | code       | comment    | blank      | total      |
++----------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                                              |         49 |        234 |         69 |        164 |        467 |
+| . (Files)                                                                                                      |          1 |          2 |          0 |         -1 |          1 |
+| Backend                                                                                                        |         10 |         54 |          1 |          9 |         64 |
+| Backend (Files)                                                                                                |          1 |         15 |          1 |          0 |         16 |
+| Backend\src                                                                                                    |          9 |         39 |          0 |          9 |         48 |
+| Backend\src\main                                                                                               |          9 |         39 |          0 |          9 |         48 |
+| Backend\src\main\java                                                                                          |          8 |         39 |          0 |          7 |         46 |
+| Backend\src\main\java\com                                                                                      |          8 |         39 |          0 |          7 |         46 |
+| Backend\src\main\java\com\onlinebank                                                                           |          8 |         39 |          0 |          7 |         46 |
+| Backend\src\main\java\com\onlinebank\controllers                                                               |          3 |          7 |          0 |          0 |          7 |
+| Backend\src\main\java\com\onlinebank\dto                                                                       |          4 |         29 |          0 |          6 |         35 |
+| Backend\src\main\java\com\onlinebank\dto\request                                                               |          1 |          2 |          0 |          1 |          3 |
+| Backend\src\main\java\com\onlinebank\dto\response                                                              |          3 |         27 |          0 |          5 |         32 |
+| Backend\src\main\java\com\onlinebank\models                                                                    |          1 |          3 |          0 |          1 |          4 |
+| Backend\src\main\resources                                                                                     |          1 |          0 |          0 |          2 |          2 |
+| Frontend                                                                                                       |         38 |        178 |         68 |        156 |        402 |
+| Frontend\src                                                                                                   |         38 |        178 |         68 |        156 |        402 |
+| Frontend\src\Body                                                                                              |          1 |          1 |         -7 |          0 |         -6 |
+| Frontend\src\Card                                                                                              |          2 |         50 |        -15 |         18 |         53 |
+| Frontend\src\Components                                                                                        |          3 |          9 |         -2 |          0 |          7 |
+| Frontend\src\Components\Expenses                                                                               |          2 |          3 |         -2 |          1 |          2 |
+| Frontend\src\Components\NewExpense                                                                             |          1 |          6 |          0 |         -1 |          5 |
+| Frontend\src\Currency                                                                                          |          1 |          1 |         -1 |          0 |          0 |
+| Frontend\src\GlobalFonts                                                                                       |          2 |          1 |        -11 |          9 |         -1 |
+| Frontend\src\Header                                                                                            |          2 |         32 |        -12 |         11 |         31 |
+| Frontend\src\Login                                                                                             |          6 |         43 |        -22 |         20 |         41 |
+| Frontend\src\Login (Files)                                                                                     |          3 |          0 |        -15 |          4 |        -11 |
+| Frontend\src\Login\LeftSideLogin                                                                               |          1 |         -1 |          0 |          0 |         -1 |
+| Frontend\src\Login\RightSideLogin                                                                              |          2 |         44 |         -7 |         16 |         53 |
+| Frontend\src\MarketButtons                                                                                     |          2 |         11 |        -21 |         18 |          8 |
+| Frontend\src\Modal                                                                                             |          2 |         14 |         -2 |          6 |         18 |
+| Frontend\src\PiggyBank                                                                                         |          2 |         70 |        -10 |         21 |         81 |
+| Frontend\src\Portfolio                                                                                         |          2 |       -160 |        214 |         -4 |         50 |
+| Frontend\src\ProfilePage                                                                                       |          2 |          0 |          0 |         -2 |         -2 |
+| Frontend\src\Sidebar                                                                                           |          5 |         26 |        -30 |         35 |         31 |
+| Frontend\src\TotalBalance                                                                                      |          2 |         -2 |         -6 |          3 |         -5 |
+| Frontend\src\Transactions                                                                                      |          2 |         -6 |         -7 |          3 |        -10 |
+| Frontend\src\newCard                                                                                           |          2 |         88 |          0 |         18 |        106 |
++----------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++----------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| filename                                                                                                       | language   | code       | comment    | blank      | total      |
++----------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| c:\Users\Илья\Desktop\Bank_App\Backend\pom.xml                                                                 | XML        |         15 |          1 |          0 |         16 |
+| c:\Users\Илья\Desktop\Bank_App\Backend\src\main\java\com\onlinebank\controllers\AccountController.java         | Java       |          2 |          0 |          0 |          2 |
+| c:\Users\Илья\Desktop\Bank_App\Backend\src\main\java\com\onlinebank\controllers\PaymentController.java         | Java       |          1 |          0 |          0 |          1 |
+| c:\Users\Илья\Desktop\Bank_App\Backend\src\main\java\com\onlinebank\controllers\PiggyBankController.java       | Java       |          4 |          0 |          0 |          4 |
+| c:\Users\Илья\Desktop\Bank_App\Backend\src\main\java\com\onlinebank\dto\request\TransactionRequest.java        | Java       |          2 |          0 |          1 |          3 |
+| c:\Users\Илья\Desktop\Bank_App\Backend\src\main\java\com\onlinebank\dto\response\AccountResponse.java          | Java       |          2 |          0 |          0 |          2 |
+| c:\Users\Илья\Desktop\Bank_App\Backend\src\main\java\com\onlinebank\dto\response\PiggyBankPaymentResponse.java | Java       |         23 |          0 |          5 |         28 |
+| c:\Users\Илья\Desktop\Bank_App\Backend\src\main\java\com\onlinebank\dto\response\TransactionResponse.java      | Java       |          2 |          0 |          0 |          2 |
+| c:\Users\Илья\Desktop\Bank_App\Backend\src\main\java\com\onlinebank\models\TransactionModel.java               | Java       |          3 |          0 |          1 |          4 |
+| c:\Users\Илья\Desktop\Bank_App\Backend\src\main\resources\application.properties                               | Properties |          0 |          0 |          2 |          2 |
+| c:\Users\Илья\Desktop\Bank_App\Frontend\src\Body\Body.js                                                       | JavaScript |          1 |         -7 |          0 |         -6 |
+| c:\Users\Илья\Desktop\Bank_App\Frontend\src\Card\Card.js                                                       | JavaScript |         46 |         -6 |         13 |         53 |
+| c:\Users\Илья\Desktop\Bank_App\Frontend\src\Card\Card.module.css                                               | CSS        |          4 |         -9 |          5 |          0 |
+| c:\Users\Илья\Desktop\Bank_App\Frontend\src\Components\Expenses\ExpenseList.js                                 | JavaScript |          3 |          0 |          1 |          4 |
+| c:\Users\Илья\Desktop\Bank_App\Frontend\src\Components\Expenses\ExpensesList.css                               | CSS        |          0 |         -2 |          0 |         -2 |
+| c:\Users\Илья\Desktop\Bank_App\Frontend\src\Components\NewExpense\ExpensesFilter.css                           | CSS        |          6 |          0 |         -1 |          5 |
+| c:\Users\Илья\Desktop\Bank_App\Frontend\src\Currency\Currency.js                                               | JavaScript |          1 |         -1 |          0 |          0 |
+| c:\Users\Илья\Desktop\Bank_App\Frontend\src\GlobalFonts\Global.module.css                                      | CSS        |          1 |        -10 |          8 |         -1 |
+| c:\Users\Илья\Desktop\Bank_App\Frontend\src\GlobalFonts\colors.module.css                                      | CSS        |          0 |         -1 |          1 |          0 |
+| c:\Users\Илья\Desktop\Bank_App\Frontend\src\Header\Header.js                                                   | JavaScript |         38 |         -9 |          6 |         35 |
+| c:\Users\Илья\Desktop\Bank_App\Frontend\src\Header\Header.module.css                                           | CSS        |         -6 |         -3 |          5 |         -4 |
+| c:\Users\Илья\Desktop\Bank_App\Frontend\src\Login\LeftSideLogin\LeftSideLogin.js                               | JavaScript |         -1 |          0 |          0 |         -1 |
+| c:\Users\Илья\Desktop\Bank_App\Frontend\src\Login\Login.js                                                     | JavaScript |         -1 |          0 |          0 |         -1 |
+| c:\Users\Илья\Desktop\Bank_App\Frontend\src\Login\RightSideLogin\RightSideLogin.js                             | JavaScript |         37 |         -4 |         10 |         43 |
+| c:\Users\Илья\Desktop\Bank_App\Frontend\src\Login\RightSideLogin\RightSideLogin.module.css                     | CSS        |          7 |         -3 |          6 |         10 |
+| c:\Users\Илья\Desktop\Bank_App\Frontend\src\Login\SignUp.js                                                    | JavaScript |          1 |        -12 |          0 |        -11 |
+| c:\Users\Илья\Desktop\Bank_App\Frontend\src\Login\Signup.module.css                                            | CSS        |          0 |         -3 |          4 |          1 |
+| c:\Users\Илья\Desktop\Bank_App\Frontend\src\MarketButtons\MarketButtons.js                                     | JavaScript |          7 |         -8 |          1 |          0 |
+| c:\Users\Илья\Desktop\Bank_App\Frontend\src\MarketButtons\MarketButtons.module.css                             | CSS        |          4 |        -13 |         17 |          8 |
+| c:\Users\Илья\Desktop\Bank_App\Frontend\src\Modal\Modal.module.css                                             | CSS        |         14 |         -2 |          7 |         19 |
+| c:\Users\Илья\Desktop\Bank_App\Frontend\src\Modal\Module.js                                                    | JavaScript |          0 |          0 |         -1 |         -1 |
+| c:\Users\Илья\Desktop\Bank_App\Frontend\src\PiggyBank\PiggyBank.js                                             | JavaScript |         65 |         -6 |         14 |         73 |
+| c:\Users\Илья\Desktop\Bank_App\Frontend\src\PiggyBank\PiggyBank.module.css                                     | CSS        |          5 |         -4 |          7 |          8 |
+| c:\Users\Илья\Desktop\Bank_App\Frontend\src\Portfolio\PortfolioPage.js                                         | JavaScript |       -160 |        225 |        -16 |         49 |
+| c:\Users\Илья\Desktop\Bank_App\Frontend\src\Portfolio\PortfolioPage.module.css                                 | CSS        |          0 |        -11 |         12 |          1 |
+| c:\Users\Илья\Desktop\Bank_App\Frontend\src\ProfilePage\profilePage.css                                        | CSS        |          0 |          0 |         -1 |         -1 |
+| c:\Users\Илья\Desktop\Bank_App\Frontend\src\ProfilePage\profilePage.js                                         | JavaScript |          0 |          0 |         -1 |         -1 |
+| c:\Users\Илья\Desktop\Bank_App\Frontend\src\Sidebar\Logo.module.css                                            | CSS        |         -1 |         -2 |          2 |         -1 |
+| c:\Users\Илья\Desktop\Bank_App\Frontend\src\Sidebar\SidebarFooter.js                                           | JavaScript |         27 |          0 |          6 |         33 |
+| c:\Users\Илья\Desktop\Bank_App\Frontend\src\Sidebar\SidebarFooter.module.css                                   | CSS        |          0 |        -10 |         10 |          0 |
+| c:\Users\Илья\Desktop\Bank_App\Frontend\src\Sidebar\SidebarNavigation.js                                       | JavaScript |          0 |         -1 |          0 |         -1 |
+| c:\Users\Илья\Desktop\Bank_App\Frontend\src\Sidebar\SidebarNavigation.module.css                               | CSS        |          0 |        -17 |         17 |          0 |
+| c:\Users\Илья\Desktop\Bank_App\Frontend\src\TotalBalance\TotalBalance.js                                       | JavaScript |          0 |         -2 |         -1 |         -3 |
+| c:\Users\Илья\Desktop\Bank_App\Frontend\src\TotalBalance\TotalBalance.module.css                               | CSS        |         -2 |         -4 |          4 |         -2 |
+| c:\Users\Илья\Desktop\Bank_App\Frontend\src\Transactions\TransactionPage.js                                    | JavaScript |         -6 |         -3 |         -1 |        -10 |
+| c:\Users\Илья\Desktop\Bank_App\Frontend\src\Transactions\TransactionPage.module.css                            | CSS        |          0 |         -4 |          4 |          0 |
+| c:\Users\Илья\Desktop\Bank_App\Frontend\src\newCard\NewCard.js                                                 | JavaScript |         38 |          0 |          8 |         46 |
+| c:\Users\Илья\Desktop\Bank_App\Frontend\src\newCard\newCard.module.css                                         | CSS        |         50 |          0 |         10 |         60 |
+| c:\Users\Илья\Desktop\Bank_App\docker-compose.yaml                                                             | YAML       |          2 |          0 |         -1 |          1 |
+| Total                                                                                                          |            |        234 |         69 |        164 |        467 |
++----------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+

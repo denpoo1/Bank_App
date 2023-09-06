@@ -9,8 +9,10 @@ import left from '../images/cardArrows/leftActive.png';
 import addCard from '../images/cardArrows/addCard.png';
 import axios from "axios";
 import Cookies from "js-cookie";
-import Modal from '../Modal/Module'; 
+import Modal from '../Modal/Module';                    
 import NewCard from "../newCard/NewCard"
+import baseUrl from "../config"; 
+
 
 const Card = ({ onCardSelect }) => {
   const [cards, setCards] = useState([]);
@@ -29,7 +31,7 @@ const Card = ({ onCardSelect }) => {
       Authorization: `Bearer ${token}`
     };
 
-    axios.get("http://localhost:8080/customers", { headers })
+    axios.get(`${baseUrl}customers`, { headers })
       .then(response => {
         const matchingUser = response.data.find(user => user.username === username);
         if (matchingUser) {
@@ -41,7 +43,7 @@ const Card = ({ onCardSelect }) => {
       });
 
     if (userID !== null) {
-      axios.get(`http://localhost:8080/customers/${userID}/credit-cards`, { headers })
+      axios.get(`${baseUrl}customers/${userID}/credit-cards`, { headers })
         .then(response => {
           setCards(response.data);
         })
@@ -88,10 +90,10 @@ const Card = ({ onCardSelect }) => {
         Authorization: `Bearer ${token}`
       };
   
-      const cardNumberResponse = await axios.get('http://localhost:8080/credit-cards/generate/card-number/16', { headers });
+      const cardNumberResponse = await axios.get(`${baseUrl}credit-cards/generate/card-number/16`, { headers });
       const generatedCardNumber = cardNumberResponse.data;
   
-      const accountResponse = await axios.get('http://localhost:8080/accounts', { headers });
+      const accountResponse = await axios.get(`${baseUrl}accounts`, { headers });
       const matchingAccount = accountResponse.data.find((arr) => arr.customerId === userID);
       if (!matchingAccount) {
         console.error('Couldnt find a user ');
@@ -123,7 +125,7 @@ const Card = ({ onCardSelect }) => {
   
       console.log(data);
   
-      const createCardResponse = await axios.post("http://localhost:8080/credit-cards", data, { headers });
+      const createCardResponse = await axios.post(`${baseUrl}credit-cards`, data, { headers });
       console.log("card created succesflly", createCardResponse.data);
       
     } catch (error) {
