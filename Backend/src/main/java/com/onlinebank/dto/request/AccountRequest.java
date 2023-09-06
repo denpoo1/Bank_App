@@ -21,6 +21,7 @@ public class AccountRequest {
         accountModel.setDate(this.date);
         accountModel.setCustomerModel(customerModel);
         accountModel.setTransactionRoundingPercentage(this.transactionRoundingPercentage);
+        accountModel.setAvatarUrl("DEFAULT");
         return accountModel;
     }
 }
