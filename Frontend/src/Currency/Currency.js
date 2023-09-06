@@ -23,7 +23,6 @@ const Currency = () => {
           },
         })
         .then((response) => {
-          // Получаем объект с обменными курсами
           const conversionRates = response.data.conversion_rates;
           setExchangeRates(conversionRates);
         })

@@ -2,16 +2,13 @@ import React, { useState } from "react";
 import styles from './newCard.module.css'
 
 const NewCard = (props) => {
-  const [inputValue, setInputValue] = useState(""); // Состояние для хранения значения ввода
+  const [inputValue, setInputValue] = useState(""); 
 
-  // Функция для проверки валидности формы
   const isFormValid = () => {
-    // Проверка на наличие текста
     if (inputValue.trim() === "") {
       return false;
     }
 
-    // Проверка на маленькие буквы и пробелы
     const regex = /^[a-z\s]+$/;
     return regex.test(inputValue);
   };
@@ -34,7 +31,7 @@ const NewCard = (props) => {
         <button
           className={`${styles.formButton} ${isFormValid() ? styles.formButtonActive : ''}`}
           type="submit"
-          onClick={() => props.onConfirm(inputValue)} // Передаем inputValue в handleCreateCard
+          onClick={() => props.onConfirm(inputValue)}
           disabled={!isFormValid()}
         >
           Submit

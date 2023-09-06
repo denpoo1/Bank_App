@@ -20,7 +20,7 @@ function AppExpenses(props) {
     if (array && array.date) {
         return array.date.getFullYear().toString() === savedYear;
     }
-    return false; // Если array или date равны null, вернуть false
+    return false; 
 });
 
 

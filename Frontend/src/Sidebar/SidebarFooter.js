@@ -7,10 +7,8 @@ const SidebarFooter = () => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    // Удаляем куку с токеном
     Cookies.remove("token");
 
-    // Переходим на главную страницу
     navigate("/");
   };
 
@@ -20,10 +18,8 @@ const SidebarFooter = () => {
   ];
 
   const openTelegramChat = () => {
-    // Замените URL на ссылку на ваш Telegram-чат
     const telegramChatUrl = "https://t.me/a10ney";
 
-    // Открывает ссылку в новой вкладке браузера
     window.open(telegramChatUrl, "_blank");
   };
 

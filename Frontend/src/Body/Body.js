@@ -5,8 +5,8 @@ import TotalBalance from "../TotalBalance/TotalBalance";
 import MarketButtons from "../MarketButtons/MarketButtons";
 import Card from '../Card/Card';
 import Currency from "../Currency/Currency";
-import axios from "axios"; // Import Axios
-import Cookies from "js-cookie"; // Import Cookies
+import axios from "axios"; 
+import Cookies from "js-cookie"; 
 import AppExpenses from "../Components/Expenses/AppExpenses";
 
 const Body = () => {
@@ -25,7 +25,6 @@ const Body = () => {
             .then(response => {
                 const matchingUser = response.data.find(user => user.username === username);
                 if (matchingUser) {
-                    // Set the userID if the username matches
                     setUserId(matchingUser.id);
                 }
             })
@@ -46,12 +45,10 @@ const Body = () => {
             (res) => {
                 const transactions = res.data;
     
-                // Преобразуйте строку 'date' в объект 'Date'
                 transactions.forEach(transaction => {
                     transaction.date = new Date(transaction.date);
                 });
     
-                // Фильтруйте транзакции, где fromCardId совпадает с selectedCardId
                 const expenses = transactions.filter(transaction => transaction.fromCardId === selectedCardId);
                 const updatedExpenses = expenses.map(expense => {
                     if (
@@ -60,11 +57,9 @@ const Body = () => {
                         cards.length > 0 && 
                         expense.toCardId !== null
                     ) {
-                        // Убедитесь, что cards не равен null, имеет длину больше 0
-                        // и expense.toCardId не равен null перед выполнением операции find и чтением свойства id
+                        
                         const card = cards.find(card => card.id === expense.toCardId);
                         if (card) {
-                            // Если карточка найдена, добавьте поле title с billingAddress
                             return { ...expense, title: `Transfer to Card ${card.billingAddress}` };
                         }
                     }
@@ -82,7 +77,6 @@ const Body = () => {
 
 
 
-    // Function to handle card selection
     const handleCardSelection = (cardId) => {
         setSelectedCardId(cardId);
     }

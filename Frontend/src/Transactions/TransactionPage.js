@@ -12,18 +12,14 @@ const PortfolioPage = () => {
     const [userID, setUserID] = useState(null);
     const [selectedCard, setSelectedCard] = useState(null);
     const [selectedCardTransactions, setSelectedCardTransactions] = useState([]);
-    const [currentPage, setCurrentPage] = useState(1);
-    const [prevDate, setPrevDate] = useState(null); // Добавлено состояние для отслеживания предыдущей даты
-    const pageSize = 6; // Number of transactions per page
+    const pageSize = 6; 
     const [transactionsToShow, setTransactionsToShow] = useState(pageSize); // Add this state
     const [cardHolder, setCardHolder] = useState(""); // Add this state
-    const [loading, setLoading] = useState(true);
     const baseUrl = "http://localhost:8080/"
 
     const handleCardSelection = (cardId) => {
         if (selectedCard !== cardId) {
             setSelectedCard(cardId);
-            setCurrentPage(1); // Reset currentPage to 1 when selecting a new card
         }
     };
     useEffect(() => {
@@ -34,12 +30,10 @@ const PortfolioPage = () => {
             Authorization: `Bearer ${token}`
         };
 
-        // First, fetch all customers to find the matching username
         axios.get(`${baseUrl}customers`, { headers })
             .then(response => {
                 const matchingUser = response.data.find(user => user.username === username);
                 if (matchingUser) {
-                    // Set the userID if the username matches
                     setUserID(matchingUser.id);
                 }
             })
@@ -47,9 +41,7 @@ const PortfolioPage = () => {
                 console.error('Error fetching customer data', error);
             });
 
-        // Then, fetch credit cards for the specific user (if userID is set)
         if (userID !== null) {
-            setLoading(true);
             axios.get(`${baseUrl}customers/${userID}/credit-cards`, { headers })
                 .then(response => {
                     setCards(response.data);
@@ -58,11 +50,9 @@ const PortfolioPage = () => {
                         setSelectedCard(response.data[0].id);
                     }
 
-                    setLoading(false);
                 })
                 .catch(error => {
                     console.error('Error fetching credit cards data', error);
-                    setLoading(false);
                 });
         }
     }, [userID]);
@@ -104,7 +94,7 @@ const PortfolioPage = () => {
 
     const transactionsToDisplay = selectedCardTransactions.slice(0, transactionsToShow);
     const loadMoreTransactions = () => {
-        const newTransactionsToShow = transactionsToShow + 5; // Increase by 5 transactions
+        const newTransactionsToShow = transactionsToShow + 5; 
         setTransactionsToShow(newTransactionsToShow);
     };
 
@@ -139,7 +129,7 @@ const PortfolioPage = () => {
                     ))}
                 </div>
             </div>
-            <Wrap className={`${styles.transactionPageWrap} ${styles.scrollableContainer}`}> {/* Apply the scrollableContainer class */}
+            <Wrap className={`${styles.transactionPageWrap} ${styles.scrollableContainer}`}>
                 <div className={styles.qwe}>
                     <div className={styles.tableNamesWrapper}>
                         <div className={styles.twoElem}>
@@ -155,7 +145,7 @@ const PortfolioPage = () => {
                 <div className={styles.sad}>
                     {Object.keys(groupedTransactions).map((transactionDate, index) => (
                         <div key={transactionDate}>
-                            {index > 0 && <div className={styles.transactionSeparator}></div>} {/* Add a separator after the first group */}
+                            {index > 0 && <div className={styles.transactionSeparator}></div>}
                             <div className={styles.devider}>
                                 <span>{transactionDate}</span>
                             </div>
@@ -184,7 +174,7 @@ const PortfolioPage = () => {
                     ))}
                 </div>
                 <div className={styles.loadMoreButtonContainer}>
-                    {transactionsToShow < selectedCardTransactions.length && ( // Show the button only when there are more transactions to load
+                    {transactionsToShow < selectedCardTransactions.length && ( 
                         <button
                             className={styles.loadMoreButton}
                             onClick={loadMoreTransactions}

@@ -13,8 +13,7 @@ const PortfolioPage = () => {
   const [customerId, setCustomerId] = useState(null);
   const [accountId, setAccountId] = useState(null);
   const [avatar, setAvatar] = useState(null)
-  const [selectedFile, setSelectedFile] = useState(null);
-  const fileInputRef = useRef(null); // Создаем ссылку на элемент input
+  const fileInputRef = useRef(null); 
   const baseUrl = "http://localhost:8080/"
 
   const [userData, setUserData] = useState({
@@ -71,7 +70,6 @@ const PortfolioPage = () => {
       console.log(accountId)
       axios.post(`${baseUrl}accounts/${accountId}/upload-avatar`, formData, { headers })
         .then(response => {
-          // Обновляем отображаемую аватарку
           setAvatar(response.data.avatar_url);
         })
         .catch(error => {
@@ -96,7 +94,6 @@ const PortfolioPage = () => {
           src={avatar === 'DEFAULT' ? defaulLogo : avatar || defaulLogo}
 
           onClick={() => {
-            // При клике на изображение вызывается клик по элементу input для выбора файла
             fileInputRef.current.click();
           }}
         />
@@ -254,13 +251,11 @@ const UserInfoRow = ({ label, value }) => {
       }
     })
       .then(response => {
-        console.log('Profile updated successfully:', response.data);
-        // You might want to update the UI or perform other actions after a successful update
+        console.log('Profile updated successfully', response.data);
         setIsEditing(false);
       })
       .catch(error => {
-        console.error('Error updating profile:', error);
-        // Handle errors here
+        console.error('Error updating profile', error);
       });
   };
 
@@ -293,7 +288,7 @@ const UserInfoRow = ({ label, value }) => {
               />
 
               <button onClick={handleSave}>Save</button>
-              <p>Editing: {editingLabel}</p> {/* Display the editing label */}
+              <p>Editing: {editingLabel}</p> 
             </animated.div>
           </Modal>
         ) : (

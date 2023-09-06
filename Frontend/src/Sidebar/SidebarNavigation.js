@@ -7,7 +7,6 @@ const SidebarNavigation = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // Обновляем активную кнопку при изменении пути
   useEffect(() => {
     const activeIndex = mainButtons.findIndex(
       (button) =>

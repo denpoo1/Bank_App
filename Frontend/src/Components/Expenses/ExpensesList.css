@@ -2,9 +2,7 @@
   list-style: none;
   padding: 0;
   max-height: 250px;
-  /* Установите желаемую максимальную высоту */
   overflow-y: auto;
-  /* Добавьте вертикальную прокрутку по мере необходимости */
 }
 .expenses-list::-webkit-scrollbar {
   width: 10px;

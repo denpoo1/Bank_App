@@ -8,9 +8,6 @@ import Cookies from "js-cookie";
 import axios from "axios";
 import Modal from "../Modal/Module";
 const PiggyBank = () => {
-    const [collected, setCollected] = useState(null); // Поменял значение для демонстрации переполнения
-    const [goal, setGoal] = useState(null);
-    const [bankName, setBankName] = useState("");
     const [isPiggyOpen, setIsPiggyOpen] = useState(false);
     const [customerId, setCustomerId] = useState(null)
     const [accountID, setAccountID] = useState(null)
@@ -54,7 +51,6 @@ const PiggyBank = () => {
             };
         }
 
-        // Обновляем стиль с помощью setStyle
         setStyle(newStyle);
     };
 
@@ -72,37 +68,30 @@ const PiggyBank = () => {
                     Authorization: `Bearer ${token}`,
                 };
 
-                // Fetch customer data
                 const customerResponse = await axios.get(`${baseUrl}customers`, { headers });
                 const matchingUser = customerResponse.data.find((arr) => arr.username === username);
                 if (matchingUser) {
                     setCustomerId(matchingUser.id);
                 }
 
-                // Fetch account data
                 const accountResponse = await axios.get(`${baseUrl}accounts`, { headers });
                 const matchingAccount = accountResponse.data.find((arr) => arr.customerId === customerId);
                 if (matchingAccount) {
                     setAccountID(matchingAccount.id);
                 }
 
-                // Fetch piggy banks data
                 const piggyBanksResponse = await axios.get(`${baseUrl}piggy-banks`, { headers });
                 const piggyBanksData = piggyBanksResponse.data;
 
-                // Filter piggy banks by accountID
                 const filteredPiggyBanks = piggyBanksData.filter((piggyBank) => piggyBank.accountID === accountID);
 
-                // Set piggy banks state
                 setPiggyBanks(filteredPiggyBanks);
 
-                // Вывод банки в консоль
              
 
-                // Подтягиваем данные из JSON для открытой накопилки
 
             } catch (error) {
-                console.error('Ошибка при получении данных', error);
+                console.error('Error geting user data', error);
             }
         };
 
@@ -120,12 +109,10 @@ const PiggyBank = () => {
         })
           .then(response => {
             console.log('Profile updated successfully:', response.data);
-            // You might want to update the UI or perform other actions after a successful update
             setIsEditing(false);
           })
           .catch(error => {
             console.error('Error updating profile:', error);
-            // Handle errors here
           });
       };
 
@@ -142,7 +129,7 @@ const PiggyBank = () => {
                             onClick={() => {
                                 openPiggy(piggyBank)
                             }
-                            } // Pass the clicked piggy bank
+                            }
                         ><div className={styles.jar}>
                                 <div className={styles.topOfJar}></div>
                                 <div className={styles.bottomOfJar}></div>
@@ -192,7 +179,7 @@ const PiggyBank = () => {
               />
 
               <button onClick={handleSave}>Save</button>
-              <p>Editing: {editingLabel}</p> {/* Display the editing label */}
+              <p>Editing: {editingLabel}</p> 
             </div>
           </Modal>
         ) : (
@@ -202,7 +189,7 @@ const PiggyBank = () => {
                                 <div className={styles.topOfBiggerJar}></div>
                                 <div
                                     className={`${styles.bottomOfBiggerJar}`}
-                                    style={style} // Устанавливаем вычисленный цвет фона
+                                    style={style}
 
                                 ></div>
                             </div>

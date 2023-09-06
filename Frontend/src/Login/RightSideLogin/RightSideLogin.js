@@ -18,25 +18,22 @@ const RightSideLogin = () => {
     const sessionExpiredCookie = Cookies.get("sessionExpired");
   
     if (sessionExpiredCookie === "true") {
-      // Очистите куки, чтобы сообщение об истекшей сессии не отображалось после обновления страницы
       Cookies.remove("sessionExpired");
-      // Установите состояние sessionExpired в true
       setSessionExpired(true)
     }
   }, []);
   useEffect(() => {
-    // Check if both username and password are filled to enable the button
     setIsFormValid(username.trim() !== '' && password.trim() !== '');
   }, [username, password]);
   useEffect(() => {
-    checkTokenExpiration(); // Добавляем проверку срока действия токена при загрузке компонента
+    checkTokenExpiration();
   }, []);
 
 
   const checkTokenExpiration = () => {
     const token = Cookies.get('token');
     if (!token) {
-      navigate('/'); // Перенаправляем на страницу входа, если токен отсутствует
+      navigate('/');
       return;
     }
 
@@ -44,7 +41,7 @@ const RightSideLogin = () => {
     const currentTime = new Date();
     if (currentTime > tokenExpirationDate) {
       Cookies.remove('token');
-      navigate('/'); // Перенаправляем на страницу входа, если токен истек
+      navigate('/'); 
     }
   };
 
@@ -60,7 +57,7 @@ const RightSideLogin = () => {
       });
 
       const token = response.data.token;
-      console.log('Токен:', token);
+      console.log('Token:', token);
 
       const tokenExpirationDate = new Date();
       tokenExpirationDate.setDate(tokenExpirationDate.getDate() + 1);
@@ -86,7 +83,6 @@ const RightSideLogin = () => {
 
 
   const handleSignUp = () => {
-    // Redirect to the signup page
     navigate('/sign-up');
   };
   const closeModalOfExpiredSession = () =>{

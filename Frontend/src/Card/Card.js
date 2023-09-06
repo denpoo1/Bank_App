@@ -9,20 +9,16 @@ import left from '../images/cardArrows/leftActive.png';
 import addCard from '../images/cardArrows/addCard.png';
 import axios from "axios";
 import Cookies from "js-cookie";
-import Modal from '../Modal/Module'; // Импортируем компонент модального окна
+import Modal from '../Modal/Module'; 
 import NewCard from "../newCard/NewCard"
 
 const Card = ({ onCardSelect }) => {
   const [cards, setCards] = useState([]);
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
   const isOnFirstCard = currentCardIndex === 0;
-  const isOnLastCard = currentCardIndex === cards.length - 1;
   const [userID, setUserID] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [generatedCardNumber, setGeneratedCardNumber] = useState(null)
-  const [accountID, setAccountID] = useState(null)
 
 
   useEffect(() => {
@@ -33,12 +29,10 @@ const Card = ({ onCardSelect }) => {
       Authorization: `Bearer ${token}`
     };
 
-    // First, fetch all customers to find the matching username
     axios.get("http://localhost:8080/customers", { headers })
       .then(response => {
         const matchingUser = response.data.find(user => user.username === username);
         if (matchingUser) {
-          // Set the userID if the username matches
           setUserID(matchingUser.id);
         }
       })
@@ -46,7 +40,6 @@ const Card = ({ onCardSelect }) => {
         console.error('Error fetching customer data', error);
       });
 
-    // Then, fetch credit cards for the specific user (if userID is set)
     if (userID !== null) {
       axios.get(`http://localhost:8080/customers/${userID}/credit-cards`, { headers })
         .then(response => {
@@ -55,9 +48,6 @@ const Card = ({ onCardSelect }) => {
         .catch(error => {
           console.error('Error fetching credit cards data', error);
         })
-        .finally(() => {
-          setIsLoading(false);
-        });
     }
   }, [userID]);
 
@@ -65,7 +55,7 @@ const Card = ({ onCardSelect }) => {
     if (isAnimating) {
       setTimeout(() => {
         setIsAnimating(false);
-      }, 300); // Задержка в миллисекундах (0.3 секунды)
+      }, 300); 
     }
   }, [isAnimating]);
 
@@ -75,9 +65,8 @@ const Card = ({ onCardSelect }) => {
       setTimeout(() => {
         setCurrentCardIndex(currentCardIndex - 1);
         setIsAnimating(false);
-        // Обновляем текущую карту в родительском компоненте
         onCardSelect(cards[currentCardIndex - 1].id);
-      }, 300); // Задержка в миллисекундах (0.3 секунды)
+      }, 300); 
     }
   };
 
@@ -87,13 +76,11 @@ const Card = ({ onCardSelect }) => {
       setTimeout(() => {
         setCurrentCardIndex(currentCardIndex + 1);
         setIsAnimating(false);
-        // Обновляем текущую карту в родительском компоненте
         onCardSelect(cards[currentCardIndex + 1].id);
-      }, 300); // Задержка в миллисекундах (0.3 секунды)
+      }, 300); 
     }
   };
 
-  // Функция для обработки создания новой карты (пока заглушка)
   const handleCreateCard = async (billingAddress) => {
     try {
       const token = Cookies.get('token');
@@ -101,33 +88,28 @@ const Card = ({ onCardSelect }) => {
         Authorization: `Bearer ${token}`
       };
   
-      // Получение сгенерированного номера карты
       const cardNumberResponse = await axios.get('http://localhost:8080/credit-cards/generate/card-number/16', { headers });
       const generatedCardNumber = cardNumberResponse.data;
   
-      // Получение информации об аккаунте
       const accountResponse = await axios.get('http://localhost:8080/accounts', { headers });
       const matchingAccount = accountResponse.data.find((arr) => arr.customerId === userID);
       if (!matchingAccount) {
-        console.error('Не удалось найти аккаунт для пользователя');
+        console.error('Couldnt find a user ');
         return;
       }
       
       const accountID = matchingAccount.id;
   
-      // Функция для генерации случайного CVV
       const generateRandomCVV = () => {
-        return Math.floor(100 + Math.random() * 900); // Генерируем случайное число от 100 до 999
+        return Math.floor(100 + Math.random() * 900); 
       };
   
-      // Функция для вычисления даты окончания через 8 лет
       const calculateExpirationDate = () => {
         const currentDate = new Date();
         currentDate.setFullYear(currentDate.getFullYear() + 8);
         return currentDate.toISOString();
       };
   
-      // Создание объекта данных для отправки
       const data = {
         cardNumber: generatedCardNumber,
         cvv: generateRandomCVV(),
@@ -141,13 +123,11 @@ const Card = ({ onCardSelect }) => {
   
       console.log(data);
   
-      // Отправка POST-запроса для создания карты
       const createCardResponse = await axios.post("http://localhost:8080/credit-cards", data, { headers });
-      console.log("Успешно создана новая карта:", createCardResponse.data);
+      console.log("card created succesflly", createCardResponse.data);
       
-      // Добавьте новую карту к списку карт в состоянии (если это необходимо)
     } catch (error) {
-      console.error("Ошибка при создании карты:", error);
+      console.error("Error creating card", error);
     }
   };
   
@@ -165,14 +145,14 @@ const Card = ({ onCardSelect }) => {
 
   const formatCardNumber = (cardNumber) => {
     if (typeof cardNumber === 'number') {
-      const formattedNumber = cardNumber.toString().replace(/\s/g, ''); // Преобразуем в строку и удаляем пробелы, если они уже есть
+      const formattedNumber = cardNumber.toString().replace(/\s/g, '');
       const groups = [];
       for (let i = 0; i < formattedNumber.length; i += 4) {
         groups.push(formattedNumber.substring(i, i + 4));
       }
-      return groups.join(' '); // Соединяем группы цифр с пробелами между ними
+      return groups.join(' ');
     } else {
-      return ''; // Если cardNumber не является числом, возвращаем пустую строку
+      return ''; 
     }
   };
 
@@ -180,17 +160,12 @@ const Card = ({ onCardSelect }) => {
     setIsModalOpen(true);
   };
 
-  // Функция для закрытия модального окна
   const closeModal = () => {
     setIsModalOpen(false);
   };
 
   const handleConfirmAction = (props) => {
-    // Здесь можно добавить логику для действия, которое нужно выполнить после подтверждения
-    // Например, вызвать функцию handleCreateCard
     handleCreateCard(props);
-    
-    // Закрыть модальное окно
     closeModal();
   };
   return (
@@ -247,7 +222,7 @@ const Card = ({ onCardSelect }) => {
               ) : (
                 <button
                   className={`${styles.cardButtons} ${styles.createButton}`}
-                  onClick={() => handleNextCard(currentCard.id)} // Передаем айдишник карты
+                  onClick={() => handleNextCard(currentCard.id)} 
                 >
                   <img src={right} alt="Next" />
                 </button>

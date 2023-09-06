@@ -3,7 +3,7 @@ import Wrap from "../Wrap/Wrap";
 import PiggyBank from "../PiggyBank/PiggyBank";
 import styles from './MarketButtons.module.css';
 import deposit from '../images/MarketButtons/deposit.png';
-import Modal from '../Modal/Module'; // Импортируем компонент модального окна
+import Modal from '../Modal/Module'; 
 import axios from 'axios';
 import Cookies from "js-cookie";
 import visa from '../images/card/visa.png';
@@ -20,19 +20,19 @@ const MarketButtons = () => {
     const [isCardNumberValid, setIsCardNumberValid] = useState(true);
     const [amount, setAmount] = useState('');
     const [isAmountValid, setIsAmountValid] = useState(true);
-    const [error, setError] = useState(null); // State variable to store error message
-    const isFormValid = isCardNumberValid && isAmountValid && amount.trim() !== '' && cardNumber.trim() !== ''; // Check if amount is not empty
+    const [error, setError] = useState(null);
+    const isFormValid = isCardNumberValid && isAmountValid && amount.trim() !== '' && cardNumber.trim() !== '';
     const baseUrl = "http://localhost:8080/"
 
 
     const handleAmountChange = (e) => {
-        const input = e.target.value.replace(/[^\d,]/g, ''); // Remove non-digit and non-comma characters
+        const input = e.target.value.replace(/[^\d,]/g, ''); 
         setAmount(input);
-        setIsAmountValid(/^\d{0,5}(,\d{0,2})?$/.test(input)); // Check if amount is valid
+        setIsAmountValid(/^\d{0,5}(,\d{0,2})?$/.test(input)); 
     };
 
     const handleSubmit = async (e) => {
-        e.preventDefault(); // Prevent form submission if it's not valid
+        e.preventDefault();
 
         if (isFormValid) {
             const token = Cookies.get('token');
@@ -41,35 +41,25 @@ const MarketButtons = () => {
             };
 
             try {
-                // Request to get all credit card numbers
                 const creditCardsResponse = await axios.get(`${baseUrl}credit-cards`, { headers });
                 const creditCardNumbers = creditCardsResponse.data.map(creditCard => creditCard.cardNumber);
 
-                // Convert entered card number to an integer
                 const enteredCardNumber = parseInt(cardNumber.replace(/\D/g, ''), 10);
 
-                // Check if the entered card number exists in the list of all credit card numbers
                 if (creditCardNumbers.includes(enteredCardNumber)) {
-                    // Find the from_account_id (id of the selectedCard)
                     const from_card_id = selectedCard.id;
 
-                    // Find the to_account_id using the entered card number
                     const matchingCard = creditCardsResponse.data.find(creditCard => creditCard.cardNumber === enteredCardNumber);
                     const to_card_id = matchingCard.id;
 
-                    // Проверка на отправку с той же карты
                     if (from_card_id === to_card_id) {
                         setError('Cannot transfer money from and to the same card.');
                     } else {
-                        // Проверка баланса карты
                         if (selectedCard.balance < parseFloat(amount.replace(',', '.'))) {
                             setError('Insufficient funds on the selected card.');
                         } else {
-                            // Баланс достаточен для совершения платежа
 
-                            // Convert the amount to cents if it's in dollars
 
-                            // Send the payment request
                             const paymentData = {
                                 from_card_id,
                                 to_card_id,
@@ -80,7 +70,6 @@ const MarketButtons = () => {
                             setError(null);
                             console.log('Payment successful:', paymentResponse.data);
 
-                            // Reload the page after successful payment
                             window.location.reload();
                         }
                     }
@@ -96,7 +85,7 @@ const MarketButtons = () => {
 
 
     const handleCardNumberChange = (e) => {
-        const input = e.target.value.replace(/\D/g, ''); // Remove non-digit characters
+        const input = e.target.value.replace(/\D/g, ''); 
         let formattedInput = '';
 
         for (let i = 0; i < input.length; i += 4) {
@@ -104,7 +93,7 @@ const MarketButtons = () => {
         }
 
         setCardNumber(formattedInput.trim());
-        setIsCardNumberValid(input.length === 16); // Check if card number is valid
+        setIsCardNumberValid(input.length === 16); 
     };
 
 
@@ -119,15 +108,15 @@ const MarketButtons = () => {
 
     const handleDepositClick = (e) => {
         e.preventDefault();
-        const firstCard = cards[0]; // Получаем первую карту из массива
-        setSelectedCard(firstCard); // Устанавливаем её как выбранную карту
-        setIsCardListOpen(false); // Закрываем список карт
-        setIsDepositModalOpen(true); // Открываем модальное окно
+        const firstCard = cards[0]; 
+        setSelectedCard(firstCard); 
+        setIsCardListOpen(false); 
+        setIsDepositModalOpen(true); 
     };
 
     const handlePiggyBank = (e) => {
         e.preventDefault();
-        setIsPiggyBankOpen(true); // Открываем модальное окно
+        setIsPiggyBankOpen(true);
     };
 
     const handleCloseDepositModal = () => {
@@ -137,7 +126,7 @@ const MarketButtons = () => {
     };
 
     const handleClosePiggyBank = () => {
-        if (!isCardListOpen) {/* TODO: -заменить isCardListOpen на внутренний компонент банки, который будет открываться */
+        if (!isCardListOpen) {
             setIsPiggyBankOpen(false);
         }
     };
@@ -188,11 +177,11 @@ const MarketButtons = () => {
     const modalAnimation = useSpring({
         from: {
             opacity: 0,
-            transform: 'translateY(50px) scale(0.1)', // Начальное положение и размер
+            transform: 'translateY(50px) scale(0.1)', 
         },
         to: {
             opacity: 1,
-            transform: 'translateY(0) scale(1)', // Конечное положение и размер
+            transform: 'translateY(0) scale(1)',
         },
     });
     return (
@@ -245,7 +234,6 @@ const MarketButtons = () => {
                                     style={modalAnimation}
                                 >
                                     <animated.div style={modalAnimation} className={styles.cardList}>
-                                        {/* Вывести список всех карт для выбора */}
                                         <div className={styles.cardListElementWrapper}>
                                             <div className={styles.cardTitleAndCloseButton}>
                                                 <span>Withdraw from:</span>
@@ -260,7 +248,7 @@ const MarketButtons = () => {
                                                 <div
                                                     key={card.id}
                                                     className={styles.cardListItem}
-                                                    onClick={() => handleCardSelect(card)} // Выбор карты и закрытие списка
+                                                    onClick={() => handleCardSelect(card)} 
                                                 >
                                                     <div className={styles.cardImage}>
                                                         {selectedCard && (

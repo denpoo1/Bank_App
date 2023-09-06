@@ -32,9 +32,8 @@ const TotalBalance = ({ cardId }) => {
     });
   
     axios.get(`${baseUrl}accounts`, { headers }).then((res) => {
-      const accounts = res.data; // Получаем массив всех аккаунтов
+      const accounts = res.data;
   
-      // Проходим по каждому аккаунту и сравниваем customerId
       accounts.forEach(account => {
         if (account.customerId === customerId) {
           if (customerId != null) {
@@ -54,11 +53,11 @@ const TotalBalance = ({ cardId }) => {
 
 
 
-    axios.get(`${baseUrl}transactions`, { headers }) // Запрос транзакций
+    axios.get(`${baseUrl}transactions`, { headers }) 
       .then(response => {
         const transactions = response.data;
 
-        const incomeExpensesMap = {}; // Объект для хранения доходов и расходов по картам
+        const incomeExpensesMap = {}; 
 
         transactions.forEach(transaction => {
           const { fromCardId, toCardId, amount } = transaction;
@@ -70,22 +69,21 @@ const TotalBalance = ({ cardId }) => {
             incomeExpensesMap[toCardId] = { income: 0, expenses: 0 };
           }
 
-          incomeExpensesMap[fromCardId].expenses += amount; // Увеличение расходов
-          incomeExpensesMap[toCardId].income += amount;     // Увеличение доходов
+          incomeExpensesMap[fromCardId].expenses += amount; 
+          incomeExpensesMap[toCardId].income += amount;    
         });
        
-        // Обновление состояний income и expenses для текущей карты
         setIncome(incomeExpensesMap[cardId]?.income || 0);
         setExpenses(incomeExpensesMap[cardId]?.expenses || 0);
 
         const calculatedIncome = incomeExpensesMap[cardId]?.income || 0;
         const calculatedExpenses = incomeExpensesMap[cardId]?.expenses || 0;
-        const calculatedPercentage = calculatedExpenses === 0 ? calculatedIncome * 100 : (calculatedIncome - calculatedExpenses) / calculatedIncome * 100; //пофиткстать хуйню с процентом, если там доход равен 0
+        const calculatedPercentage = calculatedExpenses === 0 ? calculatedIncome * 100 : (calculatedIncome - calculatedExpenses) / calculatedIncome * 100; 
         setPercentage(calculatedPercentage);
         setIsPositive(calculatedPercentage >= 0);
       })
       .catch(error => {
-        console.error('Произошла ошибка при получении данных о транзакциях', error);
+        console.error('Error fetching user data', error);
       });
   }, [cardId, isPositive, customerId]);
 
@@ -106,13 +104,12 @@ const TotalBalance = ({ cardId }) => {
 
       })
       .catch(error => {
-        console.error('Произошла ошибка при получении данных о балансе', error);
+        console.error('Error geting the balance', error)
       });
   }, [cardId, customerId]);
 
   return (
     <Wrap className={styles.wrapperTotalBAlance}>
-      {/* Your other content */}
       <h1 className={styles.amountTitle}>Balance</h1>
       <div className={styles.amountWrapper}>
         <span className={styles.amount}>
@@ -128,7 +125,7 @@ const TotalBalance = ({ cardId }) => {
               : "#FE0738",
           }}
         >
-          {percentage !== 0 ? ( // Conditionally render the triangle when percentage is not 0
+          {percentage !== 0 ? ( 
             <span className={styles.triangle}>
               {isPositive ? <>&#9650;</> : <>&#9660;</>}
             </span>
