@@ -18,7 +18,7 @@ const PortfolioPage = () => {
     const [transactionsToShow, setTransactionsToShow] = useState(pageSize); // Add this state
     const [cardHolder, setCardHolder] = useState(""); // Add this state
     const [loading, setLoading] = useState(true);
-
+    const baseUrl = "http://localhost:8080/"
 
     const handleCardSelection = (cardId) => {
         if (selectedCard !== cardId) {
@@ -35,7 +35,7 @@ const PortfolioPage = () => {
         };
 
         // First, fetch all customers to find the matching username
-        axios.get("http://localhost:8080/customers", { headers })
+        axios.get(`${baseUrl}customers`, { headers })
             .then(response => {
                 const matchingUser = response.data.find(user => user.username === username);
                 if (matchingUser) {
@@ -50,7 +50,7 @@ const PortfolioPage = () => {
         // Then, fetch credit cards for the specific user (if userID is set)
         if (userID !== null) {
             setLoading(true);
-            axios.get(`http://localhost:8080/customers/${userID}/credit-cards`, { headers })
+            axios.get(`${baseUrl}customers/${userID}/credit-cards`, { headers })
                 .then(response => {
                     setCards(response.data);
 
@@ -75,7 +75,7 @@ const PortfolioPage = () => {
                 Authorization: `Bearer ${Cookies.get('token')}`
             };
 
-            axios.get(`http://localhost:8080/transactions`, { headers })
+            axios.get(`${baseUrl}transactions`, { headers })
                 .then(response => {
                     const transactionsForSelectedCard = response.data.filter(transaction => (
                         transaction.toCardId === selectedCard || transaction.fromCardId === selectedCard

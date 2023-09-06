@@ -1,6 +1,5 @@
 import React from "react";
 import styles from './LeftSideLogin.module.css';
-import logingCardLogo from '../../images/logo/logo.jpg'
 import logo1 from '../../images/logo/logo1.jpg'
 import logo2 from '../../images/logo/logo2.jpg'
 import logo3 from '../../images/logo/logo3.jpg'

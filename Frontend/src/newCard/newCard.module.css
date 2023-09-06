@@ -1,0 +1,60 @@
+.wrapper{
+    height: 70%;
+}
+
+.addingNewCard{
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-self: center;
+    justify-content: space-between;
+    height: 100%;
+    align-items: center;
+}
+
+.inputInf{
+    height: 90px;
+    display: flex;
+    flex-direction: column;
+    justify-self: center;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.inputForCardNumber {
+    width: auto;
+    width: 300px;
+    background-color: transparent;
+    border: 2px solid #757474;
+    border-radius: 8px;
+    color: var(--text-color);
+    height: 45px;
+    outline: none;
+    transition: background-color 0.5s, box-shadow 0.5s;
+  }
+  
+  .inputForCardNumber:focus {
+    background-color: hsla(211, 100%, 35%, 0.2);
+    
+    box-shadow: 0 0 20px rgba(0, 86, 179, 0.5);
+  }
+
+
+  .formButton {
+    margin-top: 39px;
+    cursor: pointer;
+    pointer-events: none;
+    text-transform: uppercase;
+    background-color: #767676;
+    border-radius: 8px;
+    width: auto;
+    height: 50px;
+    transition: background-color 0.5s, box-shadow 0.5s;
+    
+  }
+  
+  .formButtonActive {
+    pointer-events: all;
+    background-color: #0056b3;
+  }
+  

@@ -4,6 +4,10 @@
   border-radius: 20px;
   width: 200px;
 }
+.marketButtonsWrapper h1{
+  margin-bottom: 0;
+    font-size: 25px;
+}
 
 .buttonsWrapper {
   display: flex;
@@ -17,7 +21,7 @@
   margin-top: 20px;
   background-color: transparent;
   position: relative;
-  /* Required for positioning the ::after pseudo-element */
+  
   align-items: center;
 }
 
@@ -36,18 +40,18 @@
   position: absolute;
   top: 0;
   right: -10px;
-  /* Adjust the value based on your design */
+  
   width: 1px;
-  /* Width of the vertical bar */
+  
   height: 100%;
-  /* Set the height to 100% to match the button height */
+  
   background-color: var(--separator);
-  /* Color of the vertical bar */
+  
 }
 
 .wrapForMarketElement:last-child::after {
   width: 0px;
-  /* Width of the vertical bar */
+  
 }
 
 .withdrawTitle {
@@ -141,18 +145,18 @@
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
-  /* Здесь можно настроить прозрачность */
+  
   backdrop-filter: blur(5px);
-  /* Здесь можно настроить степень размытия */
+  
   z-index: 1000;
-  /* Поднимите значение z-index, чтобы оверлей находился над другими элементами */
+  
 }
 
 
 .qwe {
   backdrop-filter: blur(5px);
 
-  /* Здесь можно настроить степень размытия */
+  
 }
 
 
@@ -178,9 +182,9 @@
 
 .inputForCardNumber:focus {
   background-color: hsla(211, 100%, 35%, 0.2);
-  /* Цвет фона при ховере */
+  
   box-shadow: 0 0 20px rgba(0, 86, 179, 0.5);
-  /* Расплывчатый эффект */
+  
 }
 
 .errorText {
@@ -213,7 +217,7 @@
   width: 100%;
   height: 50px;
   transition: background-color 0.5s, box-shadow 0.5s;
-  /* Add transition here */
+  
 }
 
 .formButtonActive {
@@ -226,3 +230,6 @@
   font-size: 14px;
   margin-top: 8px;
 }
+
+
+

@@ -1,16 +1,21 @@
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import styles from './PortfolioPage.module.css';
 import Wrap from "../Wrap/Wrap";
-import liza from "../images/logo/liza2.jpg";
+import defaulLogo from "../images/logo/defaultPhoto.png";
 import Cookies from "js-cookie";
 import axios from "axios";
 import editIcon from "../images/other/edit.png";
 import Modal from "../Modal/Module";
-import { useSpring, animated } from 'react-spring';
+import { animated } from 'react-spring';
 
 const PortfolioPage = () => {
   const [customerId, setCustomerId] = useState(null);
+  const [accountId, setAccountId] = useState(null);
+  const [avatar, setAvatar] = useState(null)
+  const [selectedFile, setSelectedFile] = useState(null);
+  const fileInputRef = useRef(null); // Создаем ссылку на элемент input
+  const baseUrl = "http://localhost:8080/"
 
   const [userData, setUserData] = useState({
     id: null,
@@ -30,7 +35,7 @@ const PortfolioPage = () => {
       Authorization: `Bearer ${token}`
     };
 
-    axios.get("http://localhost:8080/customers", { headers })
+    axios.get(`${baseUrl}customers`, { headers })
       .then(response => {
         const matchingUser = response.data.find(user => user.username === username);
         if (matchingUser) {
@@ -41,12 +46,60 @@ const PortfolioPage = () => {
       .catch(error => {
         console.error('Error fetching customer data', error);
       });
-  }, []);
+
+    axios.get(`${baseUrl}accounts`, { headers })
+      .then(response => {
+        const matchingUser = response.data.find(user => user.customerId === customerId);
+        console.log(matchingUser.avatar_url)
+        setAvatar(matchingUser.avatar_url)
+        setAccountId(matchingUser.id)
+      }).catch(error => {
+        console.error('Error fetching customer data', error);
+      });
+  }, [customerId]);
+  const handleFileChange = (event) => {
+    const selectedFile = event.target.files[0];
+
+    if (selectedFile) {
+      const formData = new FormData();
+      formData.append('file', selectedFile);
+
+      const token = Cookies.get('token');
+      const headers = {
+        Authorization: `Bearer ${token}`
+      };
+      console.log(accountId)
+      axios.post(`${baseUrl}accounts/${accountId}/upload-avatar`, formData, { headers })
+        .then(response => {
+          // Обновляем отображаемую аватарку
+          setAvatar(response.data.avatar_url);
+        })
+        .catch(error => {
+          console.error('Error uploading avatar', error);
+        });
+    }
+  };
 
   return (
     <div className={styles.portfolioPageWrap}>
       <Wrap className={styles.qwe}>
-        <img className={styles.img} alt="qwe" src={liza} />
+        <input
+          type="file"
+          accept="image/*"
+          style={{ display: 'none' }}
+          onChange={handleFileChange}
+          ref={fileInputRef}
+        />
+        <img
+          className={styles.img}
+          alt="avatar"
+          src={avatar === 'DEFAULT' ? defaulLogo : avatar || defaulLogo}
+
+          onClick={() => {
+            // При клике на изображение вызывается клик по элементу input для выбора файла
+            fileInputRef.current.click();
+          }}
+        />
         <div className={styles.infWrapper}>
           <span className={styles.name}>{userData.username}</span>
           <div className={styles.emailAndPhoneWrapper}>
@@ -74,7 +127,7 @@ const PortfolioPage = () => {
 
 const UserInfoRow = ({ label, value }) => {
   const userPassword = Cookies.get('password');
-
+  const baseUrl = "http://localhost:8080/"
   const [putInfData, setPutInfData] = useState({
     username: "",
     email: "",
@@ -106,7 +159,7 @@ const UserInfoRow = ({ label, value }) => {
     const headers = {
       Authorization: `Bearer ${token}`
     };
-    axios.get("http://localhost:8080/customers", { headers })
+    axios.get(`${baseUrl}customers`, { headers })
       .then(response => {
         const matchingUser = response.data.find(user => user.username === username);
         if (matchingUser) {
@@ -195,7 +248,7 @@ const UserInfoRow = ({ label, value }) => {
 
     console.log(userId)
     console.log(putInfData)
-    axios.put(`http://localhost:8080/customers/${userId}`, putInfData, {
+    axios.put(`${baseUrl}customers/${userId}`, putInfData, {
       headers: {
         Authorization: `Bearer ${token}`
       }
@@ -238,6 +291,7 @@ const UserInfoRow = ({ label, value }) => {
                 value={editedValue}
                 onChange={handleInputChange}
               />
+
               <button onClick={handleSave}>Save</button>
               <p>Editing: {editingLabel}</p> {/* Display the editing label */}
             </animated.div>

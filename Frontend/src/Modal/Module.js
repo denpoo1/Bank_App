@@ -11,7 +11,6 @@ const Modal = ({ children, onClose, className, clasName }) => {
             onClose();
         }
     };
-
     useEffect(() => {
         document.addEventListener('mousedown', handleOutsideClick);
         return () => {

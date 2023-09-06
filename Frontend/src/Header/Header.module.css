@@ -2,9 +2,9 @@
     position: absolute;
     top: 0;
     left: 300px;
-    /* Учитываем ширину Sidebar */
+    
     width: calc(100% - 350px);
-    /* Учитываем ширину Sidebar */
+    
     height: 80px;
     color: #fff;
     display: flex;
@@ -52,9 +52,11 @@
   height: 40px;
   border-radius: 20px;
   background-color: var(--primary-color);
-  display: flex; /* Use flexbox to control the positioning of the spans */
-  align-items: center; /* Center items vertically */
-  justify-content: space-between; /* Space items evenly along the container */
+  display: flex; 
+  align-items: center; 
+  padding: 10px 15px;
+
+  justify-content: space-between; 
 }
 .profileButton span:first-child {
   font-size: 16px;
@@ -64,23 +66,14 @@
 }
 
 .profileButton span:last-child {
-  font-size: 20px;
+  font-size: 16px;
   color: white;
 }
+.centerContainer{
+  flex-grow: 1; 
 
-  .profileButton::before {
-    content: ""; /* Очищаем содержимое псевдоэлемента, чтобы не отображался текст */
-    display: block;
-    position: absolute;
-    top: 5px;
-    left: 5px;
-    height: 30px;
-    width: 30px;
-    background-image: url("../images/logo/liza2.jpg");
-    background-repeat: no-repeat;
-    background-size: cover;
-    border-radius: 50%;
-  }
+}
+  
   
 
   
@@ -93,7 +86,7 @@
 }
 
 
-/* Стили для выпадающего меню */
+
 .dropdown {
   position: absolute;
   background-color: var(--primary-color);
@@ -106,7 +99,7 @@
   overflow: hidden;
   visibility: hidden;
   opacity: 0;
-  transform: translateY(-10px); /* Move the dropdown up a bit initially */
+  transform: translateY(-10px); 
   transition: opacity 0.3s ease, transform 0.3s ease, height 0.3s ease;
   
 }
@@ -129,16 +122,19 @@
 }
 
 .option:hover {
-  background-color: #082e66; /* Цвёет фона при наведении курсора на опцию */
+  background-color: #082e66; 
 }
 
 
 .userLogo{
-  width: 25px;
-  height: 25px;
+  width: 30px;
+  height: 30px;
   border-radius: 15px;
+  
 }
-
+.leftContainer{
+  height: 150%;
+}
 .avatarAndName {
   display: flex;
   align-items: center;

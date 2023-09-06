@@ -10,7 +10,7 @@ import Cookies from "js-cookie"; // Import Cookies
 import AppExpenses from "../Components/Expenses/AppExpenses";
 
 const Body = () => {
-
+    const baseUrl = "http://localhost:8080/"
     const [userId, setUserId] = useState(null);
     const [cards, setCards] = useState([null]);
     const [selectedCardId, setSelectedCardId] = useState(null);
@@ -21,7 +21,7 @@ const Body = () => {
         const headers = {
             Authorization: `Bearer ${token}`
         };
-        axios.get("http://localhost:8080/customers", { headers })
+        axios.get(`${baseUrl}customers`, { headers })
             .then(response => {
                 const matchingUser = response.data.find(user => user.username === username);
                 if (matchingUser) {
@@ -33,7 +33,7 @@ const Body = () => {
                 console.error('Error fetching customer data', error);
             });
         if (userId !== null) {
-            axios.get(`http://localhost:8080/customers/${userId}/credit-cards`, { headers })
+            axios.get(`${baseUrl}customers/${userId}/credit-cards`, { headers })
                 .then(response => {
                     setCards(response.data)
                 })
@@ -42,7 +42,7 @@ const Body = () => {
 
                 });
         }
-        axios.get('http://localhost:8080/transactions', { headers }).then(
+        axios.get(`${baseUrl}transactions`, { headers }).then(
             (res) => {
                 const transactions = res.data;
     
@@ -93,13 +93,13 @@ const Body = () => {
         const headers = {
             Authorization: `Bearer ${token}`
         };
-        axios.get("http://localhost:8080/customers", { headers })
+        axios.get(`${baseUrl}customers`, { headers })
             .then(response => {
                 const matchingUser = response.data.find(user => user.username === username);
 
                 if (matchingUser) {
 
-                    axios.get(`http://localhost:8080/customers/${matchingUser.id}/credit-cards`, { headers })
+                    axios.get(`${baseUrl}customers/${matchingUser.id}/credit-cards`, { headers })
                         .then(response => {
                             const userCards = response.data;
                             if (userCards.length > 0) {

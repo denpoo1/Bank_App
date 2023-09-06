@@ -22,6 +22,7 @@ const MarketButtons = () => {
     const [isAmountValid, setIsAmountValid] = useState(true);
     const [error, setError] = useState(null); // State variable to store error message
     const isFormValid = isCardNumberValid && isAmountValid && amount.trim() !== '' && cardNumber.trim() !== ''; // Check if amount is not empty
+    const baseUrl = "http://localhost:8080/"
 
 
     const handleAmountChange = (e) => {
@@ -41,7 +42,7 @@ const MarketButtons = () => {
 
             try {
                 // Request to get all credit card numbers
-                const creditCardsResponse = await axios.get('http://localhost:8080/credit-cards', { headers });
+                const creditCardsResponse = await axios.get(`${baseUrl}credit-cards`, { headers });
                 const creditCardNumbers = creditCardsResponse.data.map(creditCard => creditCard.cardNumber);
 
                 // Convert entered card number to an integer
@@ -56,21 +57,33 @@ const MarketButtons = () => {
                     const matchingCard = creditCardsResponse.data.find(creditCard => creditCard.cardNumber === enteredCardNumber);
                     const to_card_id = matchingCard.id;
 
-                    // Convert the amount to cents if it's in dollars
+                    // Проверка на отправку с той же карты
+                    if (from_card_id === to_card_id) {
+                        setError('Cannot transfer money from and to the same card.');
+                    } else {
+                        // Проверка баланса карты
+                        if (selectedCard.balance < parseFloat(amount.replace(',', '.'))) {
+                            setError('Insufficient funds on the selected card.');
+                        } else {
+                            // Баланс достаточен для совершения платежа
 
-                    // Send the payment request
-                    const paymentData = {
-                        from_card_id,
-                        to_card_id,
-                        amount: amount
-                    };
-                    console.log(amount)
-                    const paymentResponse = await axios.post('http://localhost:8080/payments', paymentData, { headers });
-                    setError(null);
-                    console.log('Payment successful:', paymentResponse.data);
+                            // Convert the amount to cents if it's in dollars
 
-                    // Reload the page after successful payment
-                    window.location.reload();
+                            // Send the payment request
+                            const paymentData = {
+                                from_card_id,
+                                to_card_id,
+                                amount: amount
+                            };
+                            console.log(amount);
+                            const paymentResponse = await axios.post(`${baseUrl}payments`, paymentData, { headers });
+                            setError(null);
+                            console.log('Payment successful:', paymentResponse.data);
+
+                            // Reload the page after successful payment
+                            window.location.reload();
+                        }
+                    }
                 } else {
                     setError('Entered card number does not exist.');
                 }
@@ -146,7 +159,7 @@ const MarketButtons = () => {
         const headers = {
             Authorization: `Bearer ${token}`
         };
-        axios.get('http://localhost:8080/customers', { headers }).then((res) => {
+        axios.get(`${baseUrl}customers`, { headers }).then((res) => {
             const matchingUser = res.data.find(arr => arr.username === username)
             if (matchingUser) {
                 setId(matchingUser.id)
@@ -157,8 +170,7 @@ const MarketButtons = () => {
 
 
         if (id != null) {
-            axios.get(`http://localhost:8080/customers/${id}/credit-cards
-            `, { headers }).then((res) => {
+            axios.get(`${baseUrl}customers/${id}/credit-cards`, { headers }).then((res) => {
                 setCards(res.data)
 
 
@@ -186,7 +198,7 @@ const MarketButtons = () => {
     return (
 
         <Wrap className={`${styles.marketButtonsWrapper} `}>
-            Markets
+            <h1>Market buttons</h1>
             <div className={styles.buttonsWrapper}>
                 {marketButtons.map((button, index) => (
                     <button
@@ -310,7 +322,7 @@ const MarketButtons = () => {
             {isPiggyBankOpen && (
                 <Modal className={isCardListOpen ? `${styles.qwe}` : ''} onClose={handleClosePiggyBank}>
 
-                    <PiggyBank/>
+                    <PiggyBank />
 
                 </Modal>
             )}

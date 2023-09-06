@@ -19,6 +19,7 @@ const Signup = () => {
   const [error, setError] = useState(null);
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [userId, setUserId] = useState(null);
+  const baseUrl = "http://localhost:8080/"
 
 
 
@@ -88,7 +89,7 @@ const Signup = () => {
 
     try {
       // Call the API to register the user
-      const response = await axios.post('http://localhost:8080/auth/signup', {
+      const response = await axios.post(`${baseUrl}auth/signup`, {
         username: trimmedUsername,
         email: trimmedEmail,
         password: password,
@@ -103,7 +104,7 @@ const Signup = () => {
 
       Cookies.set('token', response.data.token);
       // Get customerId by making a GET request to /customers
-      const customersResponse = await axios.get('http://localhost:8080/customers', {
+      const customersResponse = await axios.get(`${baseUrl}customers`, {
         headers: {
           Authorization: `Bearer ${response.data.token}`, // Use the token from the signup response
         },
@@ -130,7 +131,7 @@ const Signup = () => {
         transactionRoundingPercentage: 0,
       };
 
-      const accountResponse = await axios.post('http://localhost:8080/accounts', accountData, {
+      const accountResponse = await axios.post(`${baseUrl}accounts`, accountData, {
         headers: {
           Authorization: `Bearer ${response.data.token}`, // Use the token from the signup response
         },

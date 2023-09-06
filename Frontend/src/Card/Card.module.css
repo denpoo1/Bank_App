@@ -11,7 +11,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    /* Center items vertically within the container */
+    
     width: 370px;
 }
 
@@ -21,26 +21,26 @@
 }
 
 .settingSignButton {
-    /* Set the button size to 40x40 pixels */
+    
     width: 40px;
     height: 40px;
     background-color: transparent;
-    /* Remove default button background */
+    
     border: none;
-    /* Remove default button border */
+    
     display: flex;
-    /* Use flexbox to center the image */
+    
     align-items: center;
-    /* Center the image vertically */
+    
     justify-content: center;
-    /* Center the image horizontally */
+    
 }
 
 .settingSign {
-    /* Set the image size to 40x40 pixels */
+    
     width: 40px;
     height: 40px;
-    /* Add any other styles for the image */
+    
 }
 
 
@@ -49,10 +49,10 @@
 
 
 
-
-
-
-
+.editWrapper {
+    height: 50%;
+    width: 30%;
+}
 
 
 
@@ -71,8 +71,8 @@
     color: #fff;
     cursor: pointer;
     perspective: 1000px;
-    opacity: 0; /* Начальное значение прозрачности */
-    transition: opacity 0.3s ease-in-out; /* Плавная анимация прозрачности */
+    opacity: 0; 
+    transition: opacity 0.3s ease-in-out; 
 }
 
 .card_inner {

@@ -12,7 +12,7 @@ const TotalBalance = ({ cardId }) => {
   const [expenses, setExpenses] = useState(0);
   const [percentage, setPercentage] = useState(0);
   const [isPositive, setIsPositive] = useState(false);
-
+  const baseUrl = "http://localhost:8080/"
 
 
   useEffect(() => {
@@ -22,7 +22,7 @@ const TotalBalance = ({ cardId }) => {
       Authorization: `Bearer ${token}`
     };
   
-    axios.get('http://localhost:8080/customers', { headers }).then((res) => {
+    axios.get(`${baseUrl}customers`, { headers }).then((res) => {
       const matchingUser = res.data.find(arr => arr.username === username);
       if (matchingUser) {
         setId(matchingUser.id);
@@ -31,14 +31,14 @@ const TotalBalance = ({ cardId }) => {
       console.error('Error fetching customer data', error);
     });
   
-    axios.get('http://localhost:8080/accounts', { headers }).then((res) => {
+    axios.get(`${baseUrl}accounts`, { headers }).then((res) => {
       const accounts = res.data; // Получаем массив всех аккаунтов
   
       // Проходим по каждому аккаунту и сравниваем customerId
       accounts.forEach(account => {
         if (account.customerId === customerId) {
           if (customerId != null) {
-            axios.get(`http://localhost:8080/accounts/${account.id}/transaction`, { headers }).then((res) => {
+            axios.get(`${baseUrl}accounts/${account.id}/transaction`, { headers }).then((res) => {
             });
           }
         }
@@ -54,7 +54,7 @@ const TotalBalance = ({ cardId }) => {
 
 
 
-    axios.get(`http://localhost:8080/transactions`, { headers }) // Запрос транзакций
+    axios.get(`${baseUrl}transactions`, { headers }) // Запрос транзакций
       .then(response => {
         const transactions = response.data;
 
@@ -98,7 +98,7 @@ const TotalBalance = ({ cardId }) => {
 
 
 
-    axios.get(`http://localhost:8080/credit-cards/${cardId}`, { headers })
+    axios.get(`${baseUrl}credit-cards/${cardId}`, { headers })
       .then(response => {
         const cardData = response.data;
 

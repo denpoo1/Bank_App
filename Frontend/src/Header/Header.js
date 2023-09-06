@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import styles from './Header.module.css';
 import axios from "axios";
 import Cookies from "js-cookie";
+import { useNavigate } from 'react-router-dom';
+import defaulLogo from "../images/logo/defaultPhoto.png";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -9,8 +11,42 @@ const Header = () => {
   const [username, setUsername] = useState(""); // Добавили состояние для хранения юзернейма
   const [userData, setUserData] = useState(null); // Добавили состояние для хранения данных пользователя
   const [userImg, setUserImg] = useState('')
+  const [sessionExpired, setSessionExpired] = useState(false);
+  const navigate = useNavigate();
+  const [customerId, setCustomerId] = useState(null);
+  const [accountId, setAccountId] = useState(null);
+  const [avatar, setAvatar] = useState(null)
+  const baseUrl = "http://localhost:8080/"
 
+  useEffect(() => {
+    const token = Cookies.get('token');
+    const username = Cookies.get('username');
+    const headers = {
+      Authorization: `Bearer ${token}`
+    };
 
+    axios.get(`${baseUrl}customers`, { headers })
+      .then(response => {
+        const matchingUser = response.data.find(user => user.username === username);
+        if (matchingUser) {
+          setCustomerId(matchingUser.id)
+          setUserData(matchingUser);
+        }
+      })
+      .catch(error => {
+        console.error('Error fetching customer data', error);
+      });
+
+    axios.get(`${baseUrl}accounts`, { headers })
+      .then(response => {
+        const matchingUser = response.data.find(user => user.customerId === customerId);
+        console.log(matchingUser.avatar_url)
+        setAvatar(matchingUser.avatar_url)
+        setAccountId(matchingUser.id)
+      }).catch(error => {
+        console.error('Error fetching customer data', error);
+      });
+  }, [customerId]);
   useEffect(() => {
     const userName = Cookies.get('username');
 
@@ -18,14 +54,14 @@ const Header = () => {
     if (userName === "liza") {
       console.log("qwe");
       setUserImg('../images/logo/liza.jpg');
-    } 
+    }
 
     // Получаем токен из куки
     const tokenFromCookie = Cookies.get("token");
     if (tokenFromCookie) {
       // Выполняем GET-запрос для получения данных пользователя
       axios
-        .get("http://localhost:8080/customers", {
+        .get(`${baseUrl}customers`, {
           headers: {
             Authorization: `Bearer ${tokenFromCookie}`,
           },
@@ -50,8 +86,16 @@ const Header = () => {
           }
         })
         .catch((error) => {
+          setSessionExpired(true);
           console.error("Error fetching user data:", error);
+
+          // Сохраните информацию о сессии в куки
+          Cookies.set("sessionExpired", "true");
+
+          // Перенаправление на главную страницу
+          navigate("/");
         });
+
     }
   }, []);
 
@@ -66,7 +110,7 @@ const Header = () => {
     if (tokenFromCookie && userId) {
       // Выполняем GET-запрос для получения данных пользователя по его идентификатору
       axios
-        .get(`http://localhost:8080/customers/${userId}`, {
+        .get(`${baseUrl}customers/${userId}`, {
           headers: {
             Authorization: `Bearer ${tokenFromCookie}`,
           },
@@ -83,17 +127,23 @@ const Header = () => {
 
   return (
     <div className={styles.header}>
-      <h1 className={styles.headerTitle}>Wallet</h1>
+      <h1 className={styles.headerTitle}>Home</h1>
       <div className={styles.headerWrapper}>
         <div className={styles.headerSearchWrapper}>
-          <button className={styles.search}></button>
-          <button className={styles.notification}></button>
         </div>
-        <div className={`${styles.profileButtonWrapper} ${isMenuOpen ? styles.activeDropdown : ""}`}>
-          <button className={styles.profileButton} onClick={toggleMenu}>
-            {/* <img className={styles.userLogo} alt="we" src={userImg} /> */}
-            <span className={styles.username}>{username}</span>
-            <span className={styles.dropdownIcon}>{isMenuOpen ? "▲" : "▼"}</span>
+        <div className={`${styles.profileButtonWrapper}`
+          /* ${isMenuOpen ? styles.activeDropdown : "" */       // де добавляю выпадающее меню ,потому что все функции, которые там могут быть, реализованы на страничках
+        }>
+
+          <button className={styles.profileButton}
+          // onClick={toggleMenu}   тут тоже самое
+          >
+            <div className={styles.leftContainer}>
+              <img className={styles.userLogo} alt="we" src={avatar === 'DEFAULT' ? defaulLogo : avatar || defaulLogo} />
+            </div>           
+            <div className={styles.centerContainer}>
+    <span className={styles.username}>{username}</span>
+  </div>            {/* <span className={styles.dropdownIcon}>{isMenuOpen ? "▲" : "▼"}</span> */}
           </button>
           {isMenuOpen && (
             <div className={`${styles.dropdown}`}>

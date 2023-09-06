@@ -27,7 +27,7 @@
 
 .bottomOfJar {
     height: calc(100% - 20px - 10px);
-    /* Subtract the height of the topOfJar */
+    
     width: 100%;
     border: 3px solid white;
     border-radius: 10px;
@@ -61,9 +61,9 @@
 .full {
     z-index: 2;
     background-color: #3adb76;
-    /* Зеленый цвет */
+    
     box-shadow: 0 0 8px rgba(58, 219, 118, 1);
-    /* Свечение вокруг */
+    
 }
 
 
@@ -114,9 +114,10 @@
     width: 45%;
 }
 
-.wholeWrapper {
-    width: 100% !important;
-    height: 93% !important;
+.editWrapper {
+    width: 100% ;
+    height: 93% ;
+    overflow: hidden;
 }
 
 .wholeBankDescription {
@@ -145,7 +146,7 @@
 
 .bottomOfBiggerJar {
     height: calc(100% - 20px - 10px);
-    /* Subtract the height of the topOfJar */
+    
     width: 100%;
     border: 5px solid white;
     border-radius: 20px;
@@ -194,8 +195,8 @@
     justify-content: space-between;
     height: 100px;
     cursor: pointer;
-    min-width: 100px; /* Минимальная ширина для circleWrapper */
-  max-width: 300px; /* Максимальная ширина для circleWrapper */
+    min-width: 100px; 
+  max-width: 300px; 
   text-align: center;
 }
 
@@ -221,3 +222,9 @@
 .circleWrapper:nth-child(4) {
     height: 122px;
 }
+
+.banksWrapper{
+    display: flex;
+    flex-direction: column;
+}
+

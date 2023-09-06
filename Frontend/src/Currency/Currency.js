@@ -10,13 +10,14 @@ import Cookies from "js-cookie";
 
 const Currency = () => {
   const [exchangeRates, setExchangeRates] = useState(null);
+  const baseUrl = "http://localhost:8080/"
 
   useEffect(() => {
     const tokenFromCookie = Cookies.get("token");
 
     if (tokenFromCookie) {
       axios
-        .get("http://localhost:8080/exchange-rates/latest/eur", {
+        .get(`${baseUrl}exchange-rates/latest/eur`, {
           headers: {
             Authorization: `Bearer ${tokenFromCookie}`,
           },

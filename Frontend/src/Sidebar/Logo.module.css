@@ -14,17 +14,16 @@
     height: 2px;
     width: 125%;
     background-color: var(--separator);
-    /* Цвет горизонтальной линии */
+    
     position: absolute;
     bottom: -5px;
-    /* Расстояние между сепаратором и предыдущим элементом */
+    
     left: 0;
 }
 
 .logo {
     width: 25px;
     height: 25px;
-    border-radius: 10px;
 }
 
 

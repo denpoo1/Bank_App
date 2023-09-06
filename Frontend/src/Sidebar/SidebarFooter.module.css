@@ -1,8 +1,8 @@
 .button {
   position: relative;
-  /* Позволяет позиционировать псевдоэлемент относительно кнопки */
+  
   padding-left: 40px;
-  /* Отступ слева для создания места под иконку */
+  
   font-size: 15px;
   font-weight: bold;
   border: none;
@@ -13,25 +13,25 @@
 
 .button::before {
   content: '';
-  /* Пустое содержимое для псевдоэлемента */
+  
   display: block;
   position: absolute;
-  /* Позиционируем псевдоэлемент абсолютно */
+  
   top: 50%;
-  /* Позиция в вертикальном центре кнопки */
+  
   left: 0;
-  /* Крепим слева от кнопки */
+  
   transform: translateY(-60%);
-  /* Смещаем на половину высоты псевдоэлемента вверх */
+  
   width: 25px;
-  /* Размер иконки */
+  
   height: 25px;
   background-image: url('../images/sidebarIcons/home.png');
-  /* Путь к изображению иконки */
+  
   background-repeat: no-repeat;
   background-size: cover;
   margin-right: 40px;
-  /* Отступ между иконкой и текстом */
+  
 }
 
 

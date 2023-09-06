@@ -3,6 +3,7 @@ import styles from './RightSideLogin.module.css';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
+import Modal from '../../Modal/Module';
 
 const RightSideLogin = () => {
   const navigate = useNavigate();
@@ -10,8 +11,19 @@ const RightSideLogin = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
   const [isFormValid, setIsFormValid] = useState(false);
+  const [sessionExpired, setSessionExpired] = useState(false);
+  const baseUrl = "http://localhost:8080/"
 
-
+  useEffect(() => {
+    const sessionExpiredCookie = Cookies.get("sessionExpired");
+  
+    if (sessionExpiredCookie === "true") {
+      // Очистите куки, чтобы сообщение об истекшей сессии не отображалось после обновления страницы
+      Cookies.remove("sessionExpired");
+      // Установите состояние sessionExpired в true
+      setSessionExpired(true)
+    }
+  }, []);
   useEffect(() => {
     // Check if both username and password are filled to enable the button
     setIsFormValid(username.trim() !== '' && password.trim() !== '');
@@ -42,7 +54,7 @@ const RightSideLogin = () => {
 
   const handleLogin = async () => {
     try {
-      const response = await axios.post('http://localhost:8080/auth/signin', {
+      const response = await axios.post(`${baseUrl}auth/signin`, {
         username,
         password,
       });
@@ -77,7 +89,9 @@ const RightSideLogin = () => {
     // Redirect to the signup page
     navigate('/sign-up');
   };
-
+  const closeModalOfExpiredSession = () =>{
+      setSessionExpired(false)
+  }
   
   return (
     <div className={styles.rightSide}>
@@ -103,7 +117,15 @@ const RightSideLogin = () => {
       
       </div>
       </div>
+
+      {sessionExpired && (
+        <Modal clasName={sessionExpired ? `${styles.editWrapper}` : ''} onClose={closeModalOfExpiredSession}>
+            <h2>Your session has expired</h2>
+        </Modal>
+      )}
     </div>
+
+
   );
 };
 

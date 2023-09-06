@@ -9,30 +9,31 @@
 
 .qwe {
     position: relative;
-    /* Добавляем позиционирование для относительности */
+    
     border-radius: 20px;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
     align-items: center;
     overflow: visible;
-    /* Разрешаем содержимому выходить за пределы контейнера */
+    
     height: 100px;
 }
 
 .img {
     position: absolute;
-    /* Абсолютное позиционирование для картинки */
+    
     width: 130px;
     height: 130px;
     top: -65px;
-    /* Половина высоты картинки (половина от 150px) */
+    
     left: 50%;
-    /* Положение по горизонтали */
+    
     transform: translateX(-50%);
-    /* Центрирование картинки */
+    
     border-radius: 100px;
 }
+
 
 
 .infWrapper {
@@ -107,11 +108,11 @@
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
-    /* Здесь можно настроить прозрачность */
+    
     backdrop-filter: blur(5px);
-    /* Здесь можно настроить степень размытия */
+    
     z-index: 1000;
-    /* Поднимите значение z-index, чтобы оверлей находился над другими элементами */
+    
 }
 
 .editWrapper {
@@ -136,9 +137,9 @@
 
 .editWrapper input:focus {
     background-color: rgba(0, 86, 179, 0.2);
-    /* Цвет фона при ховере */
+    
     box-shadow: 0 0 20px rgba(0, 86, 179, 0.5);
-    /* Расплывчатый эффект */
+    
 }
 
 .zxc{

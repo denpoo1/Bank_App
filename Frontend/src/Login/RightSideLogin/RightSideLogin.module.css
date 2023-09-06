@@ -34,9 +34,9 @@
 
 .rightSideLoginWrapper input:focus {
     background-color: rgba(0, 86, 179, 0.2);
-    /* Цвет фона при ховере */
+    
     box-shadow: 0 0 20px rgba(0, 86, 179, 0.5);
-    /* Расплывчатый эффект */
+    
 }
 
 .rightSideLoginWrapper input:last-child{
@@ -51,7 +51,7 @@
     width: 100%;
     height: 50px;
     transition: background-color 0.5s, box-shadow 0.5s;
-    /* Add transition here */
+    
 }
 
 .formButtonActive {
@@ -82,3 +82,12 @@
     color: #84b1f4;
     font-size: initial;
 }
+
+.editWrapper{
+    height: 30%;
+    width: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
