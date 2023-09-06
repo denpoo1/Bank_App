@@ -3,6 +3,7 @@ import styles from "./TotalBalance.module.css";
 import Wrap from "../Wrap/Wrap";
 import axios from "axios";
 import Cookies from "js-cookie";
+import baseUrl from "../config";
 
 
 const TotalBalance = ({ cardId }) => {
@@ -12,7 +13,6 @@ const TotalBalance = ({ cardId }) => {
   const [expenses, setExpenses] = useState(0);
   const [percentage, setPercentage] = useState(0);
   const [isPositive, setIsPositive] = useState(false);
-  const baseUrl = "http://localhost:8080/"
 
 
   useEffect(() => {

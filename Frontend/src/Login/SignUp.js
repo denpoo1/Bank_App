@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import styles from './Signup.module.css';
 import Cookies from "js-cookie";
+import baseUrl from "../config";
 
 
 const Signup = () => {
@@ -19,7 +20,6 @@ const Signup = () => {
   const [error, setError] = useState(null);
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [userId, setUserId] = useState(null);
-  const baseUrl = "http://localhost:8080/"
 
 
 

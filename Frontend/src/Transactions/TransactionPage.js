@@ -6,6 +6,7 @@ import axios from "axios";
 import visa from '../images/card/visa.png';
 import arrowPlus from '../images/other/arrowPlus.png'
 import arrowMinus from '../images/other/arrowMinus.png'
+import baseUrl from "../config";
 
 const PortfolioPage = () => {
     const [cards, setCards] = useState([]);
@@ -15,7 +16,6 @@ const PortfolioPage = () => {
     const pageSize = 6; 
     const [transactionsToShow, setTransactionsToShow] = useState(pageSize); // Add this state
     const [cardHolder, setCardHolder] = useState(""); // Add this state
-    const baseUrl = "http://localhost:8080/"
 
     const handleCardSelection = (cardId) => {
         if (selectedCard !== cardId) {

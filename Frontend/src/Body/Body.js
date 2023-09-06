@@ -8,9 +8,9 @@ import Currency from "../Currency/Currency";
 import axios from "axios"; 
 import Cookies from "js-cookie"; 
 import AppExpenses from "../Components/Expenses/AppExpenses";
+import baseUrl from "../config";
 
 const Body = () => {
-    const baseUrl = "http://localhost:8080/"
     const [userId, setUserId] = useState(null);
     const [cards, setCards] = useState([null]);
     const [selectedCardId, setSelectedCardId] = useState(null);

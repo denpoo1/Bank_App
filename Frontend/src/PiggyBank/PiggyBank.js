@@ -7,6 +7,8 @@ import changeGoal from '../images/other/changeGoalBtn.png'
 import Cookies from "js-cookie";
 import axios from "axios";
 import Modal from "../Modal/Module";
+import baseUrl from "../config";
+
 const PiggyBank = () => {
     const [isPiggyOpen, setIsPiggyOpen] = useState(false);
     const [customerId, setCustomerId] = useState(null)
@@ -17,7 +19,6 @@ const PiggyBank = () => {
     const [isEditing, setIsEditing] = useState(false);
     const [editedValue, setEditedValue] = useState("");
     const [editingLabel, setEditingLabel] = useState('');
-    const baseUrl = "http://localhost:8080/"
 
     const handleCloseDepositModal = () => {
         if (isEditing) {

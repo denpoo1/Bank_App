@@ -8,13 +8,13 @@ import axios from "axios";
 import editIcon from "../images/other/edit.png";
 import Modal from "../Modal/Module";
 import { animated } from 'react-spring';
+import baseUrl from "../config";
 
 const PortfolioPage = () => {
   const [customerId, setCustomerId] = useState(null);
   const [accountId, setAccountId] = useState(null);
   const [avatar, setAvatar] = useState(null)
   const fileInputRef = useRef(null); 
-  const baseUrl = "http://localhost:8080/"
 
   const [userData, setUserData] = useState({
     id: null,
@@ -124,7 +124,6 @@ const PortfolioPage = () => {
 
 const UserInfoRow = ({ label, value }) => {
   const userPassword = Cookies.get('password');
-  const baseUrl = "http://localhost:8080/"
   const [putInfData, setPutInfData] = useState({
     username: "",
     email: "",

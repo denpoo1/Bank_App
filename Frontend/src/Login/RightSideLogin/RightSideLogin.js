@@ -4,6 +4,7 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
 import Modal from '../../Modal/Module';
+import baseUrl from "../../config"
 
 const RightSideLogin = () => {
   const navigate = useNavigate();
@@ -12,7 +13,6 @@ const RightSideLogin = () => {
   const [error, setError] = useState(null);
   const [isFormValid, setIsFormValid] = useState(false);
   const [sessionExpired, setSessionExpired] = useState(false);
-  const baseUrl = "http://localhost:8080/"
 
   useEffect(() => {
     const sessionExpiredCookie = Cookies.get("sessionExpired");
