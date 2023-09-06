@@ -13,12 +13,13 @@ const Signup = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
-  const [phoneCode, setPhoneCode] = useState(''); // State for the selected country code
+  const [phoneCode, setPhoneCode] = useState(''); 
   const [phone, setPhone] = useState('');
   const [address, setAddress] = useState('');
   const [error, setError] = useState(null);
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [userId, setUserId] = useState(null);
+  const baseUrl = "http://localhost:8080/"
 
 
 
@@ -26,7 +27,6 @@ const Signup = () => {
     { phoneCode: '1', name: 'United States', countryCode: 'US', img: './images/x' },
     { phoneCode: '91', name: 'India', countryCode: 'IN' },
     { phoneCode: '44', name: 'United Kingdom', countryCode: 'UK' },
-    // Add more country codes as needed
   ];
 
   const handleSignup = async (e) => {
@@ -39,18 +39,15 @@ const Signup = () => {
     const trimmedPhone = phone.trim();
     const trimmedAdress = address.trim();
 
-    // Validate required fields
     if (!trimmedUsername || !trimmedEmail || !trimmedFirstName || !trimmedLastName || !trimmedPhone || !trimmedAdress) {
       setError(new Error('Please fill in all required fields'));
       return;
     }
-    // Validate passwords
     if (password !== confirmPassword) {
       setError(new Error('Passwords do not match'));
       return;
     }
 
-    // Validate username (only Latin characters allowed)
     const usernameRegex = /^[a-zA-Z0-9_]+$/;
     if (!username.match(usernameRegex)) {
       setError(new Error('Username should only contain Latin characters, numbers, and underscores'));
@@ -62,7 +59,6 @@ const Signup = () => {
       return;
     }
 
-    // Validate email format
     const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
     if (!email.match(emailRegex)) {
       setError(new Error('Invalid email format'));
@@ -87,8 +83,7 @@ const Signup = () => {
     }
 
     try {
-      // Call the API to register the user
-      const response = await axios.post('http://localhost:8080/auth/signup', {
+      const response = await axios.post(`${baseUrl}auth/signup`, {
         username: trimmedUsername,
         email: trimmedEmail,
         password: password,
@@ -102,47 +97,41 @@ const Signup = () => {
       console.log(`+${phoneCode}${trimmedPhone}`)
 
       Cookies.set('token', response.data.token);
-      // Get customerId by making a GET request to /customers
-      const customersResponse = await axios.get('http://localhost:8080/customers', {
+      const customersResponse = await axios.get(`${baseUrl}customers`, {
         headers: {
           Authorization: `Bearer ${response.data.token}`, // Use the token from the signup response
         },
       });
 
-      // Find the customer with the matching username
       const customerWithMatchingUsername = customersResponse.data.find(
         (customer) => customer.username === trimmedUsername
       );
 
       if (!customerWithMatchingUsername) {
-        // If the user with the entered username is not found
         setError(new Error('User with the entered username not found'));
         return;
       }
 
-      // Now you have the user ID of the customer being registered
       const userId = customerWithMatchingUsername.id;
 
-      // Create an account using userId
       const accountData = {
         date: new Date().toISOString(),
         customerId: userId,
         transactionRoundingPercentage: 0,
       };
 
-      const accountResponse = await axios.post('http://localhost:8080/accounts', accountData, {
+      const accountResponse = await axios.post(`${baseUrl}accounts`, accountData, {
         headers: {
-          Authorization: `Bearer ${response.data.token}`, // Use the token from the signup response
+          Authorization: `Bearer ${response.data.token}`, 
         },
       });
 
       console.log('Account created:', accountResponse.data);
 
-      // Redirect to the login page after successful signup
       navigate('/');
     } catch (error) {
       if (error.response && error.response.status === 400) {
-        setError(new Error(error.response.data)); // Set the error message from the server response
+        setError(new Error(error.response.data)); 
       } else {
         setError(error);
       }
@@ -156,7 +145,7 @@ const Signup = () => {
   return (
     <div className={styles.container}>
       <h2 className={styles.title}>Sign Up</h2>
-      {error && <p className={styles.error_message}>Произошла ошибка: {error.message}</p>}
+      {error && <p className={styles.error_message}>Error: {error.message}</p>}
       <form className={styles.form} onSubmit={handleSignup}>
         <div className={styles.form_group}>
           <label className={styles.form_label}>
@@ -231,7 +220,7 @@ const Signup = () => {
                   setSelectedCountry(
                     countryCodes.find((country) => country.phoneCode === phoneCode)
                   );
-                  setPhoneCode(phoneCode); // Обновляем выбранный код страны
+                  setPhoneCode(phoneCode); 
                 }}
               >
                 <option value="">Select option</option>

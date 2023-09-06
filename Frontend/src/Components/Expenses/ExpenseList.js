@@ -7,9 +7,13 @@ const ExpenseList = (props) => {
     return <h2 className='expenses-list__fallback'>Found no expenses.</h2>;
   }
 
+  const sortedExpenses = [...props.items].sort((a, b) => {
+    return new Date(b.date) - new Date(a.date);
+  });
+
   return (
     <ul className='expenses-list'>
-      {props.items.map((expense) => (
+      {sortedExpenses.map((expense) => (
         <ExpenseItem
           key={expense.id}
           title={expense.title}

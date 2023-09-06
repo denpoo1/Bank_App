@@ -5,12 +5,12 @@ import TotalBalance from "../TotalBalance/TotalBalance";
 import MarketButtons from "../MarketButtons/MarketButtons";
 import Card from '../Card/Card';
 import Currency from "../Currency/Currency";
-import axios from "axios"; // Import Axios
-import Cookies from "js-cookie"; // Import Cookies
+import axios from "axios"; 
+import Cookies from "js-cookie"; 
 import AppExpenses from "../Components/Expenses/AppExpenses";
 
 const Body = () => {
-
+    const baseUrl = "http://localhost:8080/"
     const [userId, setUserId] = useState(null);
     const [cards, setCards] = useState([null]);
     const [selectedCardId, setSelectedCardId] = useState(null);
@@ -21,11 +21,10 @@ const Body = () => {
         const headers = {
             Authorization: `Bearer ${token}`
         };
-        axios.get("http://localhost:8080/customers", { headers })
+        axios.get(`${baseUrl}customers`, { headers })
             .then(response => {
                 const matchingUser = response.data.find(user => user.username === username);
                 if (matchingUser) {
-                    // Set the userID if the username matches
                     setUserId(matchingUser.id);
                 }
             })
@@ -33,7 +32,7 @@ const Body = () => {
                 console.error('Error fetching customer data', error);
             });
         if (userId !== null) {
-            axios.get(`http://localhost:8080/customers/${userId}/credit-cards`, { headers })
+            axios.get(`${baseUrl}customers/${userId}/credit-cards`, { headers })
                 .then(response => {
                     setCards(response.data)
                 })
@@ -42,16 +41,14 @@ const Body = () => {
 
                 });
         }
-        axios.get('http://localhost:8080/transactions', { headers }).then(
+        axios.get(`${baseUrl}transactions`, { headers }).then(
             (res) => {
                 const transactions = res.data;
     
-                // Преобразуйте строку 'date' в объект 'Date'
                 transactions.forEach(transaction => {
                     transaction.date = new Date(transaction.date);
                 });
     
-                // Фильтруйте транзакции, где fromCardId совпадает с selectedCardId
                 const expenses = transactions.filter(transaction => transaction.fromCardId === selectedCardId);
                 const updatedExpenses = expenses.map(expense => {
                     if (
@@ -60,11 +57,9 @@ const Body = () => {
                         cards.length > 0 && 
                         expense.toCardId !== null
                     ) {
-                        // Убедитесь, что cards не равен null, имеет длину больше 0
-                        // и expense.toCardId не равен null перед выполнением операции find и чтением свойства id
+                        
                         const card = cards.find(card => card.id === expense.toCardId);
                         if (card) {
-                            // Если карточка найдена, добавьте поле title с billingAddress
                             return { ...expense, title: `Transfer to Card ${card.billingAddress}` };
                         }
                     }
@@ -82,7 +77,6 @@ const Body = () => {
 
 
 
-    // Function to handle card selection
     const handleCardSelection = (cardId) => {
         setSelectedCardId(cardId);
     }
@@ -93,13 +87,13 @@ const Body = () => {
         const headers = {
             Authorization: `Bearer ${token}`
         };
-        axios.get("http://localhost:8080/customers", { headers })
+        axios.get(`${baseUrl}customers`, { headers })
             .then(response => {
                 const matchingUser = response.data.find(user => user.username === username);
 
                 if (matchingUser) {
 
-                    axios.get(`http://localhost:8080/customers/${matchingUser.id}/credit-cards`, { headers })
+                    axios.get(`${baseUrl}customers/${matchingUser.id}/credit-cards`, { headers })
                         .then(response => {
                             const userCards = response.data;
                             if (userCards.length > 0) {

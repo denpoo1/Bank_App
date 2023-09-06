@@ -10,7 +10,7 @@ const onChangeSelect = (e) => {
   return (
     <div className="expenses-filter">
       <div className="expenses-filter__control">
-        <label>Filter by year</label>
+        <h1>Statisticks</h1>
         <select value={props.selectedYEar} onChange={onChangeSelect}>
           <option value="2023">2023</option>
           <option value="2022">2022</option>

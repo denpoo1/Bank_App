@@ -7,10 +7,8 @@
 }
 
 .amountTitle {
-  font-family: 'Quicksand', sans-serif;  
-  font-size: 20px;
+  font-size: 25px;
   margin-bottom: 20px;
-  color: var(--secondary-color);
 }
 
 .amountWrapper {
@@ -39,14 +37,14 @@
   padding: 2px 13px;
   border-radius: 20px;
   display: flex;
-  /* Use flexbox to align the content */
+  
   justify-content: center;
-  /* Center the content horizontally */
+  
   align-items: center;
   height: 35px;
-  /* Add transition properties for smooth color change */
+  
   transition: background-color 0.3s ease;
-  /* Set the initial background color to green */
+  
 }
 
 
@@ -62,26 +60,26 @@
 .expenses {
   font-size: 15px;
   color: #b1b1b1;
-  display: inline-flex; /* Use inline-flex to make them appear in one line */
-  align-items: center; /* Center the content vertically */
+  display: inline-flex; 
+  align-items: center; 
 }
 
 .expenses {
   
-  margin-left: 30px; /* Add a small margin between income and expenses */
+  margin-left: 30px; 
 }
 
 .income::after {
-  content: "(Income)"; /* Text to be displayed in the ::after pseudo-element */
-  color: #308e30; /* Green color for the text */
-  margin-left: 5px; /* Add a small margin between the numbers and the ::after pseudo-element */
+  content: "(Income)"; 
+  color: #308e30; 
+  margin-left: 5px; 
 }
 
 
 .expenses::after {
-  content: "(Expenses)"; /* Text to be displayed in the ::after pseudo-element */
-  color: #a71f1f; /* Green color for the text */
-  margin-left: 5px; /* Add a small margin between the numbers and the ::after pseudo-element */
+  content: "(Expenses)"; 
+  color: #a71f1f; 
+  margin-left: 5px; 
 }
 
 

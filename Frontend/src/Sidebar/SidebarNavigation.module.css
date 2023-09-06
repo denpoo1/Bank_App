@@ -20,10 +20,10 @@
   height: 2px;
   width: 86%;
   background-color: var(--separator);
-  /* Цвет горизонтальной линии */
+  
   position: absolute;
   bottom: -20px;
-  /* Расстояние между сепаратором и предыдущим элементом */
+  
   left: 0;
   top: 450px;
 
@@ -39,21 +39,21 @@
 .clicked {
   background-color: #082e66;
   transition: background-color 0.2s ease;
-  /* Плавный переход для фона */
+  
 }
 
 .clicked button {
   color: #77a6ea;
   transition: color 0.2s ease;
-  /* Плавный переход для цвета текста */
+  
 }
 
 
 .button {
   position: relative;
-  /* Позволяет позиционировать псевдоэлемент относительно кнопки */
+  
   padding-left: 40px;
-  /* Отступ слева для создания места под иконку */
+  
   font-size: 15px;
   font-weight: bold;
   border: none;
@@ -63,40 +63,40 @@
 
 .button::before {
   content: '';
-  /* Пустое содержимое для псевдоэлемента */
+  
   display: block;
   position: absolute;
-  /* Позиционируем псевдоэлемент абсолютно */
+  
   top: 50%;
-  /* Позиция в вертикальном центре кнопки */
+  
   left: 0;
-  /* Крепим слева от кнопки */
+  
   transform: translateY(-60%);
-  /* Смещаем на половину высоты псевдоэлемента вверх */
+  
   width: 25px;
-  /* Размер иконки */
+  
   height: 25px;
   background-image: url('../images/sidebarIcons/home.png');
-  /* Путь к изображению иконки */
+  
   background-repeat: no-repeat;
   background-size: cover;
   margin-right: 40px;
-  /* Отступ между иконкой и текстом */
+  
 }
 
 
 .trans::before {
   background-image: url('../images/sidebarIcons/transaction.png');
-  /* Путь к изображению иконки */
+  
 }
 
 .port::before {
   background-image: url('../images/sidebarIcons/portfolio.png');
-  /* Путь к изображению иконки */
+  
 }
 
 
 .wallet::before {
   background-image: url('../images/sidebarIcons/wallet.png');
-  /* Путь к изображению иконки */
+  
 }
