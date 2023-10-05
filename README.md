@@ -73,6 +73,7 @@ If you would like to contribute to the development of this web application, plea
 If you have any questions or need assistance, please contact any of our team members:
 
 Frontend: [Illia Martynov](https://www.linkedin.com/in/illia-martynov-335800283/)
+
 Backend: [Den Pool](https://www.linkedin.com/in/denpool/)
 
 Thank you for using the Your Bank Web Application! 💼🌐
