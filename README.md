@@ -74,6 +74,6 @@ If you have any questions or need assistance, please contact any of our team mem
 
 Frontend: [Illia Martynov](https://www.linkedin.com/in/illia-martynov-335800283/)
 
-Backend: [Den Pool](https://www.linkedin.com/in/denpool/)
+Backend: [Denys Durbalov](https://www.linkedin.com/in/denpool/)
 
 Thank you for using the Your Bank Web Application! 💼🌐
