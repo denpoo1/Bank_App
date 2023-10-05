@@ -23,25 +23,7 @@ To run this web application locally, follow these steps:
 git clone https://github.com/illiamartynov/Bank_App.git
 ```
 
-2. Navigate to the project directory:
-```bash
-cd Bank_App
-```
 
-3. Install the necessary dependencies:
-```bash
-npm install
-```
-
-4. Run your docker compose file
-```bash
-docker compose up
-```
-
- 5. Start the development server:
-```bash
-npm start
-```
 ## Usage 📝
 
 1. Sign in to your account or create a new one if you are a new customer.
